@@ -1,0 +1,126 @@
+<template>
+  <div class="enter-game-modal-body text-white">
+    <form>
+      <div class="form-group">
+        <label
+          for="formGroupExampleInput"
+          class="w-75 bg-success border border-white text-white rounded ml-2 ml-2"
+        >
+          <h5 class="pt-1 text-left pl-2">Bowl Name:</h5>
+        </label>
+        <input
+          type="text"
+          class="form-control w-75 mx-auto text-center border border-success"
+          id="setWeight"
+          placeholder="Enter bowl name here..."
+          v-model="newGame.name"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label
+          for="formGroupExampleInput"
+          class="w-75 bg-success border border-white text-white rounded ml-2"
+        >
+          <h5 class="pt-1 text-left pl-2">Location:</h5>
+        </label>
+        <input
+          type="text"
+          class="form-control w-75 mx-auto text-center"
+          id="setReps"
+          placeholder="Enter location here..."
+          v-model="newGame.loc"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label
+          for="formGroupExampleInput"
+          class="w-75 bg-success border border-white text-white rounded ml-2"
+        >
+          <h5 class="pt-1 text-left pl-2">Date:</h5>
+        </label>
+        <input
+          type="text"
+          class="form-control w-75 mx-auto text-center"
+          id="setReps"
+          placeholder="Enter date of game here..."
+          v-model="newGame.gameDate"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label
+          for="formGroupExampleInput"
+          class="w-75 bg-success border border-white text-white rounded ml-2"
+        >
+          <h5 class="pt-1 text-left pl-2">Time:</h5>
+        </label>
+        <input
+          type="text"
+          class="form-control w-75 mx-auto text-center"
+          id="setReps"
+          placeholder="Enter time of game here..."
+          v-model="newGame.time"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label
+          for="formGroupExampleInput"
+          class="w-75 bg-success border border-white text-white rounded ml-2"
+        >
+          <h5 class="pt-1 text-left pl-2">Network(s):</h5>
+        </label>
+        <input
+          type="text"
+          class="form-control w-75 mx-auto text-center"
+          id="setReps"
+          placeholder="Enter networks aired on here..."
+          v-model="newGame.network"
+          required
+        />
+      </div>
+    </form>
+    <div class="text-center">
+      <button
+        class="btn btn-success w-25 m-2 rounded border border-white"
+        @click="addNewGame()"
+        data-dismiss="modal"
+      >
+        SAVE
+      </button>
+      <button
+        class="btn btn-secondary w-25 m-2 rounded border border-white"
+        data-dismiss="modal"
+      >
+        CANCEL
+      </button>
+    </div>
+  </div>
+</template>
+
+
+<script>
+import enterGameModalBody from "../components/EnterGameModalBody";
+export default {
+  name: "enter-game-modal-body",
+  data() {
+    return {
+      newGame: {},
+    };
+  },
+  computed: {},
+  methods: {
+    addNewGame() {
+      console.log("new game added: ", this.newGame);
+      this.$store.dispatch("addNewGame", this.newGame);
+    },
+  },
+  components: { enterGameModalBody },
+};
+</script>
+
+
+<style scoped>
+</style>
