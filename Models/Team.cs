@@ -14,6 +14,7 @@ namespace BowlPickems.Models
     public string MascotImg { get; set; }
     public string MascotName { get; set; }
     public string TeamUrl { get; set; }
+    public string streak { get; set; }
     public int GameId { get; set; }
 
 

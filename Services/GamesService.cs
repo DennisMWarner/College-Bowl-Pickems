@@ -22,5 +22,13 @@ namespace BowlPickems.Services
     {
       return _repo.Create(newGame);
     }
+    internal string Delete(int id)
+    {
+      if (_repo.Delete(id))
+      {
+        return "game deleted.";
+      }
+      throw new Exception("Could not delete DB data");
+    }
   }
 }

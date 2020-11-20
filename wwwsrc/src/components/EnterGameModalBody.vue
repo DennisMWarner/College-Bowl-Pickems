@@ -4,6 +4,21 @@
       <div class="form-group">
         <label
           for="formGroupExampleInput"
+          class="w-75 mt-2 bg-success border border-white text-white rounded ml-2 ml-2"
+        >
+          <h5 class="text-left pl-2">Sponsor:</h5>
+        </label>
+        <input
+          type="text"
+          class="form-control w-75 mx-auto text-center border border-success"
+          placeholder="Enter sponsor name here..."
+          v-model="newGame.sponsor"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label
+          for="formGroupExampleInput"
           class="w-75 bg-success border border-white text-white rounded ml-2 ml-2"
         >
           <h5 class="pt-1 text-left pl-2">Bowl Name:</h5>
@@ -11,7 +26,6 @@
         <input
           type="text"
           class="form-control w-75 mx-auto text-center border border-success"
-          id="setWeight"
           placeholder="Enter bowl name here..."
           v-model="newGame.name"
           required
@@ -27,7 +41,6 @@
         <input
           type="text"
           class="form-control w-75 mx-auto text-center"
-          id="setReps"
           placeholder="Enter location here..."
           v-model="newGame.loc"
           required
@@ -43,7 +56,6 @@
         <input
           type="text"
           class="form-control w-75 mx-auto text-center"
-          id="setReps"
           placeholder="Enter date of game here..."
           v-model="newGame.gameDate"
           required
@@ -102,7 +114,6 @@
 
 
 <script>
-import enterGameModalBody from "../components/EnterGameModalBody";
 export default {
   name: "enter-game-modal-body",
   data() {
@@ -117,7 +128,7 @@ export default {
       this.$store.dispatch("addNewGame", this.newGame);
     },
   },
-  components: { enterGameModalBody },
+  components: {},
 };
 </script>
 

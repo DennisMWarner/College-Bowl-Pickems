@@ -24,6 +24,8 @@
 -- CREATE TABLE games (
 --     id int NOT NULL AUTO_INCREMENT,
 --     name VARCHAR(255) NOT NULL,
+-- sponsor VARCHAR(255) NOT NULL,
+-- bowlUrl VARCHAR(255),
 --     gameDate VARCHAR(255),
 --     loc VARCHAR(255),
 --     time VARCHAR(12), 
@@ -43,6 +45,7 @@
 --     mascotName VARCHAR(24), 
 --     mascotImg  VARCHAR(255),
 --     teamUrl VARCHAR(255),
+--     streak VARCHAR(255),
 --     gameId int(11),
 --    PRIMARY KEY (id),
 --     INDEX (id)   

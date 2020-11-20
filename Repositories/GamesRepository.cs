@@ -25,8 +25,8 @@ namespace BowlPickems.Repositories
     internal Game Create(Game newGame)
     {
       string sql = @"
-            INSERT INTO games(name, gameDate, loc, time, network)
-            VALUES(@Name, @GameDate, @Loc, @Time, @Network); 
+            INSERT INTO games(name, gameDate, loc, time, network, sponsor, gameUrl)
+            VALUES(@Name, @GameDate, @Loc, @Time, @Network, @Sponsor, @GameUrl); 
             SELECT LAST_INSERT_ID()
         ";
       newGame.Id = _db.ExecuteScalar<int>(sql, newGame);
@@ -43,12 +43,12 @@ namespace BowlPickems.Repositories
 
     }
 
-    internal bool Delete(int id, string userId)
+    internal bool Delete(int id)
     {
       {
         string sql = @"
-     DELETE FROM games WHERE(id =@Id AND userId = @UserId) LIMIT 1";
-        int affectedRows = _db.Execute(sql, new { id, userId });
+     DELETE FROM games WHERE(id =@Id) LIMIT 1";
+        int affectedRows = _db.Execute(sql, new { id });
         return affectedRows == 1;
       }
     }

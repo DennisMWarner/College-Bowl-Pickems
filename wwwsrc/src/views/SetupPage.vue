@@ -1,15 +1,19 @@
 <template>
-  <div class="setup-page text-white row">
+  <div class="setup-page text-white">
     <add-game-button />
-
-    <div class="col-5 mt-3 text-center">
+    <add-team-button />
+    <div
+      v-if="this.$auth.isAuthenticated && this.$store.state.teams.length < 1"
+      class="w-100 m-4 text-center"
+    >
       <button
-        class="btn btn-primary p-2 mx-auto text-white text-center border btn-block border-white rounded"
+        class="btn btn-danger p-2 mx-auto text-white text-center border btn-block border-white rounded"
+        @click="addAllTeams()"
       >
-        Add Team
+        Add All Teams
       </button>
     </div>
-    <div class="col-10 offset-1 mt-3 text-center">
+    <!-- <div class="col-10 offset-1 mt-3 text-center">
       <button
         class="btn btn-warning p-2 mx-auto text-white text-center border btn-block border-white rounded"
         @click="formatGames()"
@@ -22,7 +26,7 @@
       @click="formatTeams()"
     >
       Format Teams
-    </button>
+    </button> -->
 
     <div class="col-12 text-center p-0">
       <game-title-bars />
@@ -36,6 +40,7 @@ import dates from "../components/Dates";
 import addGameButton from "../components/AddGameButton";
 import games from "../components/Games";
 import gameTitleBars from "../components/GameTitleBars";
+import addTeamButton from "../components/AddTeamButton";
 export default {
   name: "setup-page",
   data() {
@@ -72,8 +77,11 @@ export default {
         console.log("team added: ", team);
       });
     },
+    addAllTeams() {
+      this.$store.dispatch("addAllTeams");
+    },
   },
-  components: { games, addGameButton, gameTitleBars, dates },
+  components: { games, addGameButton, gameTitleBars, dates, addTeamButton },
 };
 </script>
 

@@ -1,12 +1,12 @@
 <template>
-  <div class="add-game-button col-5">
-    <div class="offset-1 mt-3 text-center">
+  <div class="add-game-button">
+    <div class="m-3 text-center">
       <button
-        class="btn btn-primary p-2 mx-auto text-white text-center border btn-block border-white rounded"
+        class="btn btn-info p-2 mx-auto text-white text-center border btn-block border-white rounded"
         data-target="#addGameModal"
         data-toggle="modal"
       >
-        Add Game
+        Add A New Game
       </button>
     </div>
     <!--Modal------------------------>
