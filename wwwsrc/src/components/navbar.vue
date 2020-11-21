@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-md navbar-light bg-light">
     <router-link class="navbar-brand" :to="{ name: 'home' }">HOME</router-link>
     <button
       class="navbar-toggler"
@@ -93,10 +93,9 @@ export default {
       this.$store.dispatch("setBearer", this.$auth.bearer);
       // console.log("this.$auth: ");
       // console.log(this.$auth);
-      this.$store.dispatch("getGames");
-      if (this.$store.state.teams.length == 0) {
-        this.$store.dispatch("getTeams");
-      }
+      await this.$store.dispatch("getGames");
+      await this.$store.dispatch("getTeams");
+      this.$store.dispatch("formatGames");
     },
     async logout() {
       this.$store.dispatch("resetBearer");

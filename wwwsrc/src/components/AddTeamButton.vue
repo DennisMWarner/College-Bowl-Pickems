@@ -26,6 +26,7 @@
 
 <script>
 import enterTeamModalBody from "../components/EnterTeamModalBody";
+import enterGameModalBody from "../components/EnterGameModalBody";
 export default {
   name: "add-team-button",
   data() {
@@ -33,7 +34,7 @@ export default {
   },
   computed: {},
   methods: {},
-  components: { enterTeamModalBody },
+  components: { enterTeamModalBody, enterGameModalBody },
 };
 </script>
 

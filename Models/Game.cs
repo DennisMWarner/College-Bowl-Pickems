@@ -13,7 +13,7 @@ namespace BowlPickems.Models
     public string Network { get; set; }
     public string BowlUrl { get; set; }
 
-    public int GameId { get; set; }
+
 
 
   }

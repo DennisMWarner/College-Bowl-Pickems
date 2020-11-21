@@ -4,7 +4,7 @@
     <add-team-button />
     <div
       v-if="this.$auth.isAuthenticated && this.$store.state.teams.length < 1"
-      class="w-100 m-4 text-center"
+      class="w-75 text-center"
     >
       <button
         class="btn btn-danger p-2 mx-auto text-white text-center border btn-block border-white rounded"
@@ -13,6 +13,12 @@
         Add All Teams
       </button>
     </div>
+    <!-- <button
+      class="btn bg-danger rounded w-50 m-3 border border-white text-white text-center"
+      @click="resetTeams()"
+    >
+      Reset all Team gameIds
+    </button> -->
     <!-- <div class="col-10 offset-1 mt-3 text-center">
       <button
         class="btn btn-warning p-2 mx-auto text-white text-center border btn-block border-white rounded"
@@ -79,6 +85,9 @@ export default {
     },
     addAllTeams() {
       this.$store.dispatch("addAllTeams");
+    },
+    resetTeams() {
+      this.$store.dispatch("resetTeamGameIds");
     },
   },
   components: { games, addGameButton, gameTitleBars, dates, addTeamButton },

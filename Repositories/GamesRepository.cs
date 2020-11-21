@@ -25,12 +25,20 @@ namespace BowlPickems.Repositories
     internal Game Create(Game newGame)
     {
       string sql = @"
-            INSERT INTO games(name, gameDate, loc, time, network, sponsor, gameUrl)
-            VALUES(@Name, @GameDate, @Loc, @Time, @Network, @Sponsor, @GameUrl); 
+            INSERT INTO games(name, gameDate, loc, time, network, sponsor, bowlUrl)
+            VALUES(@Name, @GameDate, @Loc, @Time, @Network, @Sponsor, @BowlUrl); 
             SELECT LAST_INSERT_ID()
         ";
       newGame.Id = _db.ExecuteScalar<int>(sql, newGame);
       return newGame;
+    }
+    internal Game EditGame(Game gameToUpdate)
+    {
+      {
+        string sql = "UPDATE Games SET name = @name, sponsor=@Sponsor,bowlUrl=@BowlUrl, gameDate=@GameDate, loc=@Loc, time=@Time, network=@Network WHERE id = @Id";
+        int affectedRows = _db.Execute(sql, gameToUpdate);
+        return gameToUpdate;
+      }
     }
 
 
@@ -53,14 +61,7 @@ namespace BowlPickems.Repositories
       }
     }
 
-    internal bool EditGame(Game GameToUpdate)
-    {
-      {
-        string sql = "UPDATE Games SET Views = @views, Games = @Games WHERE id = @Id";
-        int affectedRows = _db.Execute(sql, GameToUpdate);
-        return affectedRows == 1;
-      }
-    }
+
 
     internal Game GetGameById(int id)
     {

@@ -93,6 +93,22 @@
           required
         />
       </div>
+      <div class="form-group">
+        <label
+          for="formGroupExampleInput"
+          class="w-75 bg-success border border-white text-white rounded ml-2"
+        >
+          <h5 class="pt-1 text-left pl-2">Bowl URL:</h5>
+        </label>
+        <input
+          type="text"
+          class="form-control w-75 mx-auto text-center"
+          id="setReps"
+          placeholder="Enter networks aired on here..."
+          v-model="newGame.bowlUrl"
+          required
+        />
+      </div>
     </form>
     <div class="text-center">
       <button

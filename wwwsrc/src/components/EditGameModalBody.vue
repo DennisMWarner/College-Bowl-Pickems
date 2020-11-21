@@ -5,14 +5,7 @@
     </form>
     <div class="text-center">
       <button
-        class="btn btn-success w-50 m-2 rounded border border-white"
-        @click="editGame()"
-        data-dismiss="modal"
-      >
-        SAVE EDIT
-      </button>
-      <button
-        class="btn btn-secondary w-25 m-2 rounded border border-white"
+        class="btn btn-secondary w-50 mt-4 m-2 rounded border border-white"
         data-dismiss="modal"
       >
         CANCEL
@@ -30,11 +23,7 @@ export default {
     return {};
   },
   computed: {},
-  methods: {
-    editedGame() {
-      this.$store.dispatch("editGame", this.editedGame);
-    },
-  },
+  methods: {},
   components: { editFieldButtons },
 };
 </script>

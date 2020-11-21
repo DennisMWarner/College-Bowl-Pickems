@@ -22,6 +22,12 @@ namespace BowlPickems.Services
     {
       return _repo.Create(newGame);
     }
+    internal Game EditGame(Game gameToUpdate)
+    {
+      return _repo.EditGame(gameToUpdate);
+
+
+    }
     internal string Delete(int id)
     {
       if (_repo.Delete(id))

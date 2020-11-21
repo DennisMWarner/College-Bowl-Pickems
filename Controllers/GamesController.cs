@@ -47,7 +47,20 @@ namespace BowlPickems.Controllers
         return BadRequest(e.Message);
       }
     }
+    [HttpPut("{id}")]
+    [Authorize]
 
+    public ActionResult<Game> EditGame([FromBody] Game gameToUpdate)
+    {
+      try
+      {
+        return Ok(_gs.EditGame(gameToUpdate));
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
     [HttpDelete("{id}")]
     [Authorize]
     public ActionResult<string> Delete(int id)
