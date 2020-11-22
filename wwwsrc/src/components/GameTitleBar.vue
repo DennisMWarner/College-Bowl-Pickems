@@ -8,35 +8,39 @@
     >
       <div>
         <div
-          class="col-11 mx-auto no-gutters text-center pt-1 border rounded bg-warning text-white text-left my-1 mt-4"
+          class="col-11 mx-auto no-gutters text-center pt-1 border rounded bg-warning text-white text-left my-1 my-4"
           @click="setActiveGame()"
         >
           <h5>
             {{ this.gameTitleBarData.name }}
           </h5>
         </div>
+        <team-title-bars />
         <button
+          v-if="this.$store.state.activeTeamsByGameId.length < 2"
           class="btn btn-info rounded my-1 mb-3 text-center text-white border"
           data-toggle="modal"
           data-target="#add-team-to-game-modal"
+          @click="setActiveTeamsWithGameIds()"
         >
           Add a team to this game
         </button>
-        <button
-          class="btn btn-warning rounded my-1 mx-1 mb-3 text-center text-white border"
-          data-toggle="modal"
-          data-target="#editGameModal"
-          @click="setActiveEditFields()"
-        >
-          Edit this game
-        </button>
-        <div class="text-right">
+        <div>
           <button
-            class="btn btn-danger rounded my-1 mr-3 mb-3 text-center text-white border"
+            class="btn btn-warning rounded my-1 mx-1 my-3 text-center text-white border"
+            data-toggle="modal"
+            data-target="#editGameModal"
+            @click="setActiveEditFields()"
+          >
+            Edit this game
+          </button>
+
+          <button
+            class="btn btn-danger rounded my-1 mr-3 my-3 text-center text-white border"
             data-toggle="modal"
             data-target="#deleteGameModal"
           >
-            Delete
+            Delete Game
           </button>
         </div>
       </div>
@@ -88,11 +92,20 @@
           <div class="modal-body">
             <add-team-to-game-modal-body />
             <button
+              v-if="this.$store.state.activeTeams.length != 0"
               class="btn btn-warning text-white btn-block rounded border border-white my-4"
               data-dismiss="modal"
               @click="addTeamToGame()"
             >
-              Add Highlighted Team To
+              <div v-if="this.$store.state.activeTeams.length == 2">
+                Add {{ this.$store.state.activeTeams[0].name }} and
+                {{ this.$store.state.activeTeams[1].name }}
+              </div>
+              <div v-if="this.$store.state.activeTeams.length == 1">
+                Add {{ this.$store.state.activeTeams[0].name }}
+              </div>
+
+              To
               <h5 class="text-dark">
                 {{ this.$store.state.activeGame.name }}
               </h5></button
@@ -123,6 +136,7 @@
 
 
 <script>
+import teamTitleBars from "../components/TeamTitleBars";
 import editGameModalBody from "../components/EditGameModalBody";
 import addTeamToGameModalBody from "../components/AddTeamToGameModalBody";
 export default {
@@ -148,6 +162,9 @@ export default {
     setActiveEditFields() {
       this.$store.dispatch("setActiveEditFields", this.$store.state.activeGame);
     },
+    setActiveTeamsWithGameIds() {
+      this.$store.dispatch("setActiveTeamsWithGameIds");
+    },
     async deleteGame() {
       console.log("delete game called...");
       await this.$store.dispatch(
@@ -156,7 +173,7 @@ export default {
       );
     },
   },
-  components: { addTeamToGameModalBody, editGameModalBody },
+  components: { addTeamToGameModalBody, editGameModalBody, teamTitleBars },
   props: ["gameTitleBarData"],
 };
 </script>
