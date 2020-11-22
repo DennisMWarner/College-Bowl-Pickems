@@ -147,12 +147,26 @@ export default {
   computed: {},
   methods: {
     addTeamToGame() {
-      if (this.$store.state.activeTeam.id) {
-        let team = this.$store.state.activeTeam;
-        team.gameId = this.$store.state.activeGame.id;
-        this.$store.dispatch("editTeam", team);
-        console.log("team w/ game id added: ", team);
+      let teamsToUpdate = this.$store.state.activeTeams;
+      teamsToUpdate.forEach(
+        (t) => (t.gameId = this.$store.state.activeGame.id)
+      );
+      let oldGameIndex = this.$store.state.availableTeams.findIndex(
+        (t) => t.gameId == this.$store.state.activeGame.id
+      );
+      if (
+        oldGameIndex >= 0 &&
+        teamsToUpdate.filter(
+          (ttu) =>
+            ttu.name == this.$store.state.availableTeams[oldGameIndex].name
+        ).length < 1
+      ) {
+        let oldTeamToUpdate = this.$store.state.availableTeams[oldGameIndex];
+        oldTeamToUpdate.gameId = 0;
+        teamsToUpdate.push(oldTeamToUpdate);
       }
+      console.log("teamsToUpdate: ", teamsToUpdate);
+      this.$store.dispatch("editTeams", teamsToUpdate);
     },
 
     setActiveGame() {

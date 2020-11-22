@@ -18,6 +18,7 @@ let api = Axios.create({
 export default new Vuex.Store({
   state: {
     teams: [],
+    teamsToUpdate: [],
     activeTeamsByGameId: [],
     games: [],
     activeGames: [],
@@ -308,14 +309,23 @@ export default new Vuex.Store({
     async editTeam({ dispatch, commit }, team) {
       let res = await api.put("teams", team)
 
-      commit("updateAvailableTeams", res.data);
+      commit("updateAvailableTeams", res);
       dispatch("updateFormattedGame", team)
     },
+    async editTeams({ dispatch, commit }, teams) {
+      await teams.forEach(t => {
+        let res = api.put("teams", t)
 
+        commit("updateAvailableTeams", res);
+        dispatch("updateFormattedGame", t)
+
+
+      })
+    },
     updateActiveTeams({ dispatch, commit }) {
 
       commit("updateActiveTeams")
-      dispatch("updateAvailableTeams")
+
     },
     setActiveTeamsWithGameIds({ dispatch, commit }) {
       let activeTeams = [...this.state.activeTeamsByGameId]
@@ -352,6 +362,7 @@ export default new Vuex.Store({
       let formattedGame = {};
       formattedGame = { ...this.state.formattedGames.find(fg => fg.id == team.gameId) }
       commit("updateFormattedGames", formattedGame)
+      dispatch("setActiveTeamsByGameId", this.state.activeGame.id)
     },
     async resetTeamGameIds() {
 
