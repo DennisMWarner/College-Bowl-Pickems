@@ -1,29 +1,20 @@
 <template>
   <div class="points-selector">
-    <point-button
-      v-for="pointButton in pointButtons"
-      :pointButtonData="pointButton"
-      :key="pointButton.pointValue"
-      class="row justify-content-around"
-    />
+    <point-buttons />
   </div>
 </template>
 
 
 <script>
-import pointButton from "../components/PointButton";
+import pointButtons from "../components/PointButtons";
 export default {
   name: "points-selector",
   data() {
     return {};
   },
-  computed: {
-    pointButtons() {
-      return this.$store.state.points;
-    },
-  },
+  computed: {},
   methods: {},
-  components: { pointButton },
+  components: { pointButtons },
 };
 </script>
 

@@ -1,5 +1,7 @@
 <template>
-  <div class="point-button">{{ pointButtonData.pointValue }}</div>
+  <div class="point-button">
+    <div>{{ pointButtonData.pointValue }}</div>
+  </div>
 </template>
 
 

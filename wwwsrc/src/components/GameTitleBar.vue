@@ -47,6 +47,14 @@
     </div>
     <div v-else>
       <div
+        v-if="this.gameTitleBarData.secondTeam.name"
+        class="col-11 mx-auto no-gutters border rounded bg-secondary text-left my-1 text-light"
+        @click="setActiveGame()"
+      >
+        {{ this.gameTitleBarData.name }}
+      </div>
+      <div
+        v-else
         class="col-11 mx-auto no-gutters border rounded bg-light text-left my-1 text-dark"
         @click="setActiveGame()"
       >
@@ -154,7 +162,7 @@ export default {
       let oldGameIndex = this.$store.state.availableTeams.findIndex(
         (t) => t.gameId == this.$store.state.activeGame.id
       );
-      if (
+      if (asdfas
         oldGameIndex >= 0 &&
         teamsToUpdate.filter(
           (ttu) =>

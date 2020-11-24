@@ -58,6 +58,9 @@
               'background-color': this.gameData.secondTeam.priColor,
               color: this.gameData.secondTeam.secColor,
             }"
+            data-toggle="modal"
+            data-target="#pointsSelectorModal"
+            type="button"
           >
             {{ this.gameData.secondTeam.name }}
           </div>
