@@ -159,21 +159,19 @@ export default {
       teamsToUpdate.forEach(
         (t) => (t.gameId = this.$store.state.activeGame.id)
       );
-      let oldGameIndex = this.$store.state.availableTeams.findIndex(
+      let oldGames = this.$store.state.availableTeams.filter(
         (t) => t.gameId == this.$store.state.activeGame.id
       );
-      if (asdfas
-        oldGameIndex >= 0 &&
-        teamsToUpdate.filter(
-          (ttu) =>
-            ttu.name == this.$store.state.availableTeams[oldGameIndex].name
-        ).length < 1
-      ) {
-        let oldTeamToUpdate = this.$store.state.availableTeams[oldGameIndex];
-        oldTeamToUpdate.gameId = 0;
-        teamsToUpdate.push(oldTeamToUpdate);
-      }
-      console.log("teamsToUpdate: ", teamsToUpdate);
+      oldGames.forEach((og) => {
+        if (og.id != teamsToUpdate[0].id && og.id != teamsToUpdate[1].id) {
+          og.gameId = 0;
+          teamsToUpdate.push(og);
+        }
+      });
+
+      teamsToUpdate.forEach((ttu) => {
+        console.log(ttu.name, " ", ttu.gameId);
+      });
       this.$store.dispatch("editTeams", teamsToUpdate);
     },
 
