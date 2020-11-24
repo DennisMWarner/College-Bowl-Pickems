@@ -168,10 +168,10 @@ export default {
           teamsToUpdate.push(og);
         }
       });
-
       teamsToUpdate.forEach((ttu) => {
         console.log(ttu.name, " ", ttu.gameId);
       });
+
       this.$store.dispatch("editTeams", teamsToUpdate);
     },
 
