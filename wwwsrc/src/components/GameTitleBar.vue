@@ -47,7 +47,10 @@
     </div>
     <div v-else>
       <div
-        v-if="this.gameTitleBarData.secondTeam.name"
+        v-if="
+          this.gameTitleBarData.secondTeam.name &&
+          this.gameTitleBarData.firstTeam.name
+        "
         class="col-11 mx-auto no-gutters border rounded bg-secondary text-left my-1 text-light"
         @click="setActiveGame()"
       >

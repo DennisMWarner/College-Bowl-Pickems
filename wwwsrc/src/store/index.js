@@ -145,11 +145,7 @@ export default new Vuex.Store({
     setFormattedGames(state, games) {
       state.formattedGames = games
     },
-    updateFormattedGames(state, formattedGame) {
-      state.formattedGames.splice(state.formattedGames.findIndex(fg => {
-        fg.id == formattedGame.id
-      }), 1, formattedGame)
-    },
+
     addTeam(state, team) {
       state.teams.push(team)
     },
@@ -212,7 +208,7 @@ export default new Vuex.Store({
       commit("setGames", res.data);
       dispatch("setPoints")
     },
-    formatGames({ dispatch, commit }) {
+    formatGames({ commit }) {
 
       let formattedGames = []
       this.state.games.forEach(g => {
@@ -247,7 +243,7 @@ export default new Vuex.Store({
       dispatch("initializeAvailableTeams")
 
     },
-    setActiveTeam({ dispatch, commit }, team) {
+    setActiveTeam({ commit }, team) {
       commit("setActiveTeam", team)
     },
     removeActiveTeam({ commit }, team) {
@@ -270,16 +266,16 @@ export default new Vuex.Store({
     async editGame({ dispatch, commit }, editedGame) {
 
     },
-    async deleteGameById({ dispatch, commit }, gameId) {
+    async deleteGameById({ dispatch }, gameId) {
 
       await api.delete("games/" + gameId);
       dispatch("getGames")
     },
-    async addTeam({ dispatch, commit }, team) {
+    async addTeam({ commit }, team) {
       let res = await api.post("teams", team);
       commit("addTeam", res.data)
     },
-    async addAllTeams({ dispatch, commit }) {
+    async addAllTeams({ dispatch }) {
       await this.state.teamsRawData.forEach(trd => {
         let teamToAdd = {};
         teamToAdd.name = trd[0];
@@ -301,7 +297,7 @@ export default new Vuex.Store({
       commit("setTeams", res.data);
       dispatch("initializeAvailableTeams", res.data)
     },
-    initializeAvailableTeams({ dispatch, commit }) {
+    initializeAvailableTeams({ commit }) {
 
       let teams = this.state.teams.filter(t => t.gameId == 0 || t.gameId == this.state.activeGame.id);
       commit("setAvailableTeams", teams)
@@ -319,12 +315,12 @@ export default new Vuex.Store({
         dispatch("updateFormattedGame", t)
       })
     },
-    updateActiveTeams({ dispatch, commit }) {
+    updateActiveTeams({ commit }) {
 
       commit("updateActiveTeams")
 
     },
-    setActiveTeamsWithGameIds({ dispatch, commit }) {
+    setActiveTeamsWithGameIds({ commit }) {
       let activeTeams = [...this.state.activeTeamsByGameId]
       commit("setActiveTeamsWithGameIds", activeTeams)
 
@@ -334,10 +330,10 @@ export default new Vuex.Store({
       dispatch("setActiveEditFields", res.data)
       commit("updateGames", res.data)
     },
-    setActiveEditField({ dispatch, commit }, field) {
+    setActiveEditField({ commit }, field) {
       commit("setActiveEditField", field)
     },
-    setActiveEditFields({ dispatch, commit }, objectToEdit) {
+    setActiveEditFields({ commit }, objectToEdit) {
       let editableObject = [];
       for (let p in objectToEdit) {
         let prop = {}
@@ -348,17 +344,13 @@ export default new Vuex.Store({
       }
       commit("setActiveEditFields", editableObject)
     },
-    updateEditedGameField({ dispatch, commit }, field) {
+    updateEditedGameField({ dispatch }, field) {
       let gameToUpdate = { ...this.state.activeGame }
       gameToUpdate[field.key] = field.value
       dispatch("updateGame", gameToUpdate)
     },
-    updateFormattedGame({ dispatch, commit }, team) {
-
-
-      let formattedGame = {};
-      formattedGame = { ...this.state.formattedGames.find(fg => fg.id == team.gameId) }
-      commit("updateFormattedGames", formattedGame)
+    updateFormattedGame({ dispatch }, team) {
+      dispatch("formatGames")
       dispatch("setActiveTeamsByGameId", this.state.activeGame.id)
     },
     async resetTeamGameIds() {
