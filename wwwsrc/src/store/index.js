@@ -315,11 +315,8 @@ export default new Vuex.Store({
     async editTeams({ dispatch, commit }, teams) {
       await teams.forEach(t => {
         let res = api.put("teams", t)
-
         commit("updateAvailableTeams", res);
         dispatch("updateFormattedGame", t)
-
-
       })
     },
     updateActiveTeams({ dispatch, commit }) {

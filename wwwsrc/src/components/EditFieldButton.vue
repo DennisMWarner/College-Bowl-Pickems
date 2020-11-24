@@ -3,7 +3,9 @@
     <div
       v-if="
         this.editFieldButtonData.key != 'id' &&
-        this.editFieldButtonData.key != 'gameId'
+        this.editFieldButtonData.key != 'gameId' &&
+        this.editFieldButtonData.key != 'firstTeam' &&
+        this.editFieldButtonData.key != 'secondTeam'
       "
     >
       <div v-if="this.editFieldButtonData == this.$store.state.activeEditField">

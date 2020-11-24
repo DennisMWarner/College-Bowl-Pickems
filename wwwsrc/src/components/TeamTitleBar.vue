@@ -14,7 +14,7 @@
           class="btn-sm btn-secondary rounded my-1 mx-1 mb-2 text-center text-white border"
           data-toggle="modal"
           data-target="#editteamModal"
-          @click="setActiveEditFields()"
+          @click="removeTeamFromGame()"
         >
           Remove this team from this game
         </button>
@@ -76,6 +76,11 @@ export default {
     },
     setActiveEditFields() {
       this.$store.dispatch("setActiveEditFields", this.$store.state.activeTeam);
+    },
+    removeTeamFromGame() {
+      let team = this.teamTitleBarData;
+      team.gameId = 0;
+      this.$store.dispatch("editTeam", team);
     },
   },
   components: { addGameToTeamModalBody, editTeamModalBody },
