@@ -66,6 +66,8 @@ namespace BowlPickems
       services.AddTransient<GamesRepository>();
       services.AddTransient<TeamsService>();
       services.AddTransient<TeamsRepository>();
+       services.AddTransient<PicksService>();
+      services.AddTransient<PicksRepository>();
     }
 
     private IDbConnection CreateDbConnection()

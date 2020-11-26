@@ -1,13 +1,11 @@
 <template>
   <div class="view-model">
     <dates />
-    <games />
   </div>
 </template>
 
 
 <script>
-import games from "../components/Games";
 import dates from "../components/Dates";
 export default {
   name: "view-model",
@@ -16,7 +14,7 @@ export default {
   },
   computed: {},
   methods: {},
-  components: { dates, games },
+  components: { dates },
 };
 </script>
 

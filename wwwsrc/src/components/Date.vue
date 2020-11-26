@@ -1,13 +1,13 @@
 <template>
-  <div class="date p-0">
+  <div class="date p-2 no-gutters">
     <div
-      class="col-12 bg-secondary text-white text-left rounded text-white text-center p-1"
+      class="col-12 bg-white my-0 text-dark text-left rounded p-1"
       @click="setActiveDate()"
     >
       {{ dateData.date }}
     </div>
 
-    <games />
+    <games v-if="this.$store.state.activeDate == this.dateData" />
   </div>
 </template>
 

@@ -14,26 +14,21 @@
             data-toggle="modal"
             data-target="#pointsSelectorModal"
             type="button"
+            @click="setActiveFirstTeam()"
           >
             {{ this.gameData.firstTeam.name }}
           </div>
         </div>
-        <!-- Point selector modal -->
-        <div class="modal" tabindex="-1" role="dialog" id="pointsSelectorModal">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                <button
-                  type="button"
-                  class="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
+        <!--------------------------------------- Point selector modal -->
+        <div
+          class="modal no-gutters"
+          tabindex="-1"
+          role="dialog"
+          id="pointsSelectorModal"
+        >
+          <div class="modal-dialog-centered" role="document">
+            <div class="modal-content bg-transparent">
+              <div class="modal-body mr-3">
                 <points-selector />
               </div>
               <div class="modal-footer">
@@ -42,15 +37,13 @@
                   class="btn btn-secondary"
                   data-dismiss="modal"
                 >
-                  Close
-                </button>
-                <button type="button" class="btn btn-primary">
-                  Save changes
+                  Cancel
                 </button>
               </div>
             </div>
           </div>
         </div>
+        <!-----------------------------------------end points selector modal------------>
         <div class="row">
           <div
             class="col-12 offset-1 text-left teams mt-1 border team2"
@@ -61,6 +54,7 @@
             data-toggle="modal"
             data-target="#pointsSelectorModal"
             type="button"
+            @click="setActiveSecondTeam()"
           >
             {{ this.gameData.secondTeam.name }}
           </div>
@@ -88,8 +82,13 @@ export default {
   },
   computed: {},
   methods: {
-    pointSelect() {
-      console.log("points selector clicked for: ");
+    setActiveFirstTeam() {
+      this.$store.dispatch("setActiveTeam", this.gameData.firstTeam);
+      console.log("active team sent: ", this.gameData.firstTeam);
+    },
+    setActiveSecondTeam() {
+      this.$store.dispatch("setActiveTeam", this.gameData.secondTeam);
+      console.log("active team sent: ", this.gameData.secondTeam);
     },
   },
   components: { pointsSelector, team, gameTitleBar, date },

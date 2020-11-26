@@ -21,6 +21,8 @@ export default new Vuex.Store({
     teamsToUpdate: [],
     activeTeamsByGameId: [],
     games: [],
+    picks: [],
+    userPicks: [],
     activeGames: [],
     activeTeams: [],
     activeEditField: {},
@@ -30,6 +32,7 @@ export default new Vuex.Store({
     activeDate: {},
     activeGame: {},
     activeTeam: {},
+    activePoint: {},
     formattedGames: [],
     availableTeams: [],
     availableGames: [],
@@ -136,6 +139,9 @@ export default new Vuex.Store({
     setTeams(state, teams) {
       state.teams = teams
     },
+    setUserPicks(state, picks) {
+      state.userPicks = picks
+    },
     updateActiveTeams(state) {
       state.activeTeams.splice(state.activeTeams[0], 1, state.activeTeam)
     },
@@ -144,6 +150,9 @@ export default new Vuex.Store({
     },
     setFormattedGames(state, games) {
       state.formattedGames = games
+    },
+    addUserPick(state, pick) {
+      state.userPicks.push(pick)
     },
 
     addTeam(state, team) {
@@ -171,6 +180,12 @@ export default new Vuex.Store({
     },
     setActiveGame(state, game) {
       state.activeGame = game
+    },
+    setActiveGamesByActiveDate(state, games) {
+      state.activeGames = games
+    },
+    setActivePoint(state, point) {
+      state.activePoint = point
     },
     setActiveTeamsByGameId(state, teams) {
       state.activeTeamsByGameId = teams
@@ -222,11 +237,17 @@ export default new Vuex.Store({
 
       commit("setFormattedGames", formattedGames)
     },
-
+    async getUserPicks({ dispatch, commit }, userId) {
+      let res = await api.get("picks/myPicks", userId);
+      commit("setUserPicks", res.data)
+    },
 
     setPoints({ dispatch, commit }) {
       commit("setPoints");
       dispatch("setDates");
+    },
+    setActivePoint({ dispatch, commit }, point) {
+      commit("setActivePoint", point)
     },
     setActiveDate({ dispatch, commit }, date) {
 
@@ -243,17 +264,21 @@ export default new Vuex.Store({
       dispatch("initializeAvailableTeams")
 
     },
-    setActiveTeam({ commit }, team) {
-      commit("setActiveTeam", team)
+    setActiveTeam({ dispatch, commit }, team) {
+      commit("setActiveTeam", team);
+      console.log("team sent to setActiveTeam: ", team)
+      if (team.gameId != 0) {
+        dispatch("setActiveGame", this.state.formattedGames.find(g => g.id == team.gameId))
+      }
     },
     removeActiveTeam({ commit }, team) {
       commit("removeActiveTeam", team)
     },
     setActiveGamesByActiveDate({ commit }) {
-      let activeGames = [];
-      this.state.formattedGames.filter(fg => {
+      let activeGames = this.state.formattedGames.filter(fg =>
         fg.gameDate == this.state.activeDate.date
-      })
+      )
+      commit("setActiveGamesByActiveDate", activeGames)
 
     },
     setDates({ commit }) {
@@ -360,6 +385,12 @@ export default new Vuex.Store({
         resetTeam.gameId = 0
         api.put("teams", resetTeam)
       })
+    },
+    async createPick({ dispatch, commit }, pick) {
+      let res = await api.post("picks", pick)
+      if (this.state.userPicks.findIndex(up => up.id == res.data.id) < 0) {
+        commit("addUserPick", res.data)
+      }
     }
   }
 });

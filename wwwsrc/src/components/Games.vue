@@ -14,7 +14,7 @@ export default {
   },
   computed: {
     games() {
-      return this.$store.state.formattedGames;
+      return this.$store.state.activeGames;
     },
   },
   methods: {},

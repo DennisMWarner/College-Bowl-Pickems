@@ -10,6 +10,16 @@
 -- tieBreaker int NOT NULL,
 --     PRIMARY KEY (id)
 -- );
+-- CREATE TABLE picks (
+--     id int NOT NULL AUTO_INCREMENT,
+--     userId VARCHAR(255),
+--gameId INT,
+--teamId INT, 
+--points INT, 
+--win TINYINT, 
+--     PRIMARY KEY (id), 
+--INDEX userId (userId), 
+-- );
 
 -- CREATE TABLE picks (
 --     id int NOT NULL AUTO_INCREMENT,

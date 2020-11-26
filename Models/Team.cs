@@ -19,8 +19,5 @@ namespace BowlPickems.Models
 
 
   }
-  // public class VaultKeepViewModel : Game
-  // {
-  //   public int VaultKeepId { get; set; }
-  // }
+
 }
