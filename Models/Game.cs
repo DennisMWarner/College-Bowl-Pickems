@@ -12,6 +12,7 @@ namespace BowlPickems.Models
     public string Time { get; set; }
     public string Network { get; set; }
     public string BowlUrl { get; set; }
+    public int Points { get; set; }
   }
 
 }

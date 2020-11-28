@@ -5,7 +5,7 @@ namespace BowlPickems.Models
     public int Id { get; set; }
     public string UserId { get; set; }
     public int GameId { get; set; }
-    public int PickedTeamId { get; set; }
+    public int teamId { get; set; }
     public int Points { get; set; }
 
   }

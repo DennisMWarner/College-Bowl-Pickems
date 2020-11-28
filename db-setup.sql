@@ -10,22 +10,29 @@
 -- tieBreaker int NOT NULL,
 --     PRIMARY KEY (id)
 -- );
+
+
 -- CREATE TABLE picks (
 --     id int NOT NULL AUTO_INCREMENT,
 --     userId VARCHAR(255),
---gameId INT,
---teamId INT, 
---points INT, 
---win TINYINT, 
+-- gameId INT,
+-- teamId INT, 
+-- points INT, 
+-- win TINYINT, 
 --     PRIMARY KEY (id), 
---INDEX userId (userId), 
+-- INDEX userId (userId), 
 -- );
+
+-- ALTER TABLE games 
+-- DROP COLUMN points 
+
+
 
 -- CREATE TABLE picks (
 --     id int NOT NULL AUTO_INCREMENT,
 --     gameId int, 
 --     userId VARCHAR(255) NOT NULL, 
---     pickedTeamId int, 
+--     teamId int, 
 --     points int,
 --     INDEX userId (userId), 
 --     PRIMARY KEY (id)
@@ -95,6 +102,7 @@
 
 -- -- USE THIS TO CLEAN OUT YOUR DATABASE
 -- DROP TABLE IF EXISTS teams;
+-- DROP TABLE IF EXISTS picks;
 -- DROP TABLE IF EXISTS games;
 -- DROP TABLE IF EXISTS keeps;
 -- DROP TABLE IF EXISTS users;

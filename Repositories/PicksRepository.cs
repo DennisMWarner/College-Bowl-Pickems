@@ -29,8 +29,8 @@ namespace BowlPickems.Repositories
     internal Pick Create(Pick newPick)
     {
       string sql = @"
-            INSERT INTO picks(gameId, userId, pickedTeamId, points)
-            VALUES(@GameId, @UserId, @PickedTeamId, @Points); 
+            INSERT INTO picks(gameId, userId, teamId, points)
+            VALUES(@GameId, @UserId, @TeamId, @Points); 
             SELECT LAST_INSERT_ID()
         ";
       newPick.Id = _db.ExecuteScalar<int>(sql, newPick);
@@ -60,7 +60,7 @@ namespace BowlPickems.Repositories
     internal Pick EditPick(Pick pickToUpdate)
     {
       {
-        string sql = "UPDATE picks SET gameId = @GameId WHERE id = @Id";
+        string sql = "UPDATE picks SET  teamId = @TeamId, points=@Points WHERE id = @Id";
         int affectedRows = _db.Execute(sql, pickToUpdate);
         return pickToUpdate;
       }

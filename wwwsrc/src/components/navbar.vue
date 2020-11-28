@@ -95,8 +95,9 @@ export default {
       // console.log(this.$auth);
       await this.$store.dispatch("getGames");
       await this.$store.dispatch("getTeams");
+
+      await this.$store.dispatch("getUserPicks", this.$auth.userInfo.sub);
       this.$store.dispatch("formatGames");
-      this.$store.dispatch("getUserPicks", this.$auth.userInfo.sub);
     },
     async logout() {
       this.$store.dispatch("resetBearer");

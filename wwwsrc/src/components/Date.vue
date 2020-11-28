@@ -1,7 +1,7 @@
 <template>
   <div class="date p-2 no-gutters">
     <div
-      class="col-12 bg-white my-0 text-dark text-left rounded p-1"
+      class="col-12 bg-white my-0 text-dark text-left rounded p-1 w-50"
       @click="setActiveDate()"
     >
       {{ dateData.date }}

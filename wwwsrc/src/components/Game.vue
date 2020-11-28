@@ -1,7 +1,11 @@
 <template>
   <div class="game mt-3 mx-auto">
     <date />
-    <game-title-bar />
+    <div
+      class="text-white pb-1 pl-2 my-2 rounded bg-secondary border border-white"
+    >
+      {{ this.gameData.name }} (game ID: {{ this.gameData.id }})
+    </div>
     <div class="row ml-1">
       <div class="col-9">
         <div class="row">
@@ -31,15 +35,14 @@
               <div class="modal-body mr-3">
                 <points-selector />
               </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-dismiss="modal"
-                >
-                  Cancel
-                </button>
-              </div>
+
+              <button
+                type="button"
+                class="btn btn-secondary w-25 mx-auto"
+                data-dismiss="modal"
+              >
+                Cancel
+              </button>
             </div>
           </div>
         </div>
@@ -61,6 +64,13 @@
         </div>
       </div>
       <div
+        v-if="this.gameData.userData.points"
+        class="col-2 text-center px-2 pt-3 text-dark points border border-white bg-white"
+      >
+        {{ this.gameData.userData.points }}
+      </div>
+      <div
+        v-else
         class="col-2 text-center px-2 pt-3 text-dark points border border-white bg-white"
       >
         --
@@ -71,7 +81,6 @@
 
 
 <script>
-import gameTitleBar from "../components/GameTitleBar";
 import date from "../components/Date";
 import team from "../components/Team";
 import pointsSelector from "../components/PointsSelector";
@@ -91,7 +100,7 @@ export default {
       console.log("active team sent: ", this.gameData.secondTeam);
     },
   },
-  components: { pointsSelector, team, gameTitleBar, date },
+  components: { pointsSelector, team, date },
   props: ["gameData"],
 };
 </script>
