@@ -140,7 +140,6 @@ export default {
   computed: {},
   methods: {
     addNewGame() {
-      console.log("new game added: ", this.newGame);
       this.$store.dispatch("addNewGame", this.newGame);
     },
   },

@@ -43,15 +43,14 @@ export default {
           (up) => up.gameId == this.$store.state.activeGame.id
         ),
       };
+
       if (oldPick.hasOwnProperty("points")) {
         oldPick.points = 0;
         await this.$store.dispatch("updatePick", oldPick);
-        console.log("old pick: ", oldPick);
       }
-      console.log("existing pick: ", existingPick);
+
       if (existingPick.hasOwnProperty("id")) {
         existingPick.points = this.pointButtonData.pointValue;
-        // console.log("edited existing pick: ", existingPick);
         await this.$store.dispatch("updatePick", existingPick);
       } else {
         this.pick.userId = this.$auth.userInfo.sub;
@@ -59,7 +58,6 @@ export default {
         this.pick.teamId = this.$store.state.activeTeam.id;
         this.pick.points = this.pointButtonData.pointValue;
         await this.$store.dispatch("updatePick", this.pick);
-        // console.log("new pick: ", this.pick);
       }
     },
   },

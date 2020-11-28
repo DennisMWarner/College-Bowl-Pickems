@@ -91,11 +91,9 @@ export default {
   methods: {
     setActiveFirstTeam() {
       this.$store.dispatch("setActiveTeam", this.gameData.firstTeam);
-      console.log("active team sent: ", this.gameData.firstTeam);
     },
     setActiveSecondTeam() {
       this.$store.dispatch("setActiveTeam", this.gameData.secondTeam);
-      console.log("active team sent: ", this.gameData.secondTeam);
     },
   },
   components: { pointsSelector, team },

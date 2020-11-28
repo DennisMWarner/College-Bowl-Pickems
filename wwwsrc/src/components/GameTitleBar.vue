@@ -171,16 +171,12 @@ export default {
           teamsToUpdate.push(og);
         }
       });
-      teamsToUpdate.forEach((ttu) => {
-        console.log(ttu.name, " ", ttu.gameId);
-      });
 
       this.$store.dispatch("editTeams", teamsToUpdate);
     },
 
     setActiveGame() {
       this.$store.dispatch("setActiveGame", this.gameTitleBarData);
-      console.log("setActiveGame called...");
     },
     setActiveEditFields() {
       this.$store.dispatch("setActiveEditFields", this.$store.state.activeGame);
@@ -189,7 +185,6 @@ export default {
       this.$store.dispatch("setActiveTeamsWithGameIds");
     },
     async deleteGame() {
-      console.log("delete game called...");
       await this.$store.dispatch(
         "deleteGameById",
         this.$store.state.activeGame.id

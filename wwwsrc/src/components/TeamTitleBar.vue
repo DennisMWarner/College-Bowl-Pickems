@@ -67,7 +67,6 @@ export default {
         let team = this.$store.state.activeTeam;
         team.teamId = this.$store.state.activeteam.id;
         this.$store.dispatch("editTeam", team);
-        console.log("team w/ team id added: ", team);
       }
     },
 

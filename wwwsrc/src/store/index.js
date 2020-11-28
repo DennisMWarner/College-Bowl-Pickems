@@ -410,7 +410,6 @@ export default new Vuex.Store({
 
       if (this.state.userPicks.find(up => up.id == pick.id)) {
         let res = await api.put("picks", pick)
-        console.log("updateUserPicks response: ", res.data)
         dispatch("updateUserPicks", res.data)
       }
       else {
@@ -421,7 +420,6 @@ export default new Vuex.Store({
 
     async createPick({ dispatch, commit }, pick) {
       let res = await api.post("picks", pick)
-      console.log("createUserPicks response: ", res.data)
       dispatch("updateUserPicks", res.data)
     },
     updateUserPicks({ dispatch, commit }, pick) {
@@ -430,17 +428,13 @@ export default new Vuex.Store({
         picks.splice(picks.findIndex(p => p.id == pick.id), 1, pick)
       }
       else { picks.push(pick) }
-      console.log("picks updated in actions: ", picks)
       commit("setUserPicks", picks)
       dispatch("updateFormattedGamesUserData", pick)
     },
     updateFormattedGamesUserData({ dispatch, commit }, pick) {
-      console.log("pick: ", pick)
-      console.log("old game: ", this.state.formattedGames.find(fg => fg.id == pick.gameId))
       let updatedGame = { ...this.state.formattedGames.find(fg => fg.id == pick.gameId) };
       updatedGame.userData = pick
       let formattedGames = [...this.state.formattedGames]
-      console.log("updated formatted Game: ", updatedGame)
       formattedGames.splice(formattedGames.findIndex(fg => fg.id == updatedGame.id), 1, updatedGame)
       commit("setFormattedGames", formattedGames);
       dispatch("setActiveGamesByActiveDate")
