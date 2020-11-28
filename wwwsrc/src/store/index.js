@@ -155,6 +155,7 @@ export default new Vuex.Store({
       state.activeTeams.splice(state.activeTeams.findIndex(t => t.name == team.name), 1)
     },
     setFormattedGames(state, games) {
+
       state.formattedGames = games
     },
     addUserPick(state, pick) {
@@ -405,17 +406,17 @@ export default new Vuex.Store({
         api.put("teams", resetTeam)
       })
     },
-    async updatePicks({ dispatch, commit }, picks) {
-      await picks.forEach(p => {
-        if (this.state.userPicks.find(up => up.id == p.id)) {
-          let res = api.put("picks", p)
-          console.log("updateUserPicks response: ", res)
-          dispatch("updateUserPicks", res)
-        }
-        else {
-          dispatch("createPick", p)
-        }
-      })
+    async updatePick({ dispatch, commit }, pick) {
+
+      if (this.state.userPicks.find(up => up.id == pick.id)) {
+        let res = await api.put("picks", pick)
+        console.log("updateUserPicks response: ", res.data)
+        dispatch("updateUserPicks", res.data)
+      }
+      else {
+        dispatch("createPick", pick)
+      }
+
     },
 
     async createPick({ dispatch, commit }, pick) {
@@ -424,7 +425,7 @@ export default new Vuex.Store({
       dispatch("updateUserPicks", res.data)
     },
     updateUserPicks({ dispatch, commit }, pick) {
-      let picks = this.state.userPicks;
+      let picks = [...this.state.userPicks];
       if (picks.find(up => up.id == pick.id)) {
         picks.splice(picks.findIndex(p => p.id == pick.id), 1, pick)
       }
@@ -433,9 +434,18 @@ export default new Vuex.Store({
       commit("setUserPicks", picks)
       dispatch("updateFormattedGamesUserData", pick)
     },
-    updateFormattedGamesUserData({ commit }, pick) {
-    }
+    updateFormattedGamesUserData({ dispatch, commit }, pick) {
+      console.log("pick: ", pick)
+      console.log("old game: ", this.state.formattedGames.find(fg => fg.id == pick.gameId))
+      let updatedGame = { ...this.state.formattedGames.find(fg => fg.id == pick.gameId) };
+      updatedGame.userData = pick
+      let formattedGames = [...this.state.formattedGames]
+      console.log("updated formatted Game: ", updatedGame)
+      formattedGames.splice(formattedGames.findIndex(fg => fg.id == updatedGame.id), 1, updatedGame)
+      commit("setFormattedGames", formattedGames);
+      dispatch("setActiveGamesByActiveDate")
 
+    }
   }
 }
 );

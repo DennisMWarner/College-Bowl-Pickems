@@ -7,7 +7,12 @@
       {{ dateData.date }}
     </div>
 
-    <games v-if="this.$store.state.activeDate == this.dateData" />
+    <games
+      v-if="
+        this.$store.state.activeDate &&
+        this.$store.state.activeDate == this.dateData
+      "
+    />
   </div>
 </template>
 

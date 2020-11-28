@@ -1,6 +1,5 @@
 <template>
   <div class="game mt-3 mx-auto">
-    <date />
     <div
       class="text-white pb-1 pl-2 my-2 rounded bg-secondary border border-white"
     >
@@ -81,7 +80,6 @@
 
 
 <script>
-import date from "../components/Date";
 import team from "../components/Team";
 import pointsSelector from "../components/PointsSelector";
 export default {
@@ -100,7 +98,7 @@ export default {
       console.log("active team sent: ", this.gameData.secondTeam);
     },
   },
-  components: { pointsSelector, team, date },
+  components: { pointsSelector, team },
   props: ["gameData"],
 };
 </script>
