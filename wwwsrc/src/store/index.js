@@ -408,7 +408,7 @@ export default new Vuex.Store({
     },
     async updatePick({ dispatch, commit }, pick) {
 
-      if (this.state.userPicks.find(up => up.id == pick.id)) {
+      if (this.state.userPicks.find(up => up.gameId == pick.gameId)) {
         let res = await api.put("picks", pick)
         dispatch("updateUserPicks", res.data)
       }
@@ -424,8 +424,8 @@ export default new Vuex.Store({
     },
     updateUserPicks({ dispatch, commit }, pick) {
       let picks = [...this.state.userPicks];
-      if (picks.find(up => up.id == pick.id)) {
-        picks.splice(picks.findIndex(p => p.id == pick.id), 1, pick)
+      if (picks.find(up => up.gameId == pick.gameId)) {
+        picks.splice(picks.findIndex(p => p.gameId == pick.gameId), 1, pick)
       }
       else { picks.push(pick) }
       commit("setUserPicks", picks)

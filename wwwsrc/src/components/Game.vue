@@ -29,15 +29,17 @@
           role="dialog"
           id="pointsSelectorModal"
         >
-          <div class="modal-dialog-centered" role="document">
-            <div class="modal-content bg-transparent">
-              <div class="modal-body mr-3">
+          <div class="modal-dialog-centered pr-3 pl-2" role="document">
+            <div
+              class="modal-content bg-dark rounded border border-white mx-aut0"
+            >
+              <div class="modal-body">
                 <points-selector />
               </div>
 
               <button
                 type="button"
-                class="btn btn-secondary w-25 mx-auto"
+                class="btn btn-secondary w-25 mx-auto mb-4"
                 data-dismiss="modal"
               >
                 Cancel
