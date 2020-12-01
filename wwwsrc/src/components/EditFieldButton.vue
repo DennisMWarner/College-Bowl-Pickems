@@ -5,7 +5,8 @@
         this.editFieldButtonData.key != 'id' &&
         this.editFieldButtonData.key != 'gameId' &&
         this.editFieldButtonData.key != 'firstTeam' &&
-        this.editFieldButtonData.key != 'secondTeam'
+        this.editFieldButtonData.key != 'secondTeam' &&
+        this.editFieldButtonData.key != 'userData'
       "
     >
       <div v-if="this.editFieldButtonData == this.$store.state.activeEditField">

@@ -13,26 +13,6 @@
         Add All Teams
       </button>
     </div>
-    <!-- <button
-      class="btn bg-danger rounded w-50 m-3 border border-white text-white text-center"
-      @click="resetTeams()"
-    >
-      Reset all Team gameIds
-    </button> -->
-    <!-- <div class="col-10 offset-1 mt-3 text-center">
-      <button
-        class="btn btn-warning p-2 mx-auto text-white text-center border btn-block border-white rounded"
-        @click="formatGames()"
-      >
-        Format Games
-      </button>
-    </div>
-    <button
-      class="btn btn-success rounded border col-10 offset-1 border-white mt-4 text-center text-white"
-      @click="formatTeams()"
-    >
-      Format Teams
-    </button> -->
 
     <div class="col-12 text-center p-0">
       <game-title-bars />

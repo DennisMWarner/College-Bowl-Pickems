@@ -13,6 +13,8 @@ import StatsPage from "./views/StatsPage";
 import UserStatsPage from "./views/UserStatsPage";
 // @ts-ignore
 import LeaderboardPage from "./views/LeaderboardPage";
+// @ts-ignore
+import MakePicksPage from "./views/MakePicksPage"
 
 Vue.use(Router);
 
@@ -43,7 +45,11 @@ export default new Router({
       name: "stats-page",
       component: StatsPage
     },
-
+    {
+      path: "/makePicks",
+      name: "make-picks-page",
+      component: MakePicksPage
+    },
 
   ]
 });

@@ -54,6 +54,11 @@
             >All Stats</router-link
           >
         </li>
+        <li class="nav-item" :class="{ active: $route.name == 'makePicks' }">
+          <router-link :to="{ name: 'make-picks-page' }" class="nav-link"
+            >Make Picks</router-link
+          >
+        </li>
         <!-- <li
           class="nav-item"
           v-if="$auth.isAuthenticated"

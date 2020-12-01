@@ -21,10 +21,13 @@ export default new Vuex.Store({
     teamsToUpdate: [],
     activeTeamsByGameId: [],
     games: [],
-    picks: [],
+    allPicks: [],
     userPicks: [],
     userPoints: [],
     activeGames: [],
+    affectedPicks: [],
+    cancelledGameId: {},
+    users: [],
     activeTeams: [],
     activeEditField: {},
     activeEditFields: [],
@@ -140,6 +143,16 @@ export default new Vuex.Store({
     setTeams(state, teams) {
       state.teams = teams
     },
+    setUsers(state, users) {
+      state.users = users
+    },
+    setCancelledGameId(state, gameId) {
+      state.cancelledGameId = gameId
+    },
+    setAllPicks(state, picks) {
+      console.log("setAllPicks called...", picks)
+      state.allPicks = picks
+    },
     setUserPicks(state, picks) {
 
       state.userPicks = picks
@@ -214,6 +227,7 @@ export default new Vuex.Store({
       state.activeEditField = field
     },
     setActiveEditFields(state, editFields) {
+      console.log("setActiveEditfields commited: ", editFields)
       state.activeEditFields = editFields
     }
 
@@ -251,8 +265,12 @@ export default new Vuex.Store({
       commit("setUserPicks", res.data)
       dispatch("setUserPoints")
     },
+    async getAllPicks({ dispatch, commit }) {
+      let res = await api.get("picks");
+      commit("setAllPicks", res.data)
+      dispatch("getAllUsers");
+    },
     setUserPoints({ dispatch, commit }) {
-
       let points = []
       this.state.userPicks.forEach(up => {
         let point = {};
@@ -311,9 +329,53 @@ export default new Vuex.Store({
     async editGame({ dispatch, commit }, editedGame) {
 
     },
-    async deleteGameById({ dispatch }, gameId) {
+    async cancelGameById({ dispatch, commit }, game) {
+      let cancelledGame = { ...game }
+      await dispatch("getAllPicks");
 
-      await api.delete("games/" + gameId);
+      cancelledGame.status = "cancelled"
+      await api.put("games/" + game.id, cancelledGame);
+      console.log("cancelled game sent: ", cancelledGame)
+      commit("setCancelledGameId", game.id)
+      console.log("cancelled game id:", this.state.cancelledGameId)
+      dispatch("getAffectedPicks")
+    },
+    getAffectedPicks({ dispatch, commit }) {
+      this.state.users.forEach(u => {
+        let pickToUpdate
+        let userPicks = this.state.allPicks.filter(ap => ap.userId == u);
+        let cutoff = userPicks.find(up => up.gameId == this.state.cancelledGameId) || 0;
+        if (cutoff) {
+          userPicks.forEach(up => {
+            let pickToUpdate = { ...up }
+            if (pickToUpdate.points > cutoff.points) {
+
+              pickToUpdate.points--
+
+              this.state.affectedPicks.push(pickToUpdate)
+            }
+            else if (pickToUpdate.points == cutoff.points) {
+              pickToUpdate.points = 0;
+              this.state.affectedPicks.push(pickToUpdate)
+            }
+
+          })
+        }
+
+
+
+      }
+      )
+      console.log("picks to update: ", this.state.affectedPicks)
+    },
+    getAllUsers({ dispatch, commit }) {
+      let users = [];
+      this.state.allPicks.forEach(p => {
+        if (!users.includes(p.userId)) {
+          users.push(p.userId)
+        }
+      })
+      commit("setUsers", users)
       dispatch("getGames")
     },
     async addTeam({ commit }, team) {

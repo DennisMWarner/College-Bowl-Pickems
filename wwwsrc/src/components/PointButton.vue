@@ -46,11 +46,15 @@ export default {
 
       if (oldPick.hasOwnProperty("points")) {
         oldPick.points = 0;
+
         await this.$store.dispatch("updatePick", oldPick);
       }
 
       if (existingPick.hasOwnProperty("id")) {
         existingPick.points = this.pointButtonData.pointValue;
+        if (existingPick.hasOwnProperty("teamId")) {
+          existingPick.teamId = this.$store.state.activeTeam.id;
+        }
         await this.$store.dispatch("updatePick", existingPick);
       } else {
         this.pick.userId = this.$auth.userInfo.sub;

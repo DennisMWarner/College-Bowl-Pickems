@@ -1,23 +1,26 @@
 <template>
-  <div class="game mt-3 mx-auto">
+  <div class="game mt-3">
     <div
       class="text-white pb-1 pl-2 my-2 rounded bg-secondary border border-white"
     >
-      {{ this.gameData.name }} (game ID: {{ this.gameData.id }})
+      {{ this.gameData.name }}
     </div>
     <div class="row ml-1">
       <div class="col-9">
         <div class="row">
           <div
+            v-if="this.gameData.firstTeam.id == this.gameData.userData.teamId"
             class="col-12 offset-1 text-left teams border team1"
             v-bind:style="{
               'background-color': this.gameData.firstTeam.priColor,
               color: this.gameData.firstTeam.secColor,
             }"
-            data-toggle="modal"
-            data-target="#pointsSelectorModal"
-            type="button"
-            @click="setActiveFirstTeam()"
+          >
+            {{ this.gameData.firstTeam.name }}
+          </div>
+          <div
+            v-else
+            class="col-12 offset-1 text-left teams border bg-secondary text-white team1"
           >
             {{ this.gameData.firstTeam.name }}
           </div>
@@ -50,15 +53,18 @@
         <!-----------------------------------------end points selector modal------------>
         <div class="row">
           <div
+            v-if="this.gameData.secondTeam.id == this.gameData.userData.teamId"
             class="col-12 offset-1 text-left teams mt-1 border team2"
             v-bind:style="{
               'background-color': this.gameData.secondTeam.priColor,
               color: this.gameData.secondTeam.secColor,
             }"
-            data-toggle="modal"
-            data-target="#pointsSelectorModal"
-            type="button"
-            @click="setActiveSecondTeam()"
+          >
+            {{ this.gameData.secondTeam.name }}
+          </div>
+          <div
+            v-else
+            class="col-12 offset-1 text-left teams mt-1 border bg-secondary text-white team2"
           >
             {{ this.gameData.secondTeam.name }}
           </div>
@@ -109,7 +115,7 @@ export default {
   font-family: cursive;
   display: flex;
   justify-content: space-between;
-  border: solid 3px;
+  border: solid 5px;
 
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;

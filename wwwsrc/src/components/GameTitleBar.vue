@@ -3,6 +3,7 @@
     <div
       v-if="
         this.$route.path == '/setup' &&
+        this.$store.state.activeGame != '' &&
         this.$store.state.activeGame.name == gameTitleBarData.name
       "
     >
@@ -38,9 +39,9 @@
           <button
             class="btn btn-danger rounded my-1 mr-3 my-3 text-center text-white border"
             data-toggle="modal"
-            data-target="#deleteGameModal"
+            data-target="#cancelGameModal"
           >
-            Delete Game
+            Cancel Game
           </button>
         </div>
       </div>
@@ -48,8 +49,8 @@
     <div v-else>
       <div
         v-if="
-          this.gameTitleBarData.secondTeam.name &&
-          this.gameTitleBarData.firstTeam.name
+          this.gameTitleBarData.secondTeam != '' &&
+          this.gameTitleBarData.firstTeam != ''
         "
         class="col-11 mx-auto no-gutters border rounded bg-secondary text-left my-1 text-light"
         @click="setActiveGame()"
@@ -64,31 +65,31 @@
         {{ this.gameTitleBarData.name }}
       </div>
     </div>
-    <!--delete game modal------------------------>
+    <!--cancel game modal------------------------>
     <div
       class="modal text-center"
       tabindex="-1"
       role="dialog"
-      id="deleteGameModal"
+      id="cancelGameModal"
     >
       <div class="modal-dialog-centered" role="document">
         <div class="modal-content bg-transparent">
           <div class="modal-body">
             <h4 class="bg-warning p-2 border rounded border-white">
-              Delete {{ this.$store.state.activeGame.name }}?
+              Cancel {{ this.$store.state.activeGame.name }}?
             </h4>
             <div>
               <button
-                class="btn rounded border btn-danger m-2 w-25 text-white text-center border-white"
+                class="btn rounded border btn-danger m-2 w-50 text-white text-center border-white"
                 data-dismiss="modal"
-                @click="deleteGame()"
+                @click="cancelGame()"
               >
-                Delete</button
+                Cancel Game</button
               ><button
-                class="btn rounded border btn-secondary m-2 w-25 text-white text-center border-white"
+                class="btn rounded border btn-success m-2 w-50 text-white text-center border-white"
                 data-dismiss="modal"
               >
-                Cancel
+                Keep Game
               </button>
             </div>
           </div>
@@ -184,10 +185,10 @@ export default {
     setActiveTeamsWithGameIds() {
       this.$store.dispatch("setActiveTeamsWithGameIds");
     },
-    async deleteGame() {
+    async cancelGame() {
       await this.$store.dispatch(
-        "deleteGameById",
-        this.$store.state.activeGame.id
+        "cancelGameById",
+        this.$store.state.activeGame
       );
     },
   },
