@@ -21,11 +21,11 @@ export default new Vuex.Store({
     teamsToUpdate: [],
     activeTeamsByGameId: [],
     games: [],
+    otherGames: [],
     allPicks: [],
     userPicks: [],
     userPoints: [],
     activeGames: [],
-    affectedPicks: [],
     cancelledGameId: {},
     users: [],
     activeTeams: [],
@@ -126,6 +126,10 @@ export default new Vuex.Store({
   mutations: {
     setGames(state, games) {
       state.games = games
+    },
+    setOtherGames(state, games) {
+      console.log("other games: ", games)
+      state.otherGames = games
     },
     updateGames(state, game) {
       state.games.splice(state.games.findIndex(g => g.id == game.id), 1, game)
@@ -244,6 +248,10 @@ export default new Vuex.Store({
       commit("setGames", res.data);
       dispatch("setPoints")
     },
+    async getAllOtherGames({ dispatch, commit }) {
+      let res = await api.get("games/other");
+      commit("setOtherGames", res.data)
+    },
     formatGames({ commit }) {
 
       let formattedGames = []
@@ -327,6 +335,7 @@ export default new Vuex.Store({
 
     },
     async editGame({ dispatch, commit }, editedGame) {
+      let res = await api.put("games/" + editedGame.id, editedGame)
 
     },
     async cancelGameById({ dispatch, commit }, game) {
@@ -338,9 +347,9 @@ export default new Vuex.Store({
       console.log("cancelled game sent: ", cancelledGame)
       commit("setCancelledGameId", game.id)
       console.log("cancelled game id:", this.state.cancelledGameId)
-      dispatch("getAffectedPicks")
+      dispatch("updateCancelledPicks")
     },
-    getAffectedPicks({ dispatch, commit }) {
+    updateCancelledPicks({ dispatch, commit }) {
       this.state.users.forEach(u => {
         let pickToUpdate
         let userPicks = this.state.allPicks.filter(ap => ap.userId == u);
@@ -352,21 +361,16 @@ export default new Vuex.Store({
 
               pickToUpdate.points--
 
-              this.state.affectedPicks.push(pickToUpdate)
+              dispatch("updatePick", pickToUpdate)
             }
             else if (pickToUpdate.points == cutoff.points) {
               pickToUpdate.points = 0;
-              this.state.affectedPicks.push(pickToUpdate)
+              dispatch("updatePick", pickToUpdate)
             }
-
           })
         }
-
-
-
       }
       )
-      console.log("picks to update: ", this.state.affectedPicks)
     },
     getAllUsers({ dispatch, commit }) {
       let users = [];

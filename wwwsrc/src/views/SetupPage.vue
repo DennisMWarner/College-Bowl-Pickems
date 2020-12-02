@@ -17,6 +17,16 @@
     <div class="col-12 text-center p-0">
       <game-title-bars />
     </div>
+    <div v-if="this.$store.state.otherGames.length > 0">
+      <div
+        class="col-12 text-center p-0 border w-75 my-3 rounded border-white bg-warning text-white mx-auto text-center"
+      >
+        Cancelled or postponed games
+      </div>
+      <div class="col-12 text-center p-0">
+        <other-game-title-bars />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -26,6 +36,7 @@ import dates from "../components/Dates";
 import addGameButton from "../components/AddGameButton";
 import games from "../components/Games";
 import gameTitleBars from "../components/GameTitleBars";
+import otherGameTitleBars from "../components/OtherGameTitleBars";
 import addTeamButton from "../components/AddTeamButton";
 export default {
   name: "setup-page",
@@ -33,6 +44,9 @@ export default {
     return {};
   },
   computed: {},
+  created() {
+    this.$store.dispatch("getAllOtherGames");
+  },
   methods: {
     formatGames() {
       console.log("games: ");
@@ -70,7 +84,14 @@ export default {
       this.$store.dispatch("resetTeamGameIds");
     },
   },
-  components: { games, addGameButton, gameTitleBars, dates, addTeamButton },
+  components: {
+    games,
+    addGameButton,
+    gameTitleBars,
+    otherGameTitleBars,
+    dates,
+    addTeamButton,
+  },
 };
 </script>
 

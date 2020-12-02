@@ -20,6 +20,19 @@ namespace BowlPickems.Controllers
     {
       _gs = gs;
     }
+    [HttpGet("other")]
+
+    public ActionResult<IEnumerable<Game>> GetOtherGames()
+    {
+      try
+      {
+        return Ok(_gs.GetOtherGames());
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      };
+    }
     [HttpGet]
 
     public ActionResult<IEnumerable<Game>> Get()

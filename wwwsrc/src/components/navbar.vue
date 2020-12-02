@@ -69,6 +69,9 @@
           >
         </li> -->
       </ul>
+      <div v-if="$auth.isAuthenticated" class="mr-2">
+        {{ this.$auth.userInfo.name }}
+      </div>
       <span class="navbar-text">
         <button
           class="btn btn-success"

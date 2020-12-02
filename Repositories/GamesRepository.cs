@@ -18,7 +18,13 @@ namespace BowlPickems.Repositories
     internal IEnumerable<Game> Get()
     {
 
-      string sql = "SELECT * FROM Games";
+      string sql = "SELECT * FROM games WHERE status IS NULL";
+      return _db.Query<Game>(sql);
+    }
+    internal IEnumerable<Game> GetOtherGames()
+    {
+
+      string sql = "SELECT * FROM games WHERE status IS NOT NULL";
       return _db.Query<Game>(sql);
     }
 

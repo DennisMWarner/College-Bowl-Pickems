@@ -1,4 +1,4 @@
--- USE bpems;
+USE bpems;
 
 -- CREATE TABLE users (
 --     id int NOT NULL AUTO_INCREMENT,
@@ -10,23 +10,6 @@
 -- tieBreaker int NOT NULL,
 --     PRIMARY KEY (id)
 -- );
-
-
--- CREATE TABLE picks (
---     id int NOT NULL AUTO_INCREMENT,
---     userId VARCHAR(255),
--- gameId INT,
--- teamId INT, 
--- points INT, 
--- win TINYINT, 
---     PRIMARY KEY (id), 
--- INDEX userId (userId), 
--- );
-
--- ALTER TABLE games 
--- DROP COLUMN points 
-
-
 
 -- CREATE TABLE picks (
 --     id int NOT NULL AUTO_INCREMENT,
@@ -50,6 +33,12 @@
 --    PRIMARY KEY (id),
 --     INDEX (gameDate)   
 -- );
+
+-- ALTER TABLE games 
+-- DROP COLUMN points 
+
+
+
 -- CREATE TABLE teams (
 --     id int NOT NULL AUTO_INCREMENT,
 --     name VARCHAR(255) NOT NULL,
@@ -70,33 +59,7 @@
 
 
 
--- CREATE TABLE vaultkeeps (
---     id int NOT NULL AUTO_INCREMENT,
---     vaultId int NOT NULL,
---     keepId int NOT NULL,
---     userId VARCHAR(255) NOT NULL,
 
---     PRIMARY KEY (id),
---     INDEX (vaultId, keepId),
---     INDEX (userId),
-
---     FOREIGN KEY (vaultId)
---         REFERENCES vaults(id)
---         ON DELETE CASCADE,
-
---     FOREIGN KEY (keepId)
---         REFERENCES keeps(id)
---         ON DELETE CASCADE
--- )
-
-
--- -- USE THIS LINE FOR GET KEEPS BY VAULTID
--- SELECT 
--- k.*,
--- vk.id as vaultKeepId
--- FROM vaultkeeps vk
--- INNER JOIN keeps k ON k.id = vk.keepId 
--- WHERE (vaultId = @vaultId AND vk.userId = @userId) 
 
 
 
@@ -104,5 +67,4 @@
 -- DROP TABLE IF EXISTS teams;
 -- DROP TABLE IF EXISTS picks;
 -- DROP TABLE IF EXISTS games;
--- DROP TABLE IF EXISTS keeps;
 -- DROP TABLE IF EXISTS users;

@@ -1,7 +1,7 @@
 <template>
-  <div class="pickable game mt-3">
+  <div class="pickable game m-2 p-2 border border-white rounded bg-success">
     <div
-      class="text-white pb-1 pl-2 my-2 rounded bg-secondary border border-white"
+      class="text-white pb-1 pl-2 m-1 rounded bg-secondary border border-white"
     >
       {{ this.pickableGameData.name }} (game ID: {{ this.pickableGameData.id }})
     </div>

@@ -18,6 +18,10 @@ namespace BowlPickems.Services
     {
       return _repo.Get();
     }
+    public IEnumerable<Game> GetOtherGames()
+    {
+      return _repo.GetOtherGames();
+    }
     public Game Create(Game newGame)
     {
       return _repo.Create(newGame);
