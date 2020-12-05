@@ -1,10 +1,16 @@
 <template>
-  <div class="pickable game m-2 p-2 border border-white rounded bg-success">
-    <div
-      class="text-white pb-1 pl-2 m-1 rounded bg-secondary border border-white"
-    >
-      {{ this.pickableGameData.name }} (game ID: {{ this.pickableGameData.id }})
-    </div>
+  <div class="pickable game m-2 p-2 border border-white rounded bg-dark">
+    <h5 class="text-white pl-2 m-1 font-italic">
+      {{ this.pickableGameData.sponsor }} {{ this.pickableGameData.name }}
+
+      <!-- (game ID: {{ this.pickableGameData.id }}) -->
+    </h5>
+    <p class="text-white pb-1 pl-2 m-1 font-italic font-weight-lighter recs">
+      {{ this.pickableGameData.loc }} {{ this.pickableGameData.time }}
+      {{ this.pickableGameData.network }}
+
+      <!-- (game ID: {{ this.pickableGameData.id }}) -->
+    </p>
     <div class="row">
       <div class="col-9">
         <div class="row">
@@ -13,7 +19,7 @@
               this.pickableGameData.firstTeam.id ==
               this.pickableGameData.userData.teamId
             "
-            class="col-12 offset-1 text-left teams border team1"
+            class="col-12 offset-1 text-left teams team1"
             v-bind:style="{
               'background-color': this.pickableGameData.firstTeam.priColor,
               color: this.pickableGameData.firstTeam.secColor,
@@ -24,16 +30,10 @@
             @click="setActiveFirstTeam()"
           >
             {{ this.pickableGameData.firstTeam.name }}
-            <span>
-              <h6 class="mr-3 mt-2">
-                team ID:
-                {{ this.pickableGameData.firstTeam.id }}
-              </h6></span
-            >
           </div>
           <div
             v-else
-            class="col-12 offset-1 text-left teams border bg-white text-dark team1"
+            class="col-12 offset-1 text-left teams bg-white text-dark team1"
             data-toggle="modal"
             data-target="#pointsSelectorModal"
             type="button"
@@ -80,7 +80,7 @@
               this.pickableGameData.secondTeam.id ==
               this.pickableGameData.userData.teamId
             "
-            class="col-12 offset-1 text-left teams mt-1 border team2"
+            class="col-12 offset-1 text-left teams mt-1 team2"
             v-bind:style="{
               'background-color': this.pickableGameData.secondTeam.priColor,
               color: this.pickableGameData.secondTeam.secColor,
@@ -100,7 +100,7 @@
           </div>
           <div
             v-else
-            class="col-12 offset-1 text-left teams mt-1 border-secondary bg-white text-dark team2"
+            class="col-12 offset-1 text-left teams mt-1 bg-white text-dark team2"
             data-toggle="modal"
             data-target="#pointsSelectorModal"
             type="button"
@@ -118,16 +118,11 @@
       </div>
       <div
         v-if="this.pickableGameData.userData.points"
-        class="col-2 text-center px-2 pt-3 text-dark points border-secondary bg-white"
+        class="col-2 text-center px-2 pt-3 text-dark points"
       >
         {{ this.pickableGameData.userData.points }}
       </div>
-      <div
-        v-else
-        class="col-2 text-center px-2 pt-3 text-dark points border border-secondary bg-white"
-      >
-        --
-      </div>
+      <div v-else class="col-2 text-center px-2 pt-3 text-dark points">--</div>
     </div>
   </div>
 </template>
@@ -177,8 +172,8 @@ export default {
 }
 .points {
   font-family: monospace;
-  border: solid 3px black;
-  background-color: white;
+  border: solid 3px rgba(0, 0, 0, 0.849);
+  background-color: rgb(221, 215, 215);
   /* border-radius: 15px; */
   font-size: xx-large;
   font-weight: bolder;
@@ -186,5 +181,8 @@ export default {
   padding-left: 14px;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
+}
+.recs {
+  font-size: 10px;
 }
 </style>

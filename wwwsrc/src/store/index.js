@@ -24,6 +24,10 @@ export default new Vuex.Store({
     otherGames: [],
     allPicks: [],
     userPicks: [],
+    leaderboardRows: [],
+    picksByPointTotal: [],
+    picksByPointsLeft: [],
+    picksByPercent: [],
     userPoints: [],
     activeGames: [],
     cancelledGameId: {},
@@ -191,13 +195,15 @@ export default new Vuex.Store({
       state.availableTeams.splice(state.availableTeams.findIndex(t => t.id == team.id), 1)
     },
     setPoints(state) {
+      let points = []
       let pointValue = 1;
       state.games.forEach(g => {
-        let points = {};
-        points.pointValue = pointValue;
-        state.points.push(points);
+        let point = {};
+        point.pointValue = pointValue;
+        points.push(point);
         pointValue++;
       })
+      state.points = points
     },
     setActiveDate(state, date) {
       state.activeDate = date;
@@ -210,6 +216,9 @@ export default new Vuex.Store({
     },
     setActivePoint(state, point) {
       state.activePoint = point
+    },
+    setTestLeaderboardRows(state, lbRows) {
+      state.leaderboardRows = lbRows
     },
     setActiveTeamsByGameId(state, teams) {
       state.activeTeamsByGameId = teams
@@ -275,6 +284,7 @@ export default new Vuex.Store({
     },
     async getAllPicks({ dispatch, commit }) {
       let res = await api.get("picks");
+      console.log("getAllPicks called: ", res.data)
       commit("setAllPicks", res.data)
       dispatch("getAllUsers");
     },
@@ -292,6 +302,7 @@ export default new Vuex.Store({
       commit("setPoints");
       dispatch("setDates");
     },
+
     setActivePoint({ dispatch, commit }, point) {
       commit("setActivePoint", point)
     },
@@ -504,6 +515,24 @@ export default new Vuex.Store({
       formattedGames.splice(formattedGames.findIndex(fg => fg.id == updatedGame.id), 1, updatedGame)
       commit("setFormattedGames", formattedGames);
       dispatch("setActiveGamesByActiveDate")
+
+    },
+    async getTestLeaderBoardData({ dispatch, commit }) {
+      await dispatch("getAllPicks");
+      let lbRows = [];
+      this.state.users.forEach(u => {
+        let user = {};
+        let points = 0;
+        user.id = u;
+        this.state.allPicks.forEach(p => (p.userId == u ? points += p.points : {}));
+        user.points = points
+        user.percent = points / points * 100;
+
+        lbRows.push(user)
+      })
+      commit("setTestLeaderboardRows", lbRows)
+
+
 
     }
   }

@@ -19,7 +19,12 @@
             >Home</router-link
           >
         </li>
-        <li class="nav-item" :class="{ active: $route.name == 'leaderboard' }">
+
+        <li
+          class="nav-item"
+          :class="{ active: $route.name == 'leaderboard' }"
+          v-if="$auth.isAuthenticated"
+        >
           <router-link :to="{ name: 'leaderboard-page' }" class="nav-link"
             >Leaderboard</router-link
           >
@@ -49,16 +54,25 @@
             >My Stats</router-link
           >
         </li>
-        <li class="nav-item" :class="{ active: $route.name == 'stats' }">
+        <li
+          class="nav-item"
+          :class="{ active: $route.name == 'stats' }"
+          v-if="$auth.isAuthenticated"
+        >
           <router-link :to="{ name: 'stats-page' }" class="nav-link"
             >All Stats</router-link
           >
         </li>
-        <li class="nav-item" :class="{ active: $route.name == 'makePicks' }">
+        <li
+          class="nav-item"
+          :class="{ active: $route.name == 'makePicks' }"
+          v-if="$auth.isAuthenticated"
+        >
           <router-link :to="{ name: 'make-picks-page' }" class="nav-link"
             >Make Picks</router-link
           >
         </li>
+
         <!-- <li
           class="nav-item"
           v-if="$auth.isAuthenticated"

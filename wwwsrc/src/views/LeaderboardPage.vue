@@ -1,9 +1,12 @@
 <template>
-  <div class="leaderboard-page text-white">Leaderboard here</div>
+  <div class="leaderboard-page text-white">
+    <leaderboardRows />
+  </div>
 </template>
 
 
 <script>
+import leaderboardRows from "../components/LeaderBoardRows";
 export default {
   name: "leaderboard-page",
   data() {
@@ -11,7 +14,7 @@ export default {
   },
   computed: {},
   methods: {},
-  components: {},
+  components: { leaderboardRows },
 };
 </script>
 
