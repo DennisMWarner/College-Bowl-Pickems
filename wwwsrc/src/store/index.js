@@ -21,6 +21,7 @@ export default new Vuex.Store({
     teamsToUpdate: [],
     activeTeamsByGameId: [],
     games: [],
+    completedGames: [],
     otherGames: [],
     allPicks: [],
     userPicks: [],
@@ -36,6 +37,7 @@ export default new Vuex.Store({
     activeEditField: {},
     activeEditFields: [],
     points: [],
+    possiblePoints: {},
     dates: [],
     activeDate: {},
     activeGame: {},
@@ -132,7 +134,7 @@ export default new Vuex.Store({
       state.games = games
     },
     setOtherGames(state, games) {
-      console.log("other games: ", games)
+
       state.otherGames = games
     },
     updateGames(state, game) {
@@ -158,7 +160,7 @@ export default new Vuex.Store({
       state.cancelledGameId = gameId
     },
     setAllPicks(state, picks) {
-      console.log("setAllPicks called...", picks)
+
       state.allPicks = picks
     },
     setUserPicks(state, picks) {
@@ -205,6 +207,12 @@ export default new Vuex.Store({
       })
       state.points = points
     },
+    setPossiblePoints(state, points) {
+      state.possiblePoints = points
+    },
+    setCompletedGames(state, games) {
+      state.completedGames = games
+    },
     setActiveDate(state, date) {
       state.activeDate = date;
     },
@@ -240,7 +248,7 @@ export default new Vuex.Store({
       state.activeEditField = field
     },
     setActiveEditFields(state, editFields) {
-      console.log("setActiveEditfields commited: ", editFields)
+
       state.activeEditFields = editFields
     }
 
@@ -284,7 +292,6 @@ export default new Vuex.Store({
     },
     async getAllPicks({ dispatch, commit }) {
       let res = await api.get("picks");
-      console.log("getAllPicks called: ", res.data)
       commit("setAllPicks", res.data)
       dispatch("getAllUsers");
     },
@@ -298,11 +305,17 @@ export default new Vuex.Store({
       })
       commit("setUserPoints", points)
     },
-    setPoints({ dispatch, commit }) {
-      commit("setPoints");
+    async setPoints({ dispatch, commit }) {
+      await commit("setPoints");
       dispatch("setDates");
+      dispatch("setPossiblePoints")
     },
-
+    setPossiblePoints({ dispatch, commit }) {
+      let possPts = {}
+      possPts.points = 0;
+      this.state.points.forEach(p => possPts.points += p.pointValue);
+      commit("setPossiblePoints", possPts)
+    },
     setActivePoint({ dispatch, commit }, point) {
       commit("setActivePoint", point)
     },
@@ -355,9 +368,7 @@ export default new Vuex.Store({
 
       cancelledGame.status = "cancelled"
       await api.put("games/" + game.id, cancelledGame);
-      console.log("cancelled game sent: ", cancelledGame)
       commit("setCancelledGameId", game.id)
-      console.log("cancelled game id:", this.state.cancelledGameId)
       dispatch("updateCancelledPicks")
     },
     updateCancelledPicks({ dispatch, commit }) {
@@ -519,21 +530,55 @@ export default new Vuex.Store({
     },
     async getTestLeaderBoardData({ dispatch, commit }) {
       await dispatch("getAllPicks");
+      dispatch("getCompletedGames");
       let lbRows = [];
       this.state.users.forEach(u => {
         let user = {};
         let points = 0;
-        user.id = u;
-        this.state.allPicks.forEach(p => (p.userId == u ? points += p.points : {}));
-        user.points = points
-        user.percent = points / points * 100;
+        let possPoints = 0;
+        let pointsLeft = 0;
 
+        user.id = u;
+        this.state.allPicks.forEach(p => {
+          if (p.teamId != 0) {
+            let winningTeamId = 0;
+            // console.log(fg.wId, user.id, p.teamId, winningTeamId)
+            if (this.state.formattedGames.findIndex(fg => fg.wId == p.teamId) > 0) {
+              // console.log("formatted game with a winning team match found")
+              winningTeamId = this.state.formattedGames.find(fg => fg.wId == p.teamId).wId;
+            }
+
+            if (p.userId == user.id && p.teamId == winningTeamId) {
+              // console.log(p.userId, user.id, p.teamId, winningTeamId)
+              // console.log(user.id, "won ", p.points, " points.")
+              points += p.points
+            }
+            if (p.userId == user.id && this.state.completedGames.findIndex(cg => cg.id == p.gameId) != -1) {
+              possPoints += p.points
+            }
+            pointsLeft = this.state.possiblePoints.points - possPoints
+          }
+        });
+        user.pointsLeft = pointsLeft
+        user.points = points
+        user.possPoints = possPoints
+        // @ts-ignore
+        let perc = points / possPoints * 100;
+        user.percent = perc.toFixed(2)
+        // @ts-ignore
+        user.pointsLeft = pointsLeft;
+        console.log("user: ", user)
         lbRows.push(user)
       })
       commit("setTestLeaderboardRows", lbRows)
 
 
 
+    },
+    getCompletedGames({ dispatch, commit }) {
+      let completedGames = this.state.formattedGames.filter(fg => fg.wId > 0)
+      console.log("getCompGames called..", completedGames)
+      commit("setCompletedGames", completedGames)
     }
   }
 }

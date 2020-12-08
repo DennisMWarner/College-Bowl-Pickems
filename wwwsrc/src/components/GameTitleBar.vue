@@ -177,7 +177,11 @@ export default {
     },
 
     setActiveGame() {
-      this.$store.dispatch("setActiveGame", this.gameTitleBarData);
+      if (this.gameTitleBarData != this.$store.state.activeGame) {
+        this.$store.dispatch("setActiveGame", this.gameTitleBarData);
+      } else {
+        this.$store.dispatch("setActiveGame", {});
+      }
     },
     setActiveEditFields() {
       this.$store.dispatch("setActiveEditFields", this.$store.state.activeGame);

@@ -1,5 +1,5 @@
 <template>
-  <div class="team-title-bar">
+  <div class="team-title-bar mt-3 border rounded bg-dark p-1 mx-2">
     <div v-if="this.$route.path == '/setup'">
       <div>
         <div
@@ -10,6 +10,7 @@
             {{ this.teamTitleBarData.name }}
           </h5>
         </div>
+
         <button
           class="btn-sm btn-secondary rounded my-1 mx-1 mb-2 text-center text-white border"
           data-toggle="modal"
@@ -25,6 +26,15 @@
           @click="setActiveEditFields()"
         >
           Edit this team
+        </button>
+
+        <button
+          class="btn-sm btn-success rounded my-1 mx-1 mb-2 w-75 text-center text-white border"
+          data-toggle="modal"
+          data-target="#editteamModal"
+          @click="setGameWinner()"
+        >
+          {{ this.teamTitleBarData.name }} is the winner
         </button>
       </div>
     </div>
@@ -68,6 +78,11 @@ export default {
         team.teamId = this.$store.state.activeteam.id;
         this.$store.dispatch("editTeam", team);
       }
+    },
+    setGameWinner() {
+      let gameWon = { ...this.$store.state.activeGame };
+      gameWon.wId = this.teamTitleBarData.id;
+      this.$store.dispatch("updateGame", gameWon);
     },
 
     setActiveTeam() {

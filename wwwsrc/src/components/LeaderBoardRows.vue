@@ -34,6 +34,9 @@ export default {
       console.log("rows: ", this.$store.state.leaderboardRows);
     },
   },
+  created() {
+    this.$store.dispatch("getTestLeaderBoardData");
+  },
   components: { leaderboardRow },
 };
 </script>

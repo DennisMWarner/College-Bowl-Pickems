@@ -1,7 +1,7 @@
 <template>
   <div class="leaderboard-row text-white">
     {{ leaderboardRowData.id }} {{ leaderboardRowData.points }}
-    {{ leaderboardRowData.percent }}%{{ this.$auth.userInfo.sub }}
+    {{ leaderboardRowData.percent }}% {{ leaderboardRowData.pointsLeft }}
   </div>
 </template>
 

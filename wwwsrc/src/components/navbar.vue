@@ -1,6 +1,8 @@
 <template>
   <nav class="navbar navbar-expand-md navbar-light bg-light">
-    <router-link class="navbar-brand" :to="{ name: 'home' }">HOME</router-link>
+    <router-link class="w-100" :to="{ name: 'home' }">
+      <img src="../assets/cobopi.png" class="img-fluid w-25" />
+    </router-link>
     <button
       class="navbar-toggler"
       type="button"
@@ -38,6 +40,7 @@
             >Admin Page</router-link
           >
         </li>
+
         <li
           v-if="$auth.isAuthenticated"
           class="nav-item"

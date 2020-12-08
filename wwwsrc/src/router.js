@@ -16,6 +16,7 @@ import LeaderboardPage from "./views/LeaderboardPage";
 // @ts-ignore
 import MakePicksPage from "./views/MakePicksPage"
 
+
 Vue.use(Router);
 
 export default new Router({
@@ -49,7 +50,7 @@ export default new Router({
       path: "/makePicks",
       name: "make-picks-page",
       component: MakePicksPage
-    },
+    }
 
   ]
 });
