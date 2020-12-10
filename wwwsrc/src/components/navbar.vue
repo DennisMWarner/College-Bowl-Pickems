@@ -30,7 +30,7 @@
           :class="{ active: $route.name == 'leaderboard' }"
           v-if="$auth.isAuthenticated"
         >
-          <router-link :to="{ name: 'leaderboard-page' }" class="nav-link"
+          <router-link :to="{ name: 'leader-board-page' }" class="nav-link"
             >Leaderboard</router-link
           >
         </li>
@@ -89,7 +89,7 @@
           >
         </li> -->
       </ul>
-      <div v-if="$auth.isAuthenticated" class="mr-2">
+      <div v-if="$auth.isAuthenticated" class="mr-2 text-warning">
         {{ this.$auth.userInfo.name }}
       </div>
       <span class="navbar-text">

@@ -1,5 +1,5 @@
 <template >
-  <div class="point-buttons text-center">
+  <div class="point-buttons row text-center mx-auto">
     <point-button
       v-for="pointButton in pointButtons"
       :pointButtonData="pointButton"

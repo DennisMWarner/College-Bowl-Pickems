@@ -26,7 +26,7 @@ export default new Vuex.Store({
     otherGames: [],
     allPicks: [],
     userPicks: [],
-    leaderboardRows: [],
+    leaderBoardRows: [],
     picksByPointTotal: [],
     picksByPointsLeft: [],
     picksByPercent: [],
@@ -227,8 +227,8 @@ export default new Vuex.Store({
     setActivePoint(state, point) {
       state.activePoint = point
     },
-    setTestLeaderboardRows(state, lbRows) {
-      state.leaderboardRows = lbRows
+    setLeaderBoardRows(state, lbRows) {
+      state.leaderBoardRows = lbRows
     },
     setActiveTeamsByGameId(state, teams) {
       state.activeTeamsByGameId = teams
@@ -527,7 +527,7 @@ export default new Vuex.Store({
       dispatch("setActiveGamesByActiveDate")
 
     },
-    async getTestLeaderBoardData({ dispatch, commit }) {
+    async getLeaderBoardData({ dispatch, commit }) {
       await dispatch("getAllPicks");
       dispatch("getCompletedGames");
       let lbRows = [];
@@ -537,7 +537,7 @@ export default new Vuex.Store({
         let possPoints = 0;
         let pointsLeft = 0;
 
-        user.id = u;
+        user.name = u.name;
         this.state.allPicks.forEach(p => {
           if (p.teamId != 0) {
             let winningTeamId = 0;
@@ -569,7 +569,7 @@ export default new Vuex.Store({
         console.log("user: ", user)
         lbRows.push(user)
       })
-      commit("setTestLeaderboardRows", lbRows)
+      commit("setLeaderBoardRows", lbRows)
 
 
 
@@ -585,7 +585,50 @@ export default new Vuex.Store({
       let res = await api.post("users", user);
       console.log(res.data)
       dispatch("getUsers")
-    }
+    },
+    sortByPointsLeft({ dispatch, commit }) {
+      let sortedRows = this.state.leaderBoardRows.sort(function (a, b) {
+        let varA = a.pointsLeft;
+        let varB = b.pointsLeft;
+        if (varA > varB) {
+          return -1;
+        }
+        if (varA < varB) {
+          return 1;
+        }
+        return 0;
+      })
+      commit("setLeaderBoardRows", sortedRows)
+    },
+    sortByPercent({ dispatch, commit }) {
+      let sortedRows = this.state.leaderBoardRows.sort(function (a, b) {
+        let varA = a.percent;
+        let varB = b.percent;
+        if (varA > varB) {
+          return -1;
+        }
+        if (varA < varB) {
+          return 1;
+        }
+        return 0;
+      })
+      commit("setLeaderBoardRows", sortedRows)
+    },
+    sortByPoints({ dispatch, commit }) {
+      let sortedRows = this.state.leaderBoardRows.sort(function (a, b) {
+        let varA = a.points;
+        let varB = b.points;
+        if (varA > varB) {
+          return -1;
+        }
+        if (varA < varB) {
+          return 1;
+        }
+        return 0;
+      })
+      commit("setLeaderBoardRows", sortedRows)
+    },
+
   }
 }
 );

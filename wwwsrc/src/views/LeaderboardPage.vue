@@ -1,20 +1,25 @@
 <template>
-  <div class="leaderboard-page text-white">
-    <leaderboardRows />
+  <div class="leader-board-page text-white">
+    <leader-board-rows />
   </div>
 </template>
 
 
 <script>
-import leaderboardRows from "../components/LeaderBoardRows";
+import leaderBoardRows from "../components/LeaderBoardRows";
+
 export default {
-  name: "leaderboard-page",
+  name: "leader-board-page",
   data() {
     return {};
   },
   computed: {},
-  methods: {},
-  components: { leaderboardRows },
+  methods: {
+    testButton() {
+      console.log("button works...");
+    },
+  },
+  components: { leaderBoardRows },
 };
 </script>
 

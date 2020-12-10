@@ -12,7 +12,7 @@ import StatsPage from "./views/StatsPage";
 // @ts-ignore
 import UserStatsPage from "./views/UserStatsPage";
 // @ts-ignore
-import LeaderboardPage from "./views/LeaderboardPage";
+import LeaderBoardPage from "./views/LeaderBoardPage";
 // @ts-ignore
 import MakePicksPage from "./views/MakePicksPage"
 
@@ -32,9 +32,9 @@ export default new Router({
       component: SetupPage
     },
     {
-      path: "/leaderboard",
-      name: "leaderboard-page",
-      component: LeaderboardPage
+      path: "/leaderBoard",
+      name: "leader-board-page",
+      component: LeaderBoardPage
     },
     {
       path: "/stats/:user",

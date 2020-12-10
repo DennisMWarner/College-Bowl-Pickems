@@ -23,10 +23,12 @@
         <input
           type="text"
           class="form-control"
+          maxlength="20"
           placeholder="Enter username"
           aria-label=""
           v-model="newUser.name"
           aria-describedby="button-addon2"
+          required
         />
         <div class="input-group-append">
           <button
