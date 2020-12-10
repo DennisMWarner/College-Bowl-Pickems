@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import Axios from "axios";
 import router from "../router";
+import { $auth } from "@bcwdev/auth0-vue";
 
 Vue.use(Vuex);
 
@@ -156,6 +157,7 @@ export default new Vuex.Store({
     setUsers(state, users) {
       state.users = users
     },
+
     setCancelledGameId(state, gameId) {
       state.cancelledGameId = gameId
     },
@@ -293,7 +295,7 @@ export default new Vuex.Store({
     async getAllPicks({ dispatch, commit }) {
       let res = await api.get("picks");
       commit("setAllPicks", res.data)
-      dispatch("getAllUsers");
+      dispatch("getUsers");
     },
     setUserPoints({ dispatch, commit }) {
       let points = []
@@ -394,16 +396,13 @@ export default new Vuex.Store({
       }
       )
     },
-    getAllUsers({ dispatch, commit }) {
-      let users = [];
-      this.state.allPicks.forEach(p => {
-        if (!users.includes(p.userId)) {
-          users.push(p.userId)
-        }
-      })
-      commit("setUsers", users)
+    async getUsers({ dispatch, commit }) {
+      let res = await api.get("users")
+      commit("setUsers", res.data)
       dispatch("getGames")
+
     },
+
     async addTeam({ commit }, team) {
       let res = await api.post("teams", team);
       commit("addTeam", res.data)
@@ -579,6 +578,13 @@ export default new Vuex.Store({
       let completedGames = this.state.formattedGames.filter(fg => fg.wId > 0)
       console.log("getCompGames called..", completedGames)
       commit("setCompletedGames", completedGames)
+    },
+
+    async createUser({ dispatch, commit }, user) {
+      console.log("createUser called,,,,")
+      let res = await api.post("users", user);
+      console.log(res.data)
+      dispatch("getUsers")
     }
   }
 }

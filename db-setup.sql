@@ -1,4 +1,4 @@
-USE bpems;
+-- USE bpems;
 
 -- CREATE TABLE users (
 --     id int NOT NULL AUTO_INCREMENT,

@@ -1,10 +1,15 @@
 <template>
-  <div class="pickable game m-2 p-2 border border-white rounded bg-dark">
-    <h5 class="text-white pl-2 m-1 font-italic">
-      {{ this.pickableGameData.sponsor }} {{ this.pickableGameData.name }}
+  <div class="pickable game m-2 pb-2 mt-0 border border-white rounded bg-dark">
+ 
+    <h6 class="text-white pl-2 m-1 font-italic">
+      {{ this.pickableGameData.sponsor }} 
 
-      <!-- (game ID: {{ this.pickableGameData.id }}) -->
-    </h5>
+      
+  
+    {{ this.pickableGameData.name }}
+
+     
+    </h6>
     <p class="text-white pb-1 pl-2 m-1 font-italic font-weight-lighter recs">
       {{ this.pickableGameData.loc }} {{ this.pickableGameData.time }}
       {{ this.pickableGameData.network }}
@@ -40,12 +45,7 @@
             @click="setActiveFirstTeam()"
           >
             {{ this.pickableGameData.firstTeam.name
-            }}<span>
-              <h6 class="mr-3 mt-2">
-                team ID:
-                {{ this.pickableGameData.firstTeam.id }}
-              </h6></span
-            >
+            }}
           </div>
         </div>
         <!--------------------------------------- Point selector modal -->
@@ -91,12 +91,7 @@
             @click="setActiveSecondTeam()"
           >
             {{ this.pickableGameData.secondTeam.name }}
-            <span>
-              <h6 class="mr-3 mt-2">
-                team ID:
-                {{ this.pickableGameData.secondTeam.id }}
-              </h6></span
-            >
+           
           </div>
           <div
             v-else
@@ -107,22 +102,18 @@
             @click="setActiveSecondTeam()"
           >
             {{ this.pickableGameData.secondTeam.name }}
-            <span>
-              <h6 class="mr-3 mt-2">
-                team ID:
-                {{ this.pickableGameData.secondTeam.id }}
-              </h6></span
+           
             >
           </div>
         </div>
       </div>
       <div
         v-if="this.pickableGameData.userData.points"
-        class="col-2 text-center px-2 pt-3 text-dark points"
+        class="col-2 text-center px-2 pt-3 ml-2 text-dark points"
       >
         {{ this.pickableGameData.userData.points }}
       </div>
-      <div v-else class="col-2 text-center px-2 pt-3 text-dark points">--</div>
+      <div v-else class="col-2 text-center px-2 pt-3 ml-2 text-dark points">--</div>
     </div>
   </div>
 </template>
@@ -160,7 +151,7 @@ export default {
 
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: bold;
 }
 
@@ -172,8 +163,8 @@ export default {
 }
 .points {
   font-family: monospace;
-  border: solid 3px rgba(0, 0, 0, 0.849);
-  background-color: rgb(221, 215, 215);
+  border: solid 3px rgba(66, 65, 65, 0.849);
+  background-color: rgb(240, 235, 235);
   /* border-radius: 15px; */
   font-size: xx-large;
   font-weight: bolder;
@@ -183,6 +174,6 @@ export default {
   border-bottom-right-radius: 15px;
 }
 .recs {
-  font-size: 10px;
+  font-size: 12px;
 }
 </style>

@@ -1,7 +1,10 @@
 <template>
-  <nav class="navbar navbar-expand-md navbar-light bg-light">
-    <router-link class="w-100" :to="{ name: 'home' }">
-      <img src="../assets/cobopi.png" class="img-fluid w-25" />
+  <nav class="navbar navbar-expand-md navbar-dark bg-transparent">
+    <router-link class="w-50" :to="{ name: 'home' }">
+      <img
+        src="../assets/cobopi-logo-comp.png"
+        class="img-fluid p-1 bg-light rounded"
+      />
     </router-link>
     <button
       class="navbar-toggler"
@@ -115,7 +118,8 @@ export default {
   methods: {
     async login() {
       await this.$auth.loginWithPopup();
-      this.$store.dispatch("setBearer", this.$auth.bearer);
+      await this.$store.dispatch("setBearer", this.$auth.bearer);
+      this.$store.dispatch("getUsers");
       // console.log("this.$auth: ");
       // console.log(this.$auth);
       await this.$store.dispatch("getGames");
