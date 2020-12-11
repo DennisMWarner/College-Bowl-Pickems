@@ -1,14 +1,9 @@
 <template>
   <div class="pickable game m-2 pb-2 mt-0 border border-white rounded bg-dark">
- 
     <h6 class="text-white pl-2 m-1 font-italic">
-      {{ this.pickableGameData.sponsor }} 
+      {{ this.pickableGameData.sponsor }}
 
-      
-  
-    {{ this.pickableGameData.name }}
-
-     
+      {{ this.pickableGameData.name }}
     </h6>
     <p class="text-white pb-1 pl-2 m-1 font-italic font-weight-lighter recs">
       {{ this.pickableGameData.loc }} {{ this.pickableGameData.time }}
@@ -44,8 +39,7 @@
             type="button"
             @click="setActiveFirstTeam()"
           >
-            {{ this.pickableGameData.firstTeam.name
-            }}
+            {{ this.pickableGameData.firstTeam.name }}
           </div>
         </div>
         <!--------------------------------------- Point selector modal -->
@@ -91,7 +85,6 @@
             @click="setActiveSecondTeam()"
           >
             {{ this.pickableGameData.secondTeam.name }}
-           
           </div>
           <div
             v-else
@@ -102,8 +95,6 @@
             @click="setActiveSecondTeam()"
           >
             {{ this.pickableGameData.secondTeam.name }}
-           
-            >
           </div>
         </div>
       </div>
@@ -113,7 +104,9 @@
       >
         {{ this.pickableGameData.userData.points }}
       </div>
-      <div v-else class="col-2 text-center px-2 pt-3 ml-2 text-dark points">--</div>
+      <div v-else class="col-2 text-center px-2 pt-3 ml-2 text-dark points">
+        --
+      </div>
     </div>
   </div>
 </template>

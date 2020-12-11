@@ -55,7 +55,7 @@ export default {
 
     uncancelGame() {
       delete this.otherGameTitleBarData.status;
-      console.log("uncancelled game: ", this.otherGameTitleBarData);
+      // console.log("uncancelled game: ", this.otherGameTitleBarData);
       this.$store.dispatch("updateGame", this.otherGameTitleBarData);
     },
   },

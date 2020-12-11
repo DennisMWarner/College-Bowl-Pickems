@@ -19,7 +19,7 @@
         <team-title-bars />
         <button
           v-if="this.$store.state.activeTeamsByGameId.length < 2"
-          class="btn btn-info rounded my-1 mb-3 text-center text-white border"
+          class="btn btn-dark rounded my-1 mb-3 mt-5 text-center text-white border border-white"
           data-toggle="modal"
           data-target="#add-team-to-game-modal"
           @click="setActiveTeamsWithGameIds()"
@@ -49,8 +49,8 @@
     <div v-else>
       <div
         v-if="
-          this.gameTitleBarData.secondTeam != '' &&
-          this.gameTitleBarData.firstTeam != ''
+          this.gameTitleBarData.secondTeam.name != '' &&
+          this.gameTitleBarData.firstTeam.name != ''
         "
         class="col-11 mx-auto no-gutters border rounded bg-secondary text-left my-1 text-light"
         @click="setActiveGame()"

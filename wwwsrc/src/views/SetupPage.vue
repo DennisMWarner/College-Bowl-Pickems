@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     formatGames() {
-      console.log("games: ");
+      // console.log("games: ");
       this.$store.state.teams.forEach((t) => {
         if (
           this.$store.state.teams.indexOf(t) == 0 ||
@@ -62,19 +62,19 @@ export default {
           ];
 
           this.$store.dispatch("formatGame", game);
-          console.log("game pushed: ", game);
+          // console.log("game pushed: ", game);
         }
       });
     },
     formatTeams() {
-      console.log("Format Teams called.");
+      // console.log("Format Teams called.");
       this.$store.state.teamsRawData.forEach((t) => {
         let team = {};
         team.name = t[0];
         team.priColor = t[1];
         team.secColor = t[2];
         this.$store.dispatch("addTeam", team);
-        console.log("team added: ", team);
+        // console.log("team added: ", team);
       });
     },
     addAllTeams() {

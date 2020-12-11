@@ -14,11 +14,7 @@ export default {
     return {};
   },
   computed: {},
-  methods: {
-    testButton() {
-      console.log("button works...");
-    },
-  },
+  methods: {},
   components: { leaderBoardRows },
 };
 </script>

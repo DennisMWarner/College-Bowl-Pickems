@@ -13,7 +13,7 @@ export default {
   methods: {},
   beforeCreate() {
     this.$store.dispatch("getAllPicks");
-    console.log("all picks: ", this.$store.state.allPicks);
+    // console.log("all picks: ", this.$store.state.allPicks);
   },
   components: {},
 };

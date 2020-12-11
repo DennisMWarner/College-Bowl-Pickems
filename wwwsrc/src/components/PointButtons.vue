@@ -97,10 +97,10 @@ export default {
         }
       });
 
-      console.log("available points: ", availablePoints);
+      // console.log("available points: ", availablePoints);
 
       this.$store.state.formattedGames.forEach((fg) => {
-        console.log("fg points: ", fg.userData);
+        // console.log("fg points: ", fg.userData);
         if (!fg.userData.hasOwnProperty("points") || fg.userData.points == 0) {
           let pick = {};
           pick.points = availablePoints.shift();
@@ -140,7 +140,7 @@ export default {
           picksToUpdate.push(pick);
         }
       });
-      console.log("picksToUpdate:", picksToUpdate);
+      // console.log("picksToUpdate:", picksToUpdate);
       await picksToUpdate.forEach((ptu) =>
         this.$store.dispatch("updatePick", ptu)
       );

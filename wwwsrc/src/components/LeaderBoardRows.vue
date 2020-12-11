@@ -44,8 +44,8 @@ export default {
   methods: {
     async loadTestLeaderBoard() {
       await this.$store.dispatch("getLeaderBoardData");
-      console.log("users: ", this.$store.state.users);
-      console.log("rows: ", this.$store.state.leaderBoardRows);
+      // console.log("users: ", this.$store.state.users);
+      // console.log("rows: ", this.$store.state.leaderBoardRows);
     },
     sortByPoints() {
       this.$store.dispatch("sortByPoints");
@@ -58,7 +58,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("getLeaderBoardData");
+    this.$store.dispatch("getCompletedGames");
   },
   components: { leaderBoardRow },
 };

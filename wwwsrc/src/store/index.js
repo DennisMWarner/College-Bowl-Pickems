@@ -213,6 +213,7 @@ export default new Vuex.Store({
       state.possiblePoints = points
     },
     setCompletedGames(state, games) {
+      // console.log("setCompletedGames called: ", games)
       state.completedGames = games
     },
     setActiveDate(state, date) {
@@ -278,8 +279,9 @@ export default new Vuex.Store({
         let teamsfound = this.state.teams.filter(t =>
           t.gameId == g.id)
 
-        g.firstTeam = teamsfound[0] || {}
-        g.secondTeam = teamsfound[1] || {}
+        g.firstTeam = teamsfound[0] || { name: "" }
+        g.secondTeam = teamsfound[1] || { name: "" }
+        // console.log("team: ", g.secondTeam)
         g.userData = this.state.userPicks.find(up => up.gameId == g.id) || {};
         formattedGames.push(g)
 
@@ -529,30 +531,29 @@ export default new Vuex.Store({
     },
     async getLeaderBoardData({ dispatch, commit }) {
       await dispatch("getAllPicks");
-      dispatch("getCompletedGames");
       let lbRows = [];
       this.state.users.forEach(u => {
         let user = {};
         let points = 0;
         let possPoints = 0;
         let pointsLeft = 0;
-
+        user.userId = u.userId;
         user.name = u.name;
         this.state.allPicks.forEach(p => {
           if (p.teamId != 0) {
             let winningTeamId = 0;
-            // console.log(fg.wId, user.id, p.teamId, winningTeamId)
+            // console.log(fg.wId, user.userId, p.teamId, winningTeamId)
             if (this.state.formattedGames.findIndex(fg => fg.wId == p.teamId) > 0) {
               // console.log("formatted game with a winning team match found")
               winningTeamId = this.state.formattedGames.find(fg => fg.wId == p.teamId).wId;
             }
 
-            if (p.userId == user.id && p.teamId == winningTeamId) {
-              // console.log(p.userId, user.id, p.teamId, winningTeamId)
-              // console.log(user.id, "won ", p.points, " points.")
+            if (p.userId == user.userId && p.teamId == winningTeamId) {
+              // console.log(p.userId, user.userId, p.teamId, winningTeamId)
+              // console.log(user.userId, "won ", p.points, " points.")
               points += p.points
             }
-            if (p.userId == user.id && this.state.completedGames.findIndex(cg => cg.id == p.gameId) != -1) {
+            if (p.userId == user.userId && this.state.completedGames.findIndex(cg => cg.id == p.gameId) != -1) {
               possPoints += p.points
             }
             pointsLeft = this.state.possiblePoints.points - possPoints
@@ -566,9 +567,10 @@ export default new Vuex.Store({
         user.percent = perc.toFixed(2)
         // @ts-ignore
         user.pointsLeft = pointsLeft;
-        console.log("user: ", user)
+        // console.log("user row: ", user)
         lbRows.push(user)
       })
+      // console.log("leader board rows committed: ", lbRows)
       commit("setLeaderBoardRows", lbRows)
 
 
@@ -576,14 +578,15 @@ export default new Vuex.Store({
     },
     getCompletedGames({ dispatch, commit }) {
       let completedGames = this.state.formattedGames.filter(fg => fg.wId > 0)
-      console.log("getCompGames called..", completedGames)
+      // console.log("getCompGames called..", completedGames)
       commit("setCompletedGames", completedGames)
+      dispatch("getLeaderBoardData")
     },
 
     async createUser({ dispatch, commit }, user) {
-      console.log("createUser called,,,,")
+      // console.log("createUser called,,,,")
       let res = await api.post("users", user);
-      console.log(res.data)
+      // console.log(res.data)
       dispatch("getUsers")
     },
     sortByPointsLeft({ dispatch, commit }) {
