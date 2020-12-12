@@ -1,6 +1,8 @@
 <template>
   <div class="game mt-3">
-    <div class="text-white pb-1 pl-5 my-2 rounded bg-info border border-white">
+    <div
+      class="text-white pb-1 pl-5 my-2 mb-2 rounded bg-info border border-white"
+    >
       {{ this.gameData.name }}
     </div>
     <div class="row ml-1">

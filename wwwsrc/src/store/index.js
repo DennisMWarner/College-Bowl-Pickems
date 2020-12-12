@@ -279,8 +279,8 @@ export default new Vuex.Store({
         let teamsfound = this.state.teams.filter(t =>
           t.gameId == g.id)
 
-        g.firstTeam = teamsfound[0] || { name: "" }
-        g.secondTeam = teamsfound[1] || { name: "" }
+        g.firstTeam = teamsfound[0] || { name: "TBD" }
+        g.secondTeam = teamsfound[1] || { name: "TBD" }
         // console.log("team: ", g.secondTeam)
         g.userData = this.state.userPicks.find(up => up.gameId == g.id) || {};
         formattedGames.push(g)

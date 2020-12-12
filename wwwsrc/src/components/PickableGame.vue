@@ -1,5 +1,7 @@
 <template>
-  <div class="pickable game m-2 pb-2 mt-0 border border-white rounded bg-dark">
+  <div
+    class="pickable game m-2 pb-2 mt-0 mb-3 border border-white rounded bg-dark"
+  >
     <h6 class="text-white pl-2 m-1 font-italic">
       {{ this.pickableGameData.sponsor }}
 
@@ -156,7 +158,7 @@ export default {
 }
 .points {
   font-family: monospace;
-  border: solid 3px rgba(66, 65, 65, 0.849);
+  border: solid 3px rgba(0, 0, 0, 0.849);
   background-color: rgb(240, 235, 235);
   /* border-radius: 15px; */
   font-size: xx-large;

@@ -3,7 +3,7 @@
     <div
       v-if="
         this.$route.path == '/setup' &&
-        this.$store.state.activeGame != '' &&
+        Object.keys(this.$store.state.activeGame).length > 0 &&
         this.$store.state.activeGame.name == gameTitleBarData.name
       "
     >
@@ -49,8 +49,8 @@
     <div v-else>
       <div
         v-if="
-          this.gameTitleBarData.secondTeam.name != '' &&
-          this.gameTitleBarData.firstTeam.name != ''
+          this.gameTitleBarData.secondTeam.name != 'TBD' &&
+          this.gameTitleBarData.firstTeam.name != 'TBD'
         "
         class="col-11 mx-auto no-gutters border rounded bg-secondary text-left my-1 text-light"
         @click="setActiveGame()"
