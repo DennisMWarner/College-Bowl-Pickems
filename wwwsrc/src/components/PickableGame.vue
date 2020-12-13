@@ -88,15 +88,29 @@
           </div>
         </div>
       </div>
-      <div
-        v-if="this.pickableGameData.userData.points"
-        class="col-2 text-center px-2 pt-3 ml-2 text-dark points"
-        data-toggle="modal"
-        data-target="#pointsSelectorModal"
-        type="button"
-        @click="setActiveGame()"
-      >
-        {{ this.pickableGameData.userData.points }}
+      <div v-if="this.pickableGameData.userData.points">
+        <div
+          v-if="
+            this.pickableGameData.wId == this.pickableGameData.userData.teamId
+          "
+          class="col-12 text-center px-2 pt-3 ml-2 text-dark points won w-100 h-100"
+          data-toggle="modal"
+          data-target="#pointsSelectorModal"
+          type="button"
+          @click="setActiveGame()"
+        >
+          {{ this.pickableGameData.userData.points }}
+        </div>
+        <div
+          v-else
+          class="col-12 text-center px-2 pt-3 ml-2 text-dark points w-100 h-100"
+          data-toggle="modal"
+          data-target="#pointsSelectorModal"
+          type="button"
+          @click="setActiveGame()"
+        >
+          {{ this.pickableGameData.userData.points }}
+        </div>
       </div>
       <div
         v-else
@@ -197,6 +211,7 @@ export default {
   font-family: monospace;
   border: solid 3px rgba(0, 0, 0, 0.849);
   background-color: rgb(240, 235, 235);
+
   /* border-radius: 15px; */
   font-size: xx-large;
   font-weight: bolder;
@@ -204,8 +219,14 @@ export default {
   padding-left: 14px;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
+  color: rgba(0, 0, 0, 0.794) !important;
 }
 .recs {
   font-size: 12px;
+}
+.won {
+  background-image: url("../assets/iconfinder_check-circle-outline_326568.png");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 </style>

@@ -7,33 +7,45 @@
     />
     <div
       v-if="
-        this.$store.state.formattedGames.find((fg) => fg.userData.points > 0)
+        this.$store.state.formattedGames.findIndex(
+          (fg) => fg.userData.points == 0
+        ) !== -1
       "
     >
-      <button
-        class="btn btn-info border rounded w-100 text-center-text-white border-white mt-4"
-        @click="sortAscending()"
+      <div
+        v-if="
+          this.$store.state.formattedGames.find((fg) => fg.userData.points > 0)
+        "
       >
-        Sort Remaining Points Ascending</button
-      ><button
-        class="btn btn-info border rounded w-100 text-center-text-white border-white mt-4"
-        @click="sortDescending()"
-      >
-        Sort Remaining Points Descending
-      </button>
-    </div>
-    <div v-else>
-      <button
-        class="btn btn-info border rounded w-75 text-center-text-white border-white mt-4"
-        @click="sortAscending()"
-      >
-        Sort All Points Ascending</button
-      ><button
-        class="btn btn-info border rounded w-75 text-center-text-white border-white mt-4"
-        @click="sortDescending()"
-      >
-        Sort All Points Descending
-      </button>
+        <button
+          class="btn btn-info border rounded w-100 text-center-text-white border-white mt-4"
+          @click="sortAscending()"
+          data-dismiss="modal"
+        >
+          Sort Remaining Points Ascending</button
+        ><button
+          class="btn btn-info border rounded w-100 text-center-text-white border-white mt-4"
+          @click="sortDescending()"
+          data-dismiss="modal"
+        >
+          Sort Remaining Points Descending
+        </button>
+      </div>
+      <div v-else>
+        <button
+          class="btn btn-info border rounded w-75 text-center-text-white border-white mt-4"
+          @click="sortAscending()"
+          data-dismiss="modal"
+        >
+          Sort All Points Ascending</button
+        ><button
+          class="btn btn-info border rounded w-75 text-center-text-white border-white mt-4"
+          @click="sortDescending()"
+          data-dismiss="modal"
+        >
+          Sort All Points Descending
+        </button>
+      </div>
     </div>
     <button
       class="btn btn-warning mx-auto border rounded w-75 text-center text-white border-white mt-4"
