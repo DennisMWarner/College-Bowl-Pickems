@@ -3,7 +3,7 @@
     <pickable-game
       v-for="game in games"
       :pickableGameData="game"
-      :key="game.firstTeam.name"
+      :key="game.id"
     />
   </div>
 </template>

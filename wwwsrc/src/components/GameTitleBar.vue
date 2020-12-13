@@ -3,8 +3,7 @@
     <div
       v-if="
         this.$route.path == '/setup' &&
-        Object.keys(this.$store.state.activeGame).length > 0 &&
-        this.$store.state.activeGame.name == gameTitleBarData.name
+        this.$store.state.activeGame.name == this.gameTitleBarData.name
       "
     >
       <div>
@@ -49,8 +48,8 @@
     <div v-else>
       <div
         v-if="
-          this.gameTitleBarData.secondTeam.name != 'TBD' &&
-          this.gameTitleBarData.firstTeam.name != 'TBD'
+          this.gameTitleBarData.secondTeam.name !== 'TBD' &&
+          this.gameTitleBarData.firstTeam.name !== 'TBD'
         "
         class="col-11 mx-auto no-gutters border rounded bg-secondary text-left my-1 text-light"
         @click="setActiveGame()"
@@ -157,6 +156,7 @@ export default {
     return {};
   },
   computed: {},
+
   methods: {
     addTeamToGame() {
       let teamsToUpdate = this.$store.state.activeTeams;

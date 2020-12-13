@@ -12,6 +12,11 @@ export default {
   data() {
     return {};
   },
+  async beforeCreate() {
+    if (this.$store.state.formattedGames.length < 1) {
+      await this.$store.dispatch("formatGames");
+    }
+  },
   computed: {},
   methods: {},
   components: { pickableGames },

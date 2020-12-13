@@ -16,6 +16,12 @@ export default {
   data() {
     return {};
   },
+  beforeCreate() {
+    this.$store.dispatch("setActiveGame", { name: "not selected" });
+    if (this.$store.state.games.length < 1) {
+      this.$store.dispatch("getGames");
+    }
+  },
   computed: {
     gameTitleBars() {
       return this.$store.state.games;

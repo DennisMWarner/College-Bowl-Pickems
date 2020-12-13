@@ -7,7 +7,6 @@
     "
     class="point-button w-25 bg-warning col-2 mt-1 py-1 text-white border text-center rounded border-dark"
     @click="makePick()"
-    data-dismiss="modal"
   >
     <div>{{ pointButtonData.pointValue }}</div>
   </div>
@@ -15,7 +14,6 @@
     v-else
     class="point-button w-25 bg-secondary col-2 mt-1 py-1 text-white border text-center rounded border-dark"
     @click="makePick()"
-    data-dismiss="modal"
   >
     <div>{{ pointButtonData.pointValue }}</div>
   </div>
@@ -52,9 +50,9 @@ export default {
 
       if (existingPick.hasOwnProperty("id")) {
         existingPick.points = this.pointButtonData.pointValue;
-        if (existingPick.hasOwnProperty("teamId")) {
-          existingPick.teamId = this.$store.state.activeTeam.id;
-        }
+        // if (existingPick.hasOwnProperty("teamId")) {
+        //   existingPick.teamId = this.$store.state.activeTeam.id;
+        // }
         await this.$store.dispatch("updatePick", existingPick);
       } else {
         this.pick.userId = this.$auth.userInfo.sub;

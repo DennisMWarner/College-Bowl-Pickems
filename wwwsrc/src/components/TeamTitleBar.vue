@@ -83,6 +83,7 @@ export default {
       let gameWon = { ...this.$store.state.activeGame };
       gameWon.wId = this.teamTitleBarData.id;
       this.$store.dispatch("updateGame", gameWon);
+      this.$store.dispatch("setActiveGame", { name: "not selected" });
     },
 
     setActiveTeam() {

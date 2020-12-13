@@ -220,6 +220,7 @@ export default new Vuex.Store({
       state.activeDate = date;
     },
     setActiveGame(state, game) {
+      console.log("commiting active game", game)
       state.activeGame = game
     },
     setActiveGamesByActiveDate(state, games) {
@@ -257,8 +258,9 @@ export default new Vuex.Store({
 
   },
   actions: {
-    setBearer({ }, bearer) {
+    setBearer({ dispatch }, bearer) {
       api.defaults.headers.authorization = bearer;
+      dispatch("getUsers");
     },
     resetBearer() {
       api.defaults.headers.authorization = "";
@@ -272,7 +274,13 @@ export default new Vuex.Store({
       let res = await api.get("games/other");
       commit("setOtherGames", res.data)
     },
-    formatGames({ commit }) {
+    async formatGames({ dispatch, commit }) {
+      if (this.state.games.length < 1) {
+        await dispatch("getGames")
+      }
+      if (this.state.teams.length < 1) {
+        await dispatch("getTeams")
+      }
 
       let formattedGames = []
       this.state.games.forEach(g => {
@@ -424,6 +432,7 @@ export default new Vuex.Store({
 
       dispatch("getTeams")
     },
+
 
     async getTeams({ dispatch, commit }) {
 

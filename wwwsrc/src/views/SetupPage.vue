@@ -44,6 +44,11 @@ export default {
     return {};
   },
   computed: {},
+  async beforeCreate() {
+    if (this.$store.state.formattedGames.length < 1) {
+      await this.$store.dispatch("formatGames");
+    }
+  },
   created() {
     this.$store.dispatch("getAllOtherGames");
   },

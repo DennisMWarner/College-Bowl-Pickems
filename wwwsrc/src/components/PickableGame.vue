@@ -26,9 +26,6 @@
               'background-color': this.pickableGameData.firstTeam.priColor,
               color: this.pickableGameData.firstTeam.secColor,
             }"
-            data-toggle="modal"
-            data-target="#pointsSelectorModal"
-            type="button"
             @click="setActiveFirstTeam()"
           >
             {{ this.pickableGameData.firstTeam.name }}
@@ -36,9 +33,6 @@
           <div
             v-else
             class="col-12 offset-1 text-left teams bg-white text-dark team1"
-            data-toggle="modal"
-            data-target="#pointsSelectorModal"
-            type="button"
             @click="setActiveFirstTeam()"
           >
             {{ this.pickableGameData.firstTeam.name }}
@@ -81,9 +75,6 @@
               'background-color': this.pickableGameData.secondTeam.priColor,
               color: this.pickableGameData.secondTeam.secColor,
             }"
-            data-toggle="modal"
-            data-target="#pointsSelectorModal"
-            type="button"
             @click="setActiveSecondTeam()"
           >
             {{ this.pickableGameData.secondTeam.name }}
@@ -91,9 +82,6 @@
           <div
             v-else
             class="col-12 offset-1 text-left teams mt-1 bg-white text-dark team2"
-            data-toggle="modal"
-            data-target="#pointsSelectorModal"
-            type="button"
             @click="setActiveSecondTeam()"
           >
             {{ this.pickableGameData.secondTeam.name }}
@@ -103,10 +91,21 @@
       <div
         v-if="this.pickableGameData.userData.points"
         class="col-2 text-center px-2 pt-3 ml-2 text-dark points"
+        data-toggle="modal"
+        data-target="#pointsSelectorModal"
+        type="button"
+        @click="setActiveGame()"
       >
         {{ this.pickableGameData.userData.points }}
       </div>
-      <div v-else class="col-2 text-center px-2 pt-3 ml-2 text-dark points">
+      <div
+        v-else
+        class="col-2 text-center px-2 pt-3 ml-2 text-dark points"
+        data-toggle="modal"
+        data-target="#pointsSelectorModal"
+        type="button"
+        @click="setActiveGame()"
+      >
         --
       </div>
     </div>
@@ -120,15 +119,53 @@ import pointsSelector from "../components/PointsSelector";
 export default {
   name: "pickable-game",
   data() {
-    return {};
+    return {
+      newPick: {},
+    };
   },
   computed: {},
   methods: {
-    setActiveFirstTeam() {
-      this.$store.dispatch("setActiveTeam", this.pickableGameData.firstTeam);
+    async setActiveFirstTeam() {
+      await this.$store.dispatch(
+        "setActiveTeam",
+        this.pickableGameData.firstTeam
+      );
+      await this.$store.dispatch("setActiveGame", this.pickableGameData);
+      this.updatePick();
     },
-    setActiveSecondTeam() {
-      this.$store.dispatch("setActiveTeam", this.pickableGameData.secondTeam);
+    async setActiveSecondTeam() {
+      await this.$store.dispatch(
+        "setActiveTeam",
+        this.pickableGameData.secondTeam
+      );
+      await this.$store.dispatch("setActiveGame", this.pickableGameData);
+      this.updatePick();
+    },
+    updatePick() {
+      let pickIndex = this.$store.state.userPicks.findIndex(
+        (up) =>
+          up.gameId == this.$store.state.activeGame.id &&
+          up.userId == this.$auth.userInfo.sub
+      );
+      if (pickIndex >= 0) {
+        let existingPick = {
+          ...this.$store.state.userPicks[pickIndex],
+        };
+        console.log("existing pick: ", existingPick);
+        existingPick.teamId = this.$store.state.activeTeam.id;
+        // this.$store.dispatch("updatePick", existingPick);
+        console.log("existing pick: ", existingPick);
+        this.$store.dispatch("updatePick", existingPick);
+      } else {
+        this.newPick.userId = this.$auth.userInfo.sub;
+        this.newPick.gameId = this.$store.state.activeGame.id;
+        this.newPick.teamId = this.$store.state.activeTeam.id;
+        console.log("new pick: ", this.newPick);
+        this.$store.dispatch("updatePick", this.newPick);
+      }
+    },
+    setActiveGame() {
+      this.$store.dispatch("setActiveGame", this.pickableGameData);
     },
   },
   components: { pointsSelector, team },

@@ -35,7 +35,11 @@
           >
         </li>
         <li
-          v-if="$auth.isAuthenticated && $auth.identity.permissions.length > 0"
+          v-if="
+            $auth.isAuthenticated &&
+            $auth.identity.hasOwnProperty('permissions') &&
+            $auth.identity.permissions.length > 0
+          "
           class="nav-item"
           :class="{ active: $route.name == 'setup' }"
         >
@@ -119,12 +123,12 @@ export default {
     async login() {
       await this.$auth.loginWithPopup();
       await this.$store.dispatch("setBearer", this.$auth.bearer);
-      this.$store.dispatch("getUsers");
+
       // console.log("this.$auth: ");
       // console.log(this.$auth);
       await this.$store.dispatch("getGames");
       await this.$store.dispatch("getTeams");
-
+      this.$store.dispatch("formatGames");
       await this.$store.dispatch("getUserPicks", this.$auth.userInfo.sub);
       this.$store.dispatch("formatGames");
     },
