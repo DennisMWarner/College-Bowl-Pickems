@@ -44,8 +44,9 @@ export default {
   },
   computed: {},
   methods: {
-    lockAllGames() {
-      this.$store.dispatch("lockAllGames");
+    async lockAllGames() {
+      await this.$store.dispatch("lockAllGames");
+      this.$store.dispatch("getInitAndFormat");
     },
   },
   components: {},

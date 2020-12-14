@@ -18,7 +18,7 @@
     <div class="col-12 text-center p-0">
       <game-title-bars />
     </div>
-    <div v-if="this.$store.state.cancelledGames.length > 0">
+    <!-- <div v-if="this.$store.state.cancelledGames.length > 0">
       <div
         class="col-12 text-center p-0 border w-75 my-3 rounded border-white bg-warning text-white mx-auto text-center"
       >
@@ -27,8 +27,8 @@
       <div class="col-12 text-center p-0">
         <other-game-title-bars />
       </div>
-    </div>
-    <div v-if="this.$store.state.postponedGames.length > 0">
+    </div> -->
+    <!-- <div v-if="this.$store.state.postponedGames.length > 0">
       <div
         class="col-12 text-center p-0 border w-75 my-3 rounded border-white bg-warning text-white mx-auto text-center"
       >
@@ -37,8 +37,8 @@
       <div class="col-12 text-center p-0">
         <postponed-game-title-bars />
       </div>
-    </div>
-    <div v-if="this.$store.state.unlockedGames.length > 0">
+    </div> -->
+    <!-- <div v-if="this.$store.state.unlockedGames.length > 0">
       <div
         class="col-12 text-center p-0 border w-75 my-3 rounded border-white bg-warning text-white mx-auto text-center"
       >
@@ -47,7 +47,7 @@
       <div class="col-12 text-center p-0">
         <unlocked-game-title-bars />
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -57,9 +57,9 @@ import dates from "../components/Dates";
 import addGameButton from "../components/AddGameButton";
 import games from "../components/Games";
 import gameTitleBars from "../components/GameTitleBars";
-import cancelledGameTitleBars from "../components/CancelledGameTitleBars";
-import postponedGameTitleBars from "../components/PostponedGameTitleBars";
-import unlockedGameTitleBars from "../components/UnlockedGameTitleBars";
+// import cancelledGameTitleBars from "../components/CancelledGameTitleBars";
+// import postponedGameTitleBars from "../components/PostponedGameTitleBars";
+// import unlockedGameTitleBars from "../components/UnlockedGameTitleBars";
 import addTeamButton from "../components/AddTeamButton";
 import lockAllGamesButton from "../components/LockAllGamesButton";
 export default {
@@ -71,9 +71,9 @@ export default {
   async beforeCreate() {
     this.$store.dispatch("getInitAndFormat");
   },
-  created() {
-    this.$store.dispatch("getAllOtherGames");
-  },
+  // created() {
+  //   this.$store.dispatch("getAllOtherGames");
+  // },
   methods: {
     addAllTeams() {
       this.$store.dispatch("addAllTeams");
@@ -86,9 +86,9 @@ export default {
     games,
     addGameButton,
     gameTitleBars,
-    cancelledGameTitleBars,
-    postponedGameTitleBars,
-    unlockedGameTitleBars,
+    // cancelledGameTitleBars,
+    // postponedGameTitleBars,
+    // unlockedGameTitleBars,
     dates,
     addTeamButton,
     lockAllGamesButton,

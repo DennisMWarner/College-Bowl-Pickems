@@ -5,15 +5,16 @@
         this.$route.path == '/setup' &&
         this.$store.state.activeGame.name == this.gameTitleBarData.name
       "
+      class="border m-2 rounded bg-light"
     >
       <div>
         <div
-          class="col-11 mx-auto no-gutters text-center pt-1 border rounded bg-warning text-white text-left my-1 my-4"
+          class="col-11 mx-auto no-gutters text-center pt-1 px-0 border border-dark mt-2 bg-success rounded text-white text-left my-1"
           @click="setActiveGame()"
         >
-          <h5>
+          <h3>
             {{ this.gameTitleBarData.name }}
-          </h5>
+          </h3>
         </div>
         <team-title-bars />
         <button
@@ -27,20 +28,40 @@
         </button>
         <div>
           <button
-            class="btn btn-warning rounded my-1 mx-1 my-3 text-center text-white border"
+            class="btn btn-success rounded my-1 mx-1 my-3 text-center text-white border"
             data-toggle="modal"
             data-target="#editGameModal"
             @click="setActiveEditFields()"
           >
-            Edit this game
+            Edit Game
           </button>
-
           <button
-            class="btn btn-danger rounded my-1 mr-3 my-3 text-center text-white border"
+            v-if="this.gameTitleBarData.status == 'cancelled'"
+            class="btn btn-danger rounded mx-1 my-1 my-3 text-center text-white border"
+          >
+            Uncancel
+          </button>
+          <button
+            v-else
+            class="btn btn-success rounded mx-1 my-3 text-center text-white border"
             data-toggle="modal"
             data-target="#cancelGameModal"
           >
             Cancel Game
+          </button>
+          <button
+            v-if="this.gameTitleBarData.status == 'locked'"
+            class="btn btn-success rounded mx-1 my-3 text-center text-white border"
+            @click="lockOrUnlockGame('unlocked')"
+          >
+            Unlock
+          </button>
+          <button
+            v-else
+            class="btn btn-success rounded mx-1 my-3 text-center text-white border"
+            @click="lockOrUnlockGame('locked')"
+          >
+            Lock
           </button>
         </div>
       </div>
@@ -51,10 +72,22 @@
           this.gameTitleBarData.secondTeam.name !== 'TBD' &&
           this.gameTitleBarData.firstTeam.name !== 'TBD'
         "
-        class="col-11 mx-auto no-gutters border rounded bg-secondary text-left my-1 text-light"
+        class="col-11 mx-auto no-gutters border rounded bg-secondary pl-3 pr-1 text-left my-1 text-light"
         @click="setActiveGame()"
       >
         {{ this.gameTitleBarData.name }}
+        <img
+          v-if="this.gameTitleBarData.status == 'locked'"
+          src="../assets/lock.png"
+          alt=""
+          class="img-fluid float-right float-top mt-1 winImg"
+        />
+        <img
+          v-if="this.gameTitleBarData.status == 'unlocked'"
+          src="../assets/lock-open.png"
+          alt=""
+          class="img-fluid float-right float-top mt-1 winImg"
+        />
       </div>
       <div
         v-else
@@ -73,12 +106,31 @@
     >
       <div class="modal-dialog-centered" role="document">
         <div class="modal-content bg-transparent">
-          <div class="modal-body">
-            <h4 class="bg-warning p-2 border rounded border-white">
-              Cancel {{ this.$store.state.activeGame.name }}?
+          <div class="modal-body bg-warning m-2 border rounded border-white">
+            <h4 class="text-danger">
+              Caution! This cannot be undone. Previous user point selections
+              will be modified, and unrecoverable.
             </h4>
+            <h5 class="text-dark text-center mt-4">
+              Type
+              <span class="text-white font-italic">{{
+                this.$store.state.activeGame.name
+              }}</span>
+              to confirm game cancel.
+            </h5>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter game name to confirm"
+              aria-label=""
+              v-model="cancelConfirm.string"
+              aria-describedby="button-addon2"
+              required
+            />
             <div>
               <button
+                v-if="cancelConfirm.string == this.$store.state.activeGame.name"
+                type="reset"
                 class="btn rounded border btn-danger m-2 w-50 text-white text-center border-white"
                 data-dismiss="modal"
                 @click="cancelGame()"
@@ -87,6 +139,7 @@
               ><button
                 class="btn rounded border btn-success m-2 w-50 text-white text-center border-white"
                 data-dismiss="modal"
+                type="reset"
               >
                 Keep Game
               </button>
@@ -153,7 +206,9 @@ import addTeamToGameModalBody from "../components/AddTeamToGameModalBody";
 export default {
   name: "game-title-bar",
   data() {
-    return {};
+    return {
+      cancelConfirm: { string: "" },
+    };
   },
   computed: {},
 
@@ -195,6 +250,12 @@ export default {
         this.$store.state.activeGame
       );
     },
+
+    async lockOrUnlockGame(status) {
+      this.gameTitleBarData.status = status;
+      await this.$store.dispatch("updateGame", this.gameTitleBarData);
+      this.$store.dispatch("getInitAndFormat");
+    },
   },
   components: { addTeamToGameModalBody, editGameModalBody, teamTitleBars },
   props: ["gameTitleBarData"],
@@ -203,4 +264,8 @@ export default {
 
 
 <style scoped>
+.winImg {
+  max-width: 15px;
+  max-height: 15px;
+}
 </style>
