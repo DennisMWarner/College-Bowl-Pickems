@@ -7,14 +7,16 @@
     />
     <div
       v-if="
-        this.$store.state.formattedGames.findIndex(
+        this.$store.state.unlockedFormattedGames.findIndex(
           (fg) => fg.userData.points == 0
         ) !== -1
       "
     >
       <div
         v-if="
-          this.$store.state.formattedGames.find((fg) => fg.userData.points > 0)
+          this.$store.state.unlockedFormattedGames.find(
+            (fg) => fg.userData.points > 0
+          )
         "
       >
         <button
@@ -101,7 +103,7 @@ export default {
       let picksToUpdate = [];
       this.$store.state.points.forEach((p) => {
         if (
-          this.$store.state.formattedGames.findIndex(
+          this.$store.state.unlockedFormattedGames.findIndex(
             (fg) => fg.userData.points == p.pointValue
           ) < 0
         ) {
@@ -111,7 +113,7 @@ export default {
 
       // console.log("available points: ", availablePoints);
 
-      this.$store.state.formattedGames.forEach((fg) => {
+      this.$store.state.unlockedFormattedGames.forEach((fg) => {
         // console.log("fg points: ", fg.userData);
         if (!fg.userData.hasOwnProperty("points") || fg.userData.points == 0) {
           let pick = {};
@@ -133,7 +135,7 @@ export default {
       let picksToUpdate = [];
       this.$store.state.points.forEach((p) => {
         if (
-          this.$store.state.formattedGames.findIndex(
+          this.$store.state.unlockedFormattedGames.findIndex(
             (fg) => fg.userData.points == p.pointValue
           ) < 0
         ) {
@@ -141,7 +143,7 @@ export default {
         }
       });
 
-      this.$store.state.formattedGames.forEach((fg) => {
+      this.$store.state.unlockedFormattedGames.forEach((fg) => {
         if (!fg.userData.hasOwnProperty("points") || fg.userData.points == 0) {
           let pick = {};
           pick.points = availablePoints.pop();
@@ -159,7 +161,7 @@ export default {
     },
     async resetAllPoints() {
       let picksToUpdate = [];
-      this.$store.state.formattedGames.forEach((fg) => {
+      this.$store.state.unlockedFormattedGames.forEach((fg) => {
         let pick = { ...fg.userData };
         pick.points = 0;
         picksToUpdate.push(pick);

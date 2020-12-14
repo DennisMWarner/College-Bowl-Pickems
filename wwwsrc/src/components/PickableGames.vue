@@ -1,5 +1,5 @@
 <template>
-  <div class="pickable-games">
+  <div class="no-gutters row justify-content-around">
     <pickable-game
       v-for="game in games"
       :pickableGameData="game"
@@ -18,7 +18,7 @@ export default {
   },
   computed: {
     games() {
-      return this.$store.state.formattedGames;
+      return this.$store.state.unlockedFormattedGames;
     },
   },
   methods: {},

@@ -82,16 +82,6 @@
             >Make Picks</router-link
           >
         </li>
-
-        <!-- <li
-          class="nav-item"
-          v-if="$auth.isAuthenticated"
-          :class="{ active: $route.name == 'dashboard' }"
-        >
-          <router-link class="nav-link" :to="{ name: 'dashboard' }"
-            >Admin-Dashboard</router-link
-          >
-        </li> -->
       </ul>
       <div v-if="$auth.isAuthenticated" class="mr-2 text-warning">
         {{ this.$auth.userInfo.name }}
@@ -126,11 +116,7 @@ export default {
 
       // console.log("this.$auth: ");
       // console.log(this.$auth);
-      await this.$store.dispatch("getGames");
-      await this.$store.dispatch("getTeams");
-      this.$store.dispatch("formatGames");
-      await this.$store.dispatch("getUserPicks", this.$auth.userInfo.sub);
-      this.$store.dispatch("formatGames");
+      this.$store.dispatch("getInitAndFormat");
     },
     async logout() {
       this.$store.dispatch("resetBearer");

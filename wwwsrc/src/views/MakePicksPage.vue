@@ -13,12 +13,7 @@ export default {
     return {};
   },
   async beforeCreate() {
-    if (this.$store.state.formattedGames.length < 1) {
-      await this.$store.dispatch("formatGames");
-      if (this.$store.state.userPicks.length < 1) {
-        await this.$store.dispatch("getUserPicks");
-      }
-    }
+    this.$store.dispatch("getInitAndFormat");
   },
   computed: {},
   methods: {},

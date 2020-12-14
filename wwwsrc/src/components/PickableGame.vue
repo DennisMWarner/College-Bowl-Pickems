@@ -1,19 +1,47 @@
 <template>
   <div
-    class="pickable game m-2 pb-2 mt-0 mb-3 border border-white rounded bg-dark"
+    class="pickable col-md-5 game pb-2 mt-0 mb-3 mx-2 border border-white rounded bg-dark"
   >
-    <h6 class="text-white pl-2 m-1 font-italic">
-      {{ this.pickableGameData.sponsor }}
-
-      {{ this.pickableGameData.name }}
-    </h6>
-    <p class="text-white pb-1 pl-2 m-1 font-italic font-weight-lighter recs">
-      {{ this.pickableGameData.loc }} {{ this.pickableGameData.time }}
-      {{ this.pickableGameData.network }}
-
-      <!-- (game ID: {{ this.pickableGameData.id }}) -->
-    </p>
-    <div class="row">
+    <div class="m-0 row no-gutters">
+      <div class="col-12">
+        <div
+          v-if="
+            this.pickableGameData.wId != 0 &&
+            this.pickableGameData.userData.points > 0
+          "
+        >
+          <div
+            v-if="
+              this.pickableGameData.wId == this.pickableGameData.userData.teamId
+            "
+          >
+            <img
+              src="../assets/check-100px.png"
+              alt=""
+              class="img-fluid float-right float-top mt-1 winImg"
+            />
+          </div>
+          <div v-else>
+            <img
+              src="../assets/times-circle-100px.png"
+              alt=""
+              class="img-fluid float-right float-top mt-1 winImg"
+            />
+          </div>
+        </div>
+        <h6 class="text-white mb-0 pl-2 font-italic">
+          {{ this.pickableGameData.sponsor }}
+          {{ this.pickableGameData.name }}
+        </h6>
+        <p
+          class="text-white pl-2 pb-1 mb-0 font-italic font-weight-lighter recs"
+        >
+          {{ this.pickableGameData.loc }} {{ this.pickableGameData.time }}
+          {{ this.pickableGameData.network }}
+        </p>
+      </div>
+    </div>
+    <div class="row no-gutters">
       <div class="col-9">
         <div class="row">
           <div
@@ -88,33 +116,19 @@
           </div>
         </div>
       </div>
-      <div v-if="this.pickableGameData.userData.points">
-        <div
-          v-if="
-            this.pickableGameData.wId == this.pickableGameData.userData.teamId
-          "
-          class="col-12 text-center px-2 pt-3 ml-2 text-dark points won w-100 h-100"
-          data-toggle="modal"
-          data-target="#pointsSelectorModal"
-          type="button"
-          @click="setActiveGame()"
-        >
-          {{ this.pickableGameData.userData.points }}
-        </div>
-        <div
-          v-else
-          class="col-12 text-center px-2 pt-3 ml-2 text-dark points w-100 h-100"
-          data-toggle="modal"
-          data-target="#pointsSelectorModal"
-          type="button"
-          @click="setActiveGame()"
-        >
-          {{ this.pickableGameData.userData.points }}
-        </div>
+      <div
+        v-if="this.pickableGameData.userData.points"
+        class="col-2 text-center px-2 pt-3 ml-4 text-dark points"
+        data-toggle="modal"
+        data-target="#pointsSelectorModal"
+        type="button"
+        @click="setActiveGame()"
+      >
+        {{ this.pickableGameData.userData.points }}
       </div>
       <div
         v-else
-        class="col-2 text-center px-2 pt-3 ml-2 text-dark points"
+        class="col-2 text-center px-2 pt-3 ml-4 text-dark points"
         data-toggle="modal"
         data-target="#pointsSelectorModal"
         type="button"
@@ -189,6 +203,10 @@ export default {
 
 
 <style scoped>
+.winImg {
+  max-width: 40px;
+  max-height: 40px;
+}
 .teams {
   font-family: cursive;
   display: flex;
@@ -223,10 +241,5 @@ export default {
 }
 .recs {
   font-size: 12px;
-}
-.won {
-  background-image: url("../assets/iconfinder_check-circle-outline_326568.png");
-  background-repeat: no-repeat;
-  background-position: center;
 }
 </style>

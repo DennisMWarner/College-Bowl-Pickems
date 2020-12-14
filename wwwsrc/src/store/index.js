@@ -44,7 +44,8 @@ export default new Vuex.Store({
     activeGame: {},
     activeTeam: {},
     activePoint: {},
-    formattedGames: [],
+    lockedFormattedGames: [],
+    unlockedFormattedGames: [],
     availableTeams: [],
     availableGames: [],
     teamsRawData: [
@@ -185,8 +186,12 @@ export default new Vuex.Store({
       state.activeTeams.splice(state.activeTeams.findIndex(t => t.name == team.name), 1)
     },
 
-    setFormattedGames(state, games) {
-      state.formattedGames = games
+    setUnlockedFormattedGames(state, games) {
+      console.log("setting unformatted games: ", games)
+      state.unlockedFormattedGames = games
+    },
+    setLockedFormattedGames(state, games) {
+      state.lockedFormattedGames = games
     },
 
     addUserPick(state, pick) {
@@ -289,18 +294,23 @@ export default new Vuex.Store({
       dispatch("setPoints")
     },
 
-    async getAllOtherGames({ dispatch, commit }) {
+    async getAllOtherGames({ commit }) {
       let res = await api.get("games/other");
       commit("setOtherGames", res.data)
     },
 
-    async formatGames({ dispatch, commit }) {
+    async getInitAndFormat({ dispatch, commit }) {
+      if (this.state.userPicks.length < 1) {
+        await dispatch("getUserPicks")
+      }
       if (this.state.games.length < 1) {
         await dispatch("getGames")
       }
       if (this.state.teams.length < 1) {
         await dispatch("getTeams")
       }
+      let lockedFormattedGames = [];
+      let unlockedFormattedGames = []
       let formattedGames = []
       this.state.games.forEach(g => {
         let teamsfound = this.state.teams.filter(t =>
@@ -310,7 +320,26 @@ export default new Vuex.Store({
         g.userData = this.state.userPicks.find(up => up.gameId == g.id) || {};
         formattedGames.push(g)
       })
-      commit("setFormattedGames", formattedGames)
+
+      formattedGames.forEach(tf => {
+        if (tf.status == "locked") {
+          console.log("unlocked formatted game: ", tf)
+          lockedFormattedGames.push(tf)
+        }
+        else if (tf.status == "unlocked" || tf.status == null) {
+          unlockedFormattedGames.push(tf)
+        }
+      })
+      commit("setLockedFormattedGames", lockedFormattedGames)
+      commit("setUnlockedFormattedGames", unlockedFormattedGames)
+    },
+
+    lockAllGames({ dispatch }) {
+      this.state.unlockedFormattedGames.forEach(ug => {
+        let gameToEdit = { ...ug }
+        gameToEdit.status = "locked"
+        dispatch("updateGame", gameToEdit)
+      })
     },
 
     async getUserPicks({ dispatch, commit }, userId) {
@@ -372,7 +401,7 @@ export default new Vuex.Store({
     setActiveTeam({ dispatch, commit }, team) {
       commit("setActiveTeam", team);
       if (team.gameId != 0) {
-        dispatch("setActiveGame", this.state.formattedGames.find(g => g.id == team.gameId))
+        dispatch("setActiveGame", this.state.unlockedFormattedGames.find(g => g.id == team.gameId))
       }
     },
 
@@ -381,7 +410,7 @@ export default new Vuex.Store({
     },
 
     setActiveGamesByActiveDate({ commit }) {
-      let activeGames = this.state.formattedGames.filter(fg =>
+      let activeGames = this.state.unlockedFormattedGames.filter(fg =>
         fg.gameDate == this.state.activeDate.date
       )
       commit("setActiveGamesByActiveDate", activeGames)
@@ -517,7 +546,7 @@ export default new Vuex.Store({
     },
 
     updateFormattedGameTeam({ dispatch }, team) {
-      dispatch("formatGames")
+      dispatch("getInitAndFormat")
       dispatch("setActiveTeamsByGameId", this.state.activeGame.id)
     },
 
@@ -555,11 +584,11 @@ export default new Vuex.Store({
     },
 
     updateFormattedGamesUserData({ dispatch, commit }, pick) {
-      let updatedGame = { ...this.state.formattedGames.find(fg => fg.id == pick.gameId) };
+      let updatedGame = { ...this.state.unlockedFormattedGames.find(fg => fg.id == pick.gameId) };
       updatedGame.userData = pick
-      let formattedGames = [...this.state.formattedGames]
-      formattedGames.splice(formattedGames.findIndex(fg => fg.id == updatedGame.id), 1, updatedGame)
-      commit("setFormattedGames", formattedGames);
+      let unlockedFormattedGames = [...this.state.unlockedFormattedGames]
+      unlockedFormattedGames.splice(unlockedFormattedGames.findIndex(fg => fg.id == updatedGame.id), 1, updatedGame)
+      commit("setFormattedGames", unlockedFormattedGames);
       dispatch("setActiveGamesByActiveDate")
     },
 
@@ -576,8 +605,8 @@ export default new Vuex.Store({
         this.state.allPicks.forEach(p => {
           if (p.teamId != 0) {
             let winningTeamId = 0;
-            if (this.state.formattedGames.findIndex(fg => fg.wId == p.teamId) > 0) {
-              winningTeamId = this.state.formattedGames.find(fg => fg.wId == p.teamId).wId;
+            if (this.state.lockedFormattedGames.findIndex(fg => fg.wId == p.teamId) > 0) {
+              winningTeamId = this.state.lockedFormattedGames.find(fg => fg.wId == p.teamId).wId;
             }
             if (p.userId == user.userId && p.teamId == winningTeamId) {
               points += p.points
@@ -600,7 +629,7 @@ export default new Vuex.Store({
     },
 
     getCompletedGames({ dispatch, commit }) {
-      let completedGames = this.state.formattedGames.filter(fg => fg.wId > 0)
+      let completedGames = this.state.lockedFormattedGames.filter(fg => fg.wId > 0)
       commit("setCompletedGames", completedGames)
       dispatch("getLeaderBoardData")
     },

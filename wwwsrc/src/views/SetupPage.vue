@@ -2,6 +2,7 @@
   <div class="setup-page text-white">
     <add-game-button />
     <add-team-button />
+    <lock-all-games-button />
     <div
       v-if="this.$auth.isAuthenticated && this.$store.state.teams.length < 1"
       class="w-75 text-center"
@@ -38,6 +39,7 @@ import games from "../components/Games";
 import gameTitleBars from "../components/GameTitleBars";
 import otherGameTitleBars from "../components/OtherGameTitleBars";
 import addTeamButton from "../components/AddTeamButton";
+import lockAllGamesButton from "../components/LockAllGamesButton";
 export default {
   name: "setup-page",
   data() {
@@ -45,43 +47,12 @@ export default {
   },
   computed: {},
   async beforeCreate() {
-    if (this.$store.state.formattedGames.length < 1) {
-      await this.$store.dispatch("formatGames");
-    }
+    this.$store.dispatch("getInitAndFormat");
   },
   created() {
     this.$store.dispatch("getAllOtherGames");
   },
   methods: {
-    formatGames() {
-      // console.log("games: ");
-      this.$store.state.teams.forEach((t) => {
-        if (
-          this.$store.state.teams.indexOf(t) == 0 ||
-          this.$store.state.teams.indexOf(t) % 2 == 0
-        ) {
-          let game = {};
-          game.firstTeam = t;
-          game.secondTeam = this.$store.state.teams[
-            this.$store.state.teams.indexOf(t) + 1
-          ];
-
-          this.$store.dispatch("formatGame", game);
-          // console.log("game pushed: ", game);
-        }
-      });
-    },
-    formatTeams() {
-      // console.log("Format Teams called.");
-      this.$store.state.teamsRawData.forEach((t) => {
-        let team = {};
-        team.name = t[0];
-        team.priColor = t[1];
-        team.secColor = t[2];
-        this.$store.dispatch("addTeam", team);
-        // console.log("team added: ", team);
-      });
-    },
     addAllTeams() {
       this.$store.dispatch("addAllTeams");
     },
@@ -96,6 +67,7 @@ export default {
     otherGameTitleBars,
     dates,
     addTeamButton,
+    lockAllGamesButton,
   },
 };
 </script>
