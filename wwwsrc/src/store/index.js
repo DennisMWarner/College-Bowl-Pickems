@@ -23,7 +23,9 @@ export default new Vuex.Store({
     activeTeamsByGameId: [],
     games: [],
     completedGames: [],
-    otherGames: [],
+    cancelledGames: [],
+    postponedGames: [],
+    unlockedGames: [],
     allPicks: [],
     userPicks: [],
     leaderBoardRows: [],
@@ -136,8 +138,17 @@ export default new Vuex.Store({
       state.games = games
     },
 
-    setOtherGames(state, games) {
-      state.otherGames = games
+    setCancelledGames(state, games) {
+      state.cancelledGames = games
+    },
+
+    setPostponedGames(state, games) {
+      state.postponedGames = games
+    },
+
+    setUnlockedGames(state, games) {
+      console.log("locked games committed: ", games)
+      state.unlockedGames = games
     },
 
     updateGames(state, game) {
@@ -187,10 +198,11 @@ export default new Vuex.Store({
     },
 
     setUnlockedFormattedGames(state, games) {
-      console.log("setting unformatted games: ", games)
+      console.log("setting unlocked formatted games: ", games)
       state.unlockedFormattedGames = games
     },
     setLockedFormattedGames(state, games) {
+      console.log("setting locked unformatted games: ", games)
       state.lockedFormattedGames = games
     },
 
@@ -295,8 +307,25 @@ export default new Vuex.Store({
     },
 
     async getAllOtherGames({ commit }) {
+      let unlockedGames = []
+      let cancelledGames = []
+      let postponedGames = []
       let res = await api.get("games/other");
-      commit("setOtherGames", res.data)
+      res.data.forEach(g => {
+        console.log("other game: ", g)
+        if (g.status == "unlocked") {
+          unlockedGames.push(g)
+        }
+        if (g.status == "cancelled") {
+          cancelledGames.push(g)
+        }
+        if (g.status == "postponed") {
+          postponedGames.push(g)
+        }
+      })
+      commit("setCancelledGames", cancelledGames)
+      commit("setUnlockedGames", unlockedGames)
+      commit("setPostponedGames", postponedGames)
     },
 
     async getInitAndFormat({ dispatch, commit }) {
@@ -312,6 +341,7 @@ export default new Vuex.Store({
       let lockedFormattedGames = [];
       let unlockedFormattedGames = []
       let formattedGames = []
+
       this.state.games.forEach(g => {
         let teamsfound = this.state.teams.filter(t =>
           t.gameId == g.id)
@@ -322,14 +352,16 @@ export default new Vuex.Store({
       })
 
       formattedGames.forEach(tf => {
-        if (tf.status == "locked") {
-          console.log("unlocked formatted game: ", tf)
+        if (tf.status == 'locked') {
+          console.log("locked formatted game: ", tf)
           lockedFormattedGames.push(tf)
         }
         else if (tf.status == "unlocked" || tf.status == null) {
           unlockedFormattedGames.push(tf)
         }
+        else { console.log("game not parsed correctly: ", tf) }
       })
+      console.log("locked games sent: ", lockedFormattedGames)
       commit("setLockedFormattedGames", lockedFormattedGames)
       commit("setUnlockedFormattedGames", unlockedFormattedGames)
     },
@@ -385,6 +417,12 @@ export default new Vuex.Store({
     setActiveDate({ dispatch, commit }, date) {
       commit("setActiveDate", date);
       dispatch("setActiveGamesByActiveDate")
+    },
+
+    clearActiveGame({ commit }) {
+      let clearedGame = {}
+      commit("setActiveGame", clearedGame)
+      console.log("active game should be empty...:", this.state.activeGame)
     },
 
     setActiveGame({ dispatch, commit }, game) {

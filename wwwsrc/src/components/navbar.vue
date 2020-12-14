@@ -35,6 +35,15 @@
           >
         </li>
         <li
+          class="nav-item"
+          :class="{ active: $route.name == 'myPicks' }"
+          v-if="$auth.isAuthenticated"
+        >
+          <router-link :to="{ name: 'my-picks-page' }" class="nav-link"
+            >View My Picks</router-link
+          >
+        </li>
+        <li
           v-if="
             $auth.isAuthenticated &&
             $auth.identity.hasOwnProperty('permissions') &&
@@ -48,7 +57,7 @@
           >
         </li>
 
-        <li
+        <!-- <li
           v-if="$auth.isAuthenticated"
           class="nav-item"
           :class="{
@@ -72,7 +81,7 @@
           <router-link :to="{ name: 'stats-page' }" class="nav-link"
             >All Stats</router-link
           >
-        </li>
+        </li> -->
         <li
           class="nav-item"
           :class="{ active: $route.name == 'makePicks' }"

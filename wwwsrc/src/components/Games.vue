@@ -1,5 +1,5 @@
 <template>
-  <div class="games">
+  <div class="games no-gutters row justify-content-around">
     <game v-for="game in games" :gameData="game" :key="game.firstTeam.name" />
   </div>
 </template>
@@ -14,7 +14,7 @@ export default {
   },
   computed: {
     games() {
-      return this.$store.state.activeGames;
+      return this.$store.state.lockedFormattedGames;
     },
   },
   methods: {},

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="pickable col-md-5 game pb-2 mt-0 mb-3 mx-2 border border-white rounded bg-dark"
+    class="pickable-game col-md-5 game pb-2 mt-0 mb-3 mx-2 border border-white rounded bg-dark"
   >
     <div class="m-0 row no-gutters">
       <div class="col-12">

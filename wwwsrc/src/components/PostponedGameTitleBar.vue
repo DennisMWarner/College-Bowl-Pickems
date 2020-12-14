@@ -1,10 +1,10 @@
 <template>
-  <div class="other-game-title-bar">
+  <div class="postponed-game-title-bar">
     <div
       v-if="
         this.$route.path == '/setup' &&
         this.$store.state.activeGame != '' &&
-        this.$store.state.activeGame.name == otherGameTitleBarData.name
+        this.$store.state.activeGame.name == postponedGameTitleBarData.name
       "
     >
       <div>
@@ -13,7 +13,7 @@
           @click="setActiveGame()"
         >
           <h5>
-            {{ this.otherGameTitleBarData.name }}
+            {{ this.postponedGameTitleBarData.name }}
           </h5>
         </div>
 
@@ -33,7 +33,7 @@
         @click="setActiveGame()"
       >
         <h5>
-          {{ this.otherGameTitleBarData.name }}
+          {{ this.postponedGameTitleBarData.name }}
         </h5>
       </div>
     </div>
@@ -43,24 +43,24 @@
 
 <script>
 export default {
-  name: "other-game-title-bar",
+  name: "postponed-game-title-bar",
   data() {
     return {};
   },
   computed: {},
   methods: {
     setActiveGame() {
-      this.$store.dispatch("setActiveGame", this.otherGameTitleBarData);
+      this.$store.dispatch("setActiveGame", this.postponedGameTitleBarData);
     },
 
     uncancelGame() {
-      delete this.otherGameTitleBarData.status;
-      // console.log("uncancelled game: ", this.otherGameTitleBarData);
-      this.$store.dispatch("updateGame", this.otherGameTitleBarData);
+      delete this.postponedGameTitleBarData.status;
+      // console.log("unpostponed game: ", this.postponedGameTitleBarData);
+      this.$store.dispatch("updateGame", this.postponedGameTitleBarData);
     },
   },
   components: {},
-  props: ["otherGameTitleBarData"],
+  props: ["postponedGameTitleBarData"],
 };
 </script>
 

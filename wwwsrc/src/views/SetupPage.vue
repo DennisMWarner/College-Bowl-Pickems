@@ -18,14 +18,34 @@
     <div class="col-12 text-center p-0">
       <game-title-bars />
     </div>
-    <div v-if="this.$store.state.otherGames.length > 0">
+    <div v-if="this.$store.state.cancelledGames.length > 0">
       <div
         class="col-12 text-center p-0 border w-75 my-3 rounded border-white bg-warning text-white mx-auto text-center"
       >
-        Cancelled or postponed games
+        Cancelled Games
       </div>
       <div class="col-12 text-center p-0">
         <other-game-title-bars />
+      </div>
+    </div>
+    <div v-if="this.$store.state.postponedGames.length > 0">
+      <div
+        class="col-12 text-center p-0 border w-75 my-3 rounded border-white bg-warning text-white mx-auto text-center"
+      >
+        Postponed Games
+      </div>
+      <div class="col-12 text-center p-0">
+        <postponed-game-title-bars />
+      </div>
+    </div>
+    <div v-if="this.$store.state.unlockedGames.length > 0">
+      <div
+        class="col-12 text-center p-0 border w-75 my-3 rounded border-white bg-warning text-white mx-auto text-center"
+      >
+        Unlocked Games
+      </div>
+      <div class="col-12 text-center p-0">
+        <unlocked-game-title-bars />
       </div>
     </div>
   </div>
@@ -37,7 +57,9 @@ import dates from "../components/Dates";
 import addGameButton from "../components/AddGameButton";
 import games from "../components/Games";
 import gameTitleBars from "../components/GameTitleBars";
-import otherGameTitleBars from "../components/OtherGameTitleBars";
+import cancelledGameTitleBars from "../components/CancelledGameTitleBars";
+import postponedGameTitleBars from "../components/PostponedGameTitleBars";
+import unlockedGameTitleBars from "../components/UnlockedGameTitleBars";
 import addTeamButton from "../components/AddTeamButton";
 import lockAllGamesButton from "../components/LockAllGamesButton";
 export default {
@@ -64,7 +86,9 @@ export default {
     games,
     addGameButton,
     gameTitleBars,
-    otherGameTitleBars,
+    cancelledGameTitleBars,
+    postponedGameTitleBars,
+    unlockedGameTitleBars,
     dates,
     addTeamButton,
     lockAllGamesButton,
