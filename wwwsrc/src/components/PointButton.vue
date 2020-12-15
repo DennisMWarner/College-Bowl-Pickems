@@ -1,18 +1,32 @@
 <template>
   <div
     v-if="
+      this.$store.state.lockedFormattedGames.findIndex(
+        (lfg) => lfg.userData.points == this.pointButtonData.pointValue
+      ) > -1
+    "
+    class="point-button bg-dark col-2 mt-1 py-1 text-secondary border text-center rounded border-secondary"
+  >
+    <div>{{ pointButtonData.pointValue }}</div>
+  </div>
+  <div
+    v-else-if="
       this.$store.state.userPicks.findIndex(
         (p) => p.points == this.pointButtonData.pointValue
-      ) < 0
+      ) == -1
     "
-    class="point-button w-25 bg-warning col-2 mt-1 py-1 text-white border text-center rounded border-dark"
+    class="point-button bg-warning col-2 mt-1 py-1 text-white border text-center rounded border-dark"
     @click="makePick()"
   >
     <div>{{ pointButtonData.pointValue }}</div>
   </div>
   <div
-    v-else
-    class="point-button w-25 bg-secondary col-2 mt-1 py-1 text-white border text-center rounded border-dark"
+    v-else-if="
+      this.$store.state.userPicks.findIndex(
+        (p) => p.points == this.pointButtonData.pointValue
+      ) != -1
+    "
+    class="point-button bg-secondary col-2 mt-1 py-1 text-white border text-center rounded border-dark"
     @click="makePick()"
   >
     <div>{{ pointButtonData.pointValue }}</div>

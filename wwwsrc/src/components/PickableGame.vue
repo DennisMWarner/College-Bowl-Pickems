@@ -60,7 +60,7 @@
           </div>
           <div
             v-else
-            class="col-12 offset-1 text-left teams bg-white text-dark team1"
+            class="col-12 offset-1 text-left teams bg-white text-secondary team1"
             @click="setActiveFirstTeam()"
           >
             {{ this.pickableGameData.firstTeam.name }}
@@ -109,7 +109,7 @@
           </div>
           <div
             v-else
-            class="col-12 offset-1 text-left teams mt-1 bg-white text-dark team2"
+            class="col-12 offset-1 text-left teams mt-1 bg-primary text-secondary team2"
             @click="setActiveSecondTeam()"
           >
             {{ this.pickableGameData.secondTeam.name }}
@@ -235,7 +235,7 @@ export default {
   font-weight: bolder;
   padding-top: 18px;
   padding-left: 14px;
-  border-top-right-radius: 15px;
+  border-radius: 15px;
   border-bottom-right-radius: 15px;
   color: rgba(0, 0, 0, 0.794) !important;
 }

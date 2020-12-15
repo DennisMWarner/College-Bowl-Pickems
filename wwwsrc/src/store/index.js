@@ -147,7 +147,6 @@ export default new Vuex.Store({
     },
 
     setUnlockedGames(state, games) {
-      console.log("locked games committed: ", games)
       state.unlockedGames = games
     },
 
@@ -198,11 +197,10 @@ export default new Vuex.Store({
     },
 
     setUnlockedFormattedGames(state, games) {
-      console.log("setting unlocked formatted games: ", games)
       state.unlockedFormattedGames = games
     },
+
     setLockedFormattedGames(state, games) {
-      console.log("setting locked unformatted games: ", games)
       state.lockedFormattedGames = games
     },
 
@@ -222,15 +220,7 @@ export default new Vuex.Store({
       state.availableTeams.splice(state.availableTeams.findIndex(t => t.id == team.id), 1)
     },
 
-    setPoints(state) {
-      let points = []
-      let pointValue = 1;
-      state.games.forEach(g => {
-        let point = {};
-        point.pointValue = pointValue;
-        points.push(point);
-        pointValue++;
-      })
+    setPoints(state, points) {
       state.points = points
     },
 
@@ -312,7 +302,6 @@ export default new Vuex.Store({
       let postponedGames = []
       let res = await api.get("games/other");
       res.data.forEach(g => {
-        console.log("other game: ", g)
         if (g.status == "unlocked") {
           unlockedGames.push(g)
         }
@@ -353,15 +342,13 @@ export default new Vuex.Store({
 
       formattedGames.forEach(tf => {
         if (tf.status == 'locked') {
-          console.log("locked formatted game: ", tf)
           lockedFormattedGames.push(tf)
         }
         else if (tf.status == "unlocked" || tf.status == null) {
           unlockedFormattedGames.push(tf)
         }
-        else { console.log("game not parsed correctly: ", tf) }
+        else { }
       })
-      console.log("locked games sent: ", lockedFormattedGames)
       commit("setLockedFormattedGames", lockedFormattedGames)
       commit("setUnlockedFormattedGames", unlockedFormattedGames)
     },
@@ -398,7 +385,15 @@ export default new Vuex.Store({
     },
 
     async setPoints({ dispatch, commit }) {
-      await commit("setPoints");
+      let points = [];
+      this.state.games.forEach((g, index) => {
+        if (g.status != 'cancelled') {
+          let point = {}
+          point.pointValue = index + 1
+          points.push(point)
+        }
+      })
+      await commit("setPoints", points);
       dispatch("setDates");
       dispatch("setPossiblePoints")
     },
@@ -422,7 +417,6 @@ export default new Vuex.Store({
     clearActiveGame({ commit }) {
       let clearedGame = {}
       commit("setActiveGame", clearedGame)
-      console.log("active game should be empty...:", this.state.activeGame)
     },
 
     setActiveGame({ dispatch, commit }, game) {
@@ -459,6 +453,7 @@ export default new Vuex.Store({
     },
 
     async addNewGame({ dispatch, commit }, newGame) {
+      newGame.status = 'unlocked'
       let res = await api.post("games", newGame);
     },
 
@@ -626,7 +621,7 @@ export default new Vuex.Store({
       updatedGame.userData = pick
       let unlockedFormattedGames = [...this.state.unlockedFormattedGames]
       unlockedFormattedGames.splice(unlockedFormattedGames.findIndex(fg => fg.id == updatedGame.id), 1, updatedGame)
-      commit("setFormattedGames", unlockedFormattedGames);
+      commit("setUnlockedFormattedGames", unlockedFormattedGames);
       dispatch("setActiveGamesByActiveDate")
     },
 
@@ -674,7 +669,20 @@ export default new Vuex.Store({
 
     async createUser({ dispatch, commit }, user) {
       let res = await api.post("users", user);
-      dispatch("getUsers")
+      let points = []
+      let pointValue = 1;
+      state.unlockedFormattedGames.forEach(g => {
+        let initPick = {}
+        initPick.userId = this.$auth.userInfo.sub
+        initPick.name = user.name
+        initPick.gameId = g.id
+        let pickRes = api.post("createPick", initPick)
+        let point = {};
+        point.pointValue = pointValue;
+        points.push(point);
+        pointValue++;
+      })
+      dispatch("getAllPicks")
     },
 
     sortByPointsLeft({ dispatch, commit }) {

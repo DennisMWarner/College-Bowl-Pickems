@@ -105,11 +105,15 @@ export default {
         if (
           this.$store.state.unlockedFormattedGames.findIndex(
             (fg) => fg.userData.points == p.pointValue
+          ) < 0 &&
+          this.$store.state.lockedFormattedGames.findIndex(
+            (fg) => fg.userData.points == p.pointValue
           ) < 0
         ) {
           availablePoints.push(p.pointValue);
         }
       });
+      console.log("availabel points: ", availablePoints);
 
       // console.log("available points: ", availablePoints);
 
@@ -136,6 +140,9 @@ export default {
       this.$store.state.points.forEach((p) => {
         if (
           this.$store.state.unlockedFormattedGames.findIndex(
+            (fg) => fg.userData.points == p.pointValue
+          ) < 0 &&
+          this.$store.state.lockedFormattedGames.findIndex(
             (fg) => fg.userData.points == p.pointValue
           ) < 0
         ) {

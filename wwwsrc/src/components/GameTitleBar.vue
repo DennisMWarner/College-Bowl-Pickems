@@ -78,13 +78,13 @@
         {{ this.gameTitleBarData.name }}
         <img
           v-if="this.gameTitleBarData.status == 'locked'"
-          src="../assets/lock.png"
+          src="../assets/lock-closed-solid.png"
           alt=""
           class="img-fluid float-right float-top mt-1 winImg"
         />
         <img
           v-if="this.gameTitleBarData.status == 'unlocked'"
-          src="../assets/lock-open.png"
+          src="../assets/lock-open-solid.png"
           alt=""
           class="img-fluid float-right float-top mt-1 winImg"
         />
@@ -255,6 +255,7 @@ export default {
       this.gameTitleBarData.status = status;
       await this.$store.dispatch("updateGame", this.gameTitleBarData);
       this.$store.dispatch("getInitAndFormat");
+      this.$store.dispatch("clearActiveGame");
     },
   },
   components: { addTeamToGameModalBody, editGameModalBody, teamTitleBars },
