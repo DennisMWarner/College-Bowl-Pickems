@@ -199,6 +199,7 @@ export default new Vuex.Store({
     },
 
     setUnlockedFormattedGames(state, games) {
+      console.log("unlocked, formatted games: ", games)
       state.unlockedFormattedGames = games
     },
 
@@ -586,6 +587,7 @@ export default new Vuex.Store({
       let gameToUpdate = { ...this.state.activeGame }
       gameToUpdate[field.key] = field.value
       dispatch("updateGame", gameToUpdate)
+      dispatch("clearActiveGame")
     },
 
     updateFormattedGameTeam({ dispatch }, team) {
@@ -599,6 +601,14 @@ export default new Vuex.Store({
         resetTeam.gameId = 0
         api.put("teams", resetTeam)
       })
+    },
+
+    async resetWinners({ dispatch, commit }) {
+      await this.state.games.forEach(g => {
+        g.wId = 0;
+        dispatch("updateGame", g)
+      })
+      dispatch("getInitAndFormat")
     },
 
     async updatePick({ dispatch, commit }, pick) {
@@ -641,6 +651,7 @@ export default new Vuex.Store({
       this.state.users.forEach(u => {
         let user = {};
         let points = 0;
+        let perc = 0;
         let possPoints = 0;
         let pointsLeft = 0;
         user.userId = u.userId;
@@ -663,7 +674,9 @@ export default new Vuex.Store({
         user.pointsLeft = pointsLeft
         user.points = points
         user.possPoints = possPoints
-        let perc = points / possPoints * 100;
+        if (points != 0) {
+          perc = points / possPoints * 100;
+        }
         user.percent = perc.toFixed(2)
         user.pointsLeft = pointsLeft;
         lbRows.push(user)
@@ -681,17 +694,24 @@ export default new Vuex.Store({
       let res = await api.post("users", user);
       let points = []
       let pointValue = 1;
-      state.unlockedFormattedGames.forEach(g => {
+      if (this.state.unlockedFormattedGames.length < 1) {
+        await dispatch("getInitAndFormat")
+      }
+      this.state.unlockedFormattedGames.forEach(g => {
         let initPick = {}
-        initPick.userId = this.$auth.userInfo.sub
+        initPick.userId = user.userId
         initPick.name = user.name
+        initPick.points = 0
+        initPick.teamId = 0
         initPick.gameId = g.id
-        let pickRes = api.post("createPick", initPick)
+        let pickRes = api.post("picks", initPick)
+        console.log("init pick: ", initPick)
         let point = {};
         point.pointValue = pointValue;
         points.push(point);
         pointValue++;
       })
+      commit("setPoints", points)
       dispatch("getAllPicks")
     },
 

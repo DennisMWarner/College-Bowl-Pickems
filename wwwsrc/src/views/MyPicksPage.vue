@@ -1,6 +1,5 @@
 <template>
   <div class="my-picks-page text-white">
-    My Picks
     <games />
   </div>
 </template>

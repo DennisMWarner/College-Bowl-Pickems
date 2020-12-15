@@ -73,6 +73,7 @@ export default {
       // let key = this.editFieldButtonData.key;
       // this.editData[key] = this.editData.value;
       this.$store.dispatch("updateEditedGameField", this.editData);
+      this.$store.dispatch("getInitAndFormat");
     },
   },
 

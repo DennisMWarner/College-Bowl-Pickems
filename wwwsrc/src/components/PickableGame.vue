@@ -45,7 +45,14 @@
       <div class="col-9">
         <div class="row">
           <div
-            v-if="
+            v-if="!this.pickableGameData.userData.teamId"
+            class="col-12 offset-1 text-left teams bg-white text-secondary team1"
+            @click="setActiveFirstTeam()"
+          >
+            {{ this.pickableGameData.firstTeam.name }}
+          </div>
+          <div
+            v-else-if="
               this.pickableGameData.firstTeam.id ==
               this.pickableGameData.userData.teamId
             "
@@ -60,7 +67,7 @@
           </div>
           <div
             v-else
-            class="col-12 offset-1 text-left teams bg-white text-secondary team1"
+            class="col-12 offset-1 text-left teams bg-dark text-secondary team1"
             @click="setActiveFirstTeam()"
           >
             {{ this.pickableGameData.firstTeam.name }}
@@ -94,7 +101,14 @@
         <!-----------------------------------------end points selector modal------------>
         <div class="row">
           <div
-            v-if="
+            v-if="!this.pickableGameData.userData.teamId"
+            class="col-12 offset-1 text-left teams bg-white text-secondary team2"
+            @click="setActiveSecondTeam()"
+          >
+            {{ this.pickableGameData.secondTeam.name }}
+          </div>
+          <div
+            v-else-if="
               this.pickableGameData.secondTeam.id ==
               this.pickableGameData.userData.teamId
             "
@@ -109,7 +123,7 @@
           </div>
           <div
             v-else
-            class="col-12 offset-1 text-left teams mt-1 bg-primary text-secondary team2"
+            class="col-12 offset-1 text-left teams mt-1 text-secondary team2"
             @click="setActiveSecondTeam()"
           >
             {{ this.pickableGameData.secondTeam.name }}

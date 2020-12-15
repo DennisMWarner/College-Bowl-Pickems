@@ -7,13 +7,13 @@
       {{ leaderBoardRowData.name }}
     </div>
     <div class="w-50 row no-gutters">
-      <span class="w-25 text-center mx-auto">{{
+      <span class="w-25 text-center pl-1 mx-auto">{{
         leaderBoardRowData.points
       }}</span>
-      <span class="w-25 text-center mx-auto">
+      <span class="w-25 text-center pl-2 mx-auto">
         {{ leaderBoardRowData.percent }}%</span
       >
-      <span class="w-25 text-center mx-auto">
+      <span class="w-25 text-center pl-2 mx-auto">
         {{ leaderBoardRowData.pointsLeft }}</span
       >
     </div>
@@ -26,13 +26,13 @@
       {{ leaderBoardRowData.name }}
     </div>
     <div class="w-50 row no-gutters">
-      <span class="w-25 text-center mx-auto">{{
+      <span class="w-25 text-center pl-1 mx-auto">{{
         leaderBoardRowData.points
       }}</span>
-      <span class="w-25 text-center mx-auto">
+      <span class="w-25 text-center pl-2 mx-auto">
         {{ leaderBoardRowData.percent }}%</span
       >
-      <span class="w-25 text-center mx-auto">
+      <span class="w-25 text-center pl-2 mx-auto">
         {{ leaderBoardRowData.pointsLeft }}</span
       >
     </div>

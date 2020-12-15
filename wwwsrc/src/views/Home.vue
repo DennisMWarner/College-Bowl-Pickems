@@ -61,6 +61,7 @@
               <button
                 type="button"
                 class="btn btn-warning border border-white w-50 mx-auto m-3"
+                data-dismiss="modal"
                 @click="createUser()"
               >
                 OK

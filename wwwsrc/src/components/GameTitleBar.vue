@@ -76,15 +76,22 @@
         @click="setActiveGame()"
       >
         {{ this.gameTitleBarData.name }}
+
         <img
           v-if="this.gameTitleBarData.status == 'locked'"
           src="../assets/lock-closed-solid.png"
           alt=""
-          class="img-fluid float-right float-top mt-1 winImg"
+          class="img-fluid float-right float-top mt-1 ml-3 winImg"
         />
         <img
           v-if="this.gameTitleBarData.status == 'unlocked'"
           src="../assets/lock-open-solid.png"
+          alt=""
+          class="img-fluid float-right float-top mt-1 ml-3 winImg"
+        />
+        <img
+          v-if="this.gameTitleBarData.wId != 0"
+          src="../assets/check-solid-circle.png"
           alt=""
           class="img-fluid float-right float-top mt-1 winImg"
         />

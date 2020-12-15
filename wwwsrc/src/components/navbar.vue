@@ -37,7 +37,10 @@
         <li
           class="nav-item"
           :class="{ active: $route.name == 'myPicks' }"
-          v-if="$auth.isAuthenticated"
+          v-if="
+            $auth.isAuthenticated &&
+            this.$store.state.lockedFormattedGames.length > 0
+          "
         >
           <router-link :to="{ name: 'my-picks-page' }" class="nav-link"
             >View My Picks</router-link
@@ -85,7 +88,10 @@
         <li
           class="nav-item"
           :class="{ active: $route.name == 'makePicks' }"
-          v-if="$auth.isAuthenticated"
+          v-if="
+            $auth.isAuthenticated &&
+            this.$store.state.unlockedFormattedGames.length > 0
+          "
         >
           <router-link :to="{ name: 'make-picks-page' }" class="nav-link"
             >Make Picks</router-link
@@ -93,17 +99,27 @@
         </li>
       </ul>
       <div v-if="$auth.isAuthenticated" class="mr-2 text-warning">
-        {{ this.$auth.userInfo.name }}
+        {{
+          this.$store.state.users.find(
+            (u) => u.userId == this.$auth.userInfo.sub
+          ).name
+        }}
       </div>
       <span class="navbar-text">
         <button
-          class="btn btn-success"
+          class="btn btn-dark border border-white"
           @click="login"
           v-if="!$auth.isAuthenticated"
         >
           Login
         </button>
-        <button class="btn btn-danger" @click="logout" v-else>logout</button>
+        <button
+          class="btn btn-danger border border-white"
+          @click="logout"
+          v-else
+        >
+          logout
+        </button>
       </span>
     </div>
   </nav>

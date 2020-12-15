@@ -47,7 +47,7 @@
           </div>
           <div
             v-else
-            class="col-12 offset-1 text-left teams bg-white text-dark team1"
+            class="col-12 offset-1 text-left teams bg-dark text-secondary team1"
           >
             {{ this.gameData.firstTeam.name }}
           </div>
@@ -66,7 +66,7 @@
           </div>
           <div
             v-else
-            class="col-12 offset-1 text-left teams mt-1 bg-white text-dark team2"
+            class="col-12 offset-1 text-left teams mt-1 bg-dark text-secondary team2"
           >
             {{ this.gameData.secondTeam.name }}
           </div>
