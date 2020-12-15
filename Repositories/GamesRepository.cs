@@ -30,8 +30,8 @@ namespace BowlPickems.Repositories
     internal Game Create(Game newGame)
     {
       string sql = @"
-            INSERT INTO games(name, gameDate, loc, time, network, sponsor, bowlUrl)
-            VALUES(@Name, @GameDate, @Loc, @Time, @Network, @Sponsor, @BowlUrl,); 
+            INSERT INTO games(name, gameDate, loc, time, network, sponsor, bowlUrl, wId, status)
+            VALUES(@Name, @GameDate, @Loc, @Time, @Network, @Sponsor, @BowlUrl, @WId, @Status); 
             SELECT LAST_INSERT_ID()
         ";
       newGame.Id = _db.ExecuteScalar<int>(sql, newGame);

@@ -465,6 +465,7 @@ export default new Vuex.Store({
 
     async addNewGame({ dispatch, commit }, newGame) {
       newGame.status = 'unlocked'
+      newGame.wId = 0
       let res = await api.post("games", newGame);
     },
 

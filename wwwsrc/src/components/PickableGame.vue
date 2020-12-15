@@ -29,7 +29,7 @@
             />
           </div>
         </div>
-        <h6 class="text-white mb-0 pl-2 font-italic">
+        <h6 class="text-white mb-0 pt-1 pl-2 font-italic">
           {{ this.pickableGameData.sponsor }}
           {{ this.pickableGameData.name }}
         </h6>
@@ -90,7 +90,7 @@
 
               <button
                 type="button"
-                class="btn btn-secondary w-25 mx-auto mb-4"
+                class="btn btn-secondary w-25 mx-auto shadow text-dark mb-4"
                 data-dismiss="modal"
               >
                 Cancel

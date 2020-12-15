@@ -31,6 +31,8 @@
 --     time VARCHAR(12), 
 --     network VARCHAR(24),
 --    PRIMARY KEY (id),
+--    wId int NOT NULL,
+--    status VARCHAR(255),
 --     INDEX (gameDate)   
 -- );
 

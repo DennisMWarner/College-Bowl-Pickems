@@ -4,14 +4,14 @@
       this.leaderBoardHeaderButtonData ==
       this.$store.state.activeLeaderBoardHeaderButton
     "
-    class="leader-board-header-button w-25 text-center mx-auto border rounded bg-warning"
+    class="leader-board-header-button w-25 px-1 text-center mx-auto border border-white text-white rounded bg-info"
     @click="sort()"
   >
     {{ this.leaderBoardHeaderButtonData.name }}
   </div>
   <div
     v-else
-    class="leader-board-header-button w-25 text-center mx-auto border rounded bg-dark"
+    class="leader-board-header-button w-25 px-1 text-center mx-auto border rounded text-white"
     @click="sort()"
   >
     {{ leaderBoardHeaderButtonData.name }}

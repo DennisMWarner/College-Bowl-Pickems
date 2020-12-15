@@ -20,7 +20,7 @@
             />
           </div>
         </div>
-        <h6 class="text-white mb-0 pl-2 font-italic">
+        <h6 class="text-white mb-0 pl-2 pt-1 font-italic">
           {{ this.gameData.sponsor }}
           {{ this.gameData.name }}
         </h6>

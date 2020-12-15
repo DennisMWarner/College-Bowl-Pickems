@@ -17,6 +17,7 @@
     "
     class="point-button bg-warning col-2 mt-1 py-1 text-white border text-center rounded border-dark"
     @click="makePick()"
+    data-dismiss="modal"
   >
     <div>{{ pointButtonData.pointValue }}</div>
   </div>
@@ -28,6 +29,7 @@
     "
     class="point-button bg-secondary col-2 mt-1 py-1 text-white border text-center rounded border-dark"
     @click="makePick()"
+    data-dismiss="modal"
   >
     <div>{{ pointButtonData.pointValue }}</div>
   </div>
