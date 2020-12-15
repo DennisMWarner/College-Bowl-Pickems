@@ -26,6 +26,8 @@ export default new Vuex.Store({
     cancelledGames: [],
     postponedGames: [],
     unlockedGames: [],
+    leaderBoardHeaderButtons: [{ name: "Pts Won" }, { name: "Win %" }, { name: "Pts Left" }],
+    activeLeaderBoardHeaderButton: {},
     allPicks: [],
     userPicks: [],
     leaderBoardRows: [],
@@ -248,6 +250,10 @@ export default new Vuex.Store({
       state.activePoint = point
     },
 
+    setActiveLeaderBoardHeaderButton(state, button) {
+      state.activeLeaderBoardHeaderButton = button
+    },
+
     setLeaderBoardRows(state, lbRows) {
       state.leaderBoardRows = lbRows
     },
@@ -412,6 +418,10 @@ export default new Vuex.Store({
     setActiveDate({ dispatch, commit }, date) {
       commit("setActiveDate", date);
       dispatch("setActiveGamesByActiveDate")
+    },
+
+    setActiveLeaderBoardHeaderButton({ commit }, button) {
+      commit("setActiveLeaderBoardHeaderButton", button)
     },
 
     clearActiveGame({ commit }) {
