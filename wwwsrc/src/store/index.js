@@ -168,9 +168,6 @@ export default new Vuex.Store({
       state.otherGames = games
     },
 
-    updateGames(state, game) {
-      state.games.splice(state.games.findIndex(g => g.id == game.id), 1, game)
-    },
 
     setDates(state) {
       state.games.forEach(g => {
@@ -392,7 +389,6 @@ export default new Vuex.Store({
         gameToEdit.status = "unlocked"
         dispatch("updateGame", gameToEdit)
       })
-
     },
 
     async getUserPicks({ dispatch, commit }, userId) {
@@ -654,17 +650,16 @@ export default new Vuex.Store({
 
     async updateGame({ dispatch, commit }, gameToUpdate) {
       let res = await api.put("games/" + gameToUpdate.id, gameToUpdate)
-      dispatch("setActiveEditFields", res.data)
-      commit("updateGames", res.data)
+      dispatch("getInitAndFormat")
     },
 
     async updateTeam({ dispatch, commit }, teamToUpdate) {
       let res = await api.put("teams/" + teamToUpdate.id, teamToUpdate)
-      dispatch("setActiveEditFields", res.data)
       dispatch("getInitAndFormat")
     },
 
     setActiveEditField({ commit }, field) {
+      console.log("activeEditfield passed: ", field)
       commit("setActiveEditField", field)
     },
 
@@ -679,16 +674,20 @@ export default new Vuex.Store({
       commit("setActiveEditFields", editableObject)
     },
 
-    updateEditedGameField({ dispatch }, field) {
+    async updateEditedGameField({ dispatch }, field) {
       let gameToUpdate = { ...this.state.activeGame }
       gameToUpdate[field.key] = field.value
-      dispatch("updateGame", gameToUpdate)
-      dispatch("clearActiveGame")
+      await dispatch("updateGame", gameToUpdate)
+      await dispatch("setActiveGame", gameToUpdate);
+      dispatch("setActiveEditFields", this.state.activeGame)
     },
-    updateEditedTeamField({ dispatch }, field) {
+
+    async updateEditedTeamField({ dispatch }, field) {
       let teamToUpdate = { ...this.state.activeTeam }
       teamToUpdate[field.key] = field.value
-      dispatch("updateTeam", teamToUpdate)
+      await dispatch("updateTeam", teamToUpdate)
+      await dispatch("setActiveTeam", teamToUpdate);
+      dispatch("setActiveEditFields", this.state.activeTeam)
     },
 
     updateFormattedGameTeam({ dispatch }, team) {

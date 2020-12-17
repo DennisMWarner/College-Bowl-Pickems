@@ -71,7 +71,6 @@
         <input
           type="text"
           class="form-control w-75 mx-auto text-center"
-          id="setReps"
           placeholder="Enter time of game here..."
           v-model="newGame.time"
           required
@@ -87,7 +86,6 @@
         <input
           type="text"
           class="form-control w-75 mx-auto text-center"
-          id="setReps"
           placeholder="Enter networks aired on here..."
           v-model="newGame.network"
           required
@@ -103,7 +101,6 @@
         <input
           type="text"
           class="form-control w-75 mx-auto text-center"
-          id="setReps"
           placeholder="Enter networks aired on here..."
           v-model="newGame.bowlUrl"
           required

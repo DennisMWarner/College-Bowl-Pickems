@@ -239,14 +239,15 @@ export default {
     },
 
     setActiveGame() {
-      if (this.gameTitleBarData != this.$store.state.activeGame) {
-        this.$store.dispatch("setActiveGame", this.gameTitleBarData);
-      } else {
-        this.$store.dispatch("setActiveGame", {});
-      }
+      // if (this.gameTitleBarData != this.$store.state.activeGame) {
+      //   this.$store.dispatch("setActiveGame", this.gameTitleBarData);
+      // } else {
+      //   this.$store.dispatch("setActiveGame", {});
+      // }
+      this.$store.dispatch("setActiveGame", this.gameTitleBarData);
     },
     setActiveEditFields() {
-      this.$store.dispatch("setActiveEditFields", this.$store.state.activeGame);
+      this.$store.dispatch("setActiveEditFields", this.gameTitleBarData);
     },
     setActiveTeamsWithGameIds() {
       this.$store.dispatch("setActiveTeamsWithGameIds");

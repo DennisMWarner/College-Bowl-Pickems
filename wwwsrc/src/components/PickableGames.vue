@@ -1,5 +1,5 @@
 <template>
-  <div class="no-gutters row justify-content-around">
+  <div class="no-gutters row justify-content-around mt-4">
     <pickable-game
       v-for="game in games"
       :pickableGameData="game"

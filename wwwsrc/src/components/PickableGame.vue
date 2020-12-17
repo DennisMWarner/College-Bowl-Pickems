@@ -51,7 +51,9 @@
           >
             {{ this.pickableGameData.firstTeam.name }}
             <div class="row no-gutters">
-              <div class="col-7 recsTop text-right">Big 10 12-0</div>
+              <div class="col-7 recsTop text-right">
+                Big 10 &nbsp;&nbsp; 12-0
+              </div>
               <div class="col-7 recsBot text-right">13-0</div>
               <div class="col-4 streak text-right">W-5</div>
             </div>
@@ -70,7 +72,9 @@
           >
             {{ this.pickableGameData.firstTeam.name }}
             <div class="row no-gutters">
-              <div class="col-7 recsTop text-right">Big 10 12-0</div>
+              <div class="col-7 recsTop text-right">
+                Big 10 &nbsp;&nbsp; 12-0
+              </div>
               <div class="col-7 recsBot text-right">13-0</div>
               <div class="col-4 streak text-right">W-5</div>
             </div>
@@ -82,7 +86,9 @@
           >
             {{ this.pickableGameData.firstTeam.name }}
             <div class="row no-gutters">
-              <div class="col-7 recsTop text-right">Big 10 12-0</div>
+              <div class="col-7 recsTop text-right">
+                Big 10 &nbsp;&nbsp; 12-0
+              </div>
               <div class="col-7 recsBot text-right">13-0</div>
               <div class="col-4 streak text-right">W-5</div>
             </div>
@@ -122,7 +128,9 @@
           >
             {{ this.pickableGameData.secondTeam.name }}
             <div class="row no-gutters">
-              <div class="col-7 recsTop text-right">Big 10 12-0</div>
+              <div class="col-7 recsTop text-right">
+                Big 10 &nbsp;&nbsp; 12-0
+              </div>
               <div class="col-7 recsBot text-right">13-0</div>
               <div class="col-4 streak text-right">W-5</div>
             </div>
@@ -141,7 +149,9 @@
           >
             {{ this.pickableGameData.secondTeam.name }}
             <div class="row no-gutters">
-              <div class="col-7 recsTop text-right">Big 10 12-0</div>
+              <div class="col-7 recsTop text-right">
+                Big 10 &nbsp;&nbsp; 12-0
+              </div>
               <div class="col-7 recsBot text-right">13-0</div>
               <div class="col-4 streak text-right">W-5</div>
             </div>
@@ -153,7 +163,9 @@
           >
             {{ this.pickableGameData.secondTeam.name }}
             <div class="row no-gutters">
-              <div class="col-7 recsTop text-right">Big 10 12-0</div>
+              <div class="col-7 recsTop text-right">
+                Big 10 &nbsp;&nbsp; 12-0
+              </div>
               <div class="col-7 recsBot text-right">13-0</div>
               <div class="col-4 streak text-right">W-5</div>
             </div>
