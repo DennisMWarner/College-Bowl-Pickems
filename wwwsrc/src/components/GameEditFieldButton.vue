@@ -70,11 +70,11 @@ export default {
     setActiveEditField() {
       this.$store.dispatch("setActiveEditField", this.gameEditFieldButtonData);
     },
-    updateEditedGameField() {
+    async updateEditedGameField() {
       this.editData.key = this.gameEditFieldButtonData.key;
       // let key = this.gameEditFieldButtonData.key;
       // this.editData[key] = this.editData.value;
-      this.$store.dispatch("updateEditedGameField", this.editData);
+      await this.$store.dispatch("updateEditedGameField", this.editData);
       this.$store.dispatch("getInitAndFormat");
     },
   },

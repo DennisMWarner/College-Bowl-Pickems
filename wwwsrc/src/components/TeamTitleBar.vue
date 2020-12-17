@@ -74,11 +74,12 @@ export default {
         this.$store.dispatch("editTeam", team);
       }
     },
-    setGameWinner() {
+    async setGameWinner() {
       let gameWon = { ...this.$store.state.activeGame };
       gameWon.wId = this.teamTitleBarData.id;
-      this.$store.dispatch("updateGame", gameWon);
-      this.$store.dispatch("setActiveGame", { name: "not selected" });
+      await this.$store.dispatch("updateGame", gameWon);
+      this.$store.dispatch("getInitAndFormat");
+      this.$store.dispatch("clearActiveGame");
     },
 
     setActiveTeam() {

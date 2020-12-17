@@ -383,6 +383,16 @@ export default new Vuex.Store({
         gameToEdit.status = "locked"
         dispatch("updateGame", gameToEdit)
       })
+
+    },
+
+    unlockAllGames({ dispatch }) {
+      this.state.lockedFormattedGames.forEach(ug => {
+        let gameToEdit = { ...ug }
+        gameToEdit.status = "unlocked"
+        dispatch("updateGame", gameToEdit)
+      })
+
     },
 
     async getUserPicks({ dispatch, commit }, userId) {

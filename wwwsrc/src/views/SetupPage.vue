@@ -3,18 +3,73 @@
     <add-game-button />
     <add-team-button />
     <lock-all-games-button />
+    <unlock-games-button />
     <button
       class="btn btn-danger border border-white text-center text-white w-75 mb-3"
-      @click="resetWinners()"
+      data-target="#resetWinnersModal"
+      data-toggle="modal"
     >
       Reset all winners
     </button>
+    <!--Reset winners modal------------------------>
+    <div class="modal" tabindex="-1" role="dialog" id="resetWinnersModal">
+      <div class="modal-dialog-centered m-3" role="document">
+        <div class="modal-content bg-danger">
+          <div class="modal-body p-3 border rounded border-white text-center">
+            <h4>
+              CAUTION: FOR TESTING ONLY! DO NOT USE ONCE SEASON HAS STARTED! ALL
+              WINNERS WOULD HAVE TO BE PICKED FOR GAMES INDIVDUALLY!
+            </h4>
+            <button
+              class="btn btn-danger test-center text-white border rounded w-50 border-white m-2"
+              data-dismiss="modal"
+              @click="resetWinners()"
+            >
+              Reset All Winners</button
+            ><button
+              class="btn btn-info test-center text-white border rounded w-50 border-white m-2"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--------------modal end-------------->
     <button
       class="btn btn-danger border border-white text-center text-white w-75 mb-3"
-      @click="resetTeams()"
+      data-target="#resetTeamsModal"
+      data-toggle="modal"
     >
       Reset all teams
     </button>
+    <!--Reset teams modal------------------------>
+    <div class="modal" tabindex="-1" role="dialog" id="resetTeamsModal">
+      <div class="modal-dialog-centered m-3" role="document">
+        <div class="modal-content bg-danger">
+          <div class="modal-body p-3 border rounded border-white text-center">
+            <h4>
+              CAUTION: FOR TESTING ONLY! DO NOT USE ONCE SEASON HAS STARTED! ALL
+              TEAMS WOULD HAVE TO BE ADDED BACK TO GAMES INDIVDUALLY!
+            </h4>
+            <button
+              class="btn btn-danger test-center text-white border rounded w-50 border-white m-2"
+              data-dismiss="modal"
+              @click="resetTeams()"
+            >
+              Reset All Teams</button
+            ><button
+              class="btn btn-info test-center text-white border rounded w-50 border-white m-2"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--------------modal end-------------->
     <button
       class="btn btn-success border border-white text-center text-white w-75 mb-3"
       @click="genUserSims()"
@@ -46,26 +101,6 @@
         <other-game-title-bars />
       </div>
     </div>
-    <!-- <div v-if="this.$store.state.postponedGames.length > 0">
-      <div
-        class="col-12 text-center p-0 border w-75 my-3 rounded border-white bg-warning text-white mx-auto text-center"
-      >
-        Postponed Games
-      </div>
-      <div class="col-12 text-center p-0">
-        <postponed-game-title-bars />
-      </div>
-    </div> -->
-    <!-- <div v-if="this.$store.state.unlockedGames.length > 0">
-      <div
-        class="col-12 text-center p-0 border w-75 my-3 rounded border-white bg-warning text-white mx-auto text-center"
-      >
-        Unlocked Games
-      </div>
-      <div class="col-12 text-center p-0">
-        <unlocked-game-title-bars />
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -75,12 +110,10 @@ import dates from "../components/Dates";
 import addGameButton from "../components/AddGameButton";
 import games from "../components/Games";
 import gameTitleBars from "../components/GameTitleBars";
-// import cancelledGameTitleBars from "../components/CancelledGameTitleBars";
-// import postponedGameTitleBars from "../components/PostponedGameTitleBars";
-// import unlockedGameTitleBars from "../components/UnlockedGameTitleBars";
 import otherGameTitleBars from "../components/OtherGameTitleBars";
 import addTeamButton from "../components/AddTeamButton";
 import lockAllGamesButton from "../components/LockAllGamesButton";
+import unlockGamesButton from "../components/UnlockGamesButton";
 export default {
   name: "setup-page",
   data() {
@@ -115,6 +148,7 @@ export default {
     dates,
     addTeamButton,
     lockAllGamesButton,
+    unlockGamesButton,
   },
 };
 </script>

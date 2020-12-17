@@ -73,12 +73,12 @@ export default {
         this.teamEditFieldButtonData
       );
     },
-    updateEditedTeamField() {
+    async updateEditedTeamField() {
       this.editData.key = this.teamEditFieldButtonData.key;
       // let key = this.teamEditFieldButtonData.key;
       // this.editData[key] = this.editData.value;
       console.log("team field to update: ", this.editData);
-      this.$store.dispatch("updateEditedTeamField", this.editData);
+      await this.$store.dispatch("updateEditedTeamField", this.editData);
       this.$store.dispatch("getInitAndFormat");
     },
   },

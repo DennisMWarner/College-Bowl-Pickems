@@ -1,6 +1,12 @@
 <template>
   <div class="my-picks-page text-white">
     <games />
+    <div class="text-center">
+      <h5 class="w-75 mx-auto">
+        National Championship Total Points Tiebreaker:
+        {{ this.$store.state.activeUser.tieBreaker }}
+      </h5>
+    </div>
   </div>
 </template>
 

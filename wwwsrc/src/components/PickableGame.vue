@@ -34,7 +34,7 @@
           {{ this.pickableGameData.name }}
         </h6>
         <p
-          class="text-white pl-2 pb-1 mb-0 font-italic font-weight-lighter recs"
+          class="text-white pl-2 pb-1 mb-1 font-italic font-weight-lighter locs"
         >
           {{ this.pickableGameData.loc }} {{ this.pickableGameData.time }}
           {{ this.pickableGameData.network }}
@@ -50,6 +50,11 @@
             @click="setActiveFirstTeam()"
           >
             {{ this.pickableGameData.firstTeam.name }}
+            <div class="row no-gutters">
+              <div class="col-7 recsTop text-right">Big 10 12-0</div>
+              <div class="col-7 recsBot text-right">13-0</div>
+              <div class="col-4 streak text-right">W-5</div>
+            </div>
           </div>
           <div
             v-else-if="
@@ -64,6 +69,11 @@
             @click="setActiveFirstTeam()"
           >
             {{ this.pickableGameData.firstTeam.name }}
+            <div class="row no-gutters">
+              <div class="col-7 recsTop text-right">Big 10 12-0</div>
+              <div class="col-7 recsBot text-right">13-0</div>
+              <div class="col-4 streak text-right">W-5</div>
+            </div>
           </div>
           <div
             v-else
@@ -71,6 +81,11 @@
             @click="setActiveFirstTeam()"
           >
             {{ this.pickableGameData.firstTeam.name }}
+            <div class="row no-gutters">
+              <div class="col-7 recsTop text-right">Big 10 12-0</div>
+              <div class="col-7 recsBot text-right">13-0</div>
+              <div class="col-4 streak text-right">W-5</div>
+            </div>
           </div>
         </div>
         <!--------------------------------------- Point selector modal -->
@@ -106,6 +121,11 @@
             @click="setActiveSecondTeam()"
           >
             {{ this.pickableGameData.secondTeam.name }}
+            <div class="row no-gutters">
+              <div class="col-7 recsTop text-right">Big 10 12-0</div>
+              <div class="col-7 recsBot text-right">13-0</div>
+              <div class="col-4 streak text-right">W-5</div>
+            </div>
           </div>
           <div
             v-else-if="
@@ -120,6 +140,11 @@
             @click="setActiveSecondTeam()"
           >
             {{ this.pickableGameData.secondTeam.name }}
+            <div class="row no-gutters">
+              <div class="col-7 recsTop text-right">Big 10 12-0</div>
+              <div class="col-7 recsBot text-right">13-0</div>
+              <div class="col-4 streak text-right">W-5</div>
+            </div>
           </div>
           <div
             v-else
@@ -127,6 +152,11 @@
             @click="setActiveSecondTeam()"
           >
             {{ this.pickableGameData.secondTeam.name }}
+            <div class="row no-gutters">
+              <div class="col-7 recsTop text-right">Big 10 12-0</div>
+              <div class="col-7 recsBot text-right">13-0</div>
+              <div class="col-4 streak text-right">W-5</div>
+            </div>
           </div>
         </div>
       </div>
@@ -253,7 +283,20 @@ export default {
   border-bottom-right-radius: 15px;
   color: rgba(0, 0, 0, 0.794) !important;
 }
-.recs {
+.locs {
   font-size: 12px;
+}
+.recsTop {
+  font-size: 10px;
+  margin-top: 0px;
+}
+.recsBot {
+  font-size: 10px;
+  margin-top: -4px;
+}
+.streak {
+  font-size: 12px;
+  margin-top: -12px;
+  padding-left: 3px;
 }
 </style>
