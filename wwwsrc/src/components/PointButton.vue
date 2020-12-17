@@ -15,7 +15,7 @@
         (p) => p.points == this.pointButtonData.pointValue
       ) == -1
     "
-    class="point-button bg-warning col-2 mt-1 py-1 text-white border text-center rounded border-dark"
+    class="point-button bg-warning col-2 mt-1 py-1 text-white border text-center rounded border-light"
     @click="makePick()"
     data-dismiss="modal"
   >
@@ -27,7 +27,7 @@
         (p) => p.points == this.pointButtonData.pointValue
       ) != -1
     "
-    class="point-button bg-secondary col-2 mt-1 py-1 text-white border text-center rounded border-dark"
+    class="point-button bg-secondary col-2 mt-1 py-1 text-white border text-center rounded border-light"
     @click="makePick()"
     data-dismiss="modal"
   >

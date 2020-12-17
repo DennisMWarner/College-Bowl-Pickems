@@ -38,6 +38,8 @@
           <button
             v-if="this.gameTitleBarData.status == 'cancelled'"
             class="btn btn-danger rounded mx-1 my-1 my-3 text-center text-white border"
+            data-toggle="modal"
+            data-target="#unCancelGameModal"
           >
             Uncancel
           </button>
@@ -115,8 +117,7 @@
         <div class="modal-content bg-transparent">
           <div class="modal-body bg-warning m-2 border rounded border-white">
             <h4 class="text-danger">
-              Caution! This cannot be undone. Previous user point selections
-              will be modified, and unrecoverable.
+              Caution! This will modify points for all users.
             </h4>
             <h5 class="text-dark text-center mt-4">
               Type
@@ -149,6 +150,57 @@
                 type="reset"
               >
                 Keep Game
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--------------modal end-------------->
+    <!--uncancel game modal------------------------>
+    <div
+      class="modal text-center"
+      tabindex="-1"
+      role="dialog"
+      id="unCancelGameModal"
+    >
+      <div class="modal-dialog-centered" role="document">
+        <div class="modal-content bg-transparent">
+          <div class="modal-body bg-warning m-2 border rounded border-white">
+            <h4 class="text-danger">
+              Caution! This will modify points for all users.
+            </h4>
+            <h5 class="text-dark text-center mt-4">
+              Type
+              <span class="text-white font-italic">{{
+                this.$store.state.activeGame.name
+              }}</span>
+              to confirm game uncancel.
+            </h5>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter game name to confirm"
+              aria-label=""
+              v-model="cancelConfirm.string"
+              aria-describedby="button-addon2"
+              required
+            />
+            <div>
+              <button
+                v-if="cancelConfirm.string == this.$store.state.activeGame.name"
+                type="reset"
+                class="btn rounded border btn-danger m-2 w-50 text-white text-center border-white"
+                data-dismiss="modal"
+                @click="unCancelGame()"
+              >
+                Uncancel Game</button
+              ><button
+                class="btn rounded border btn-success m-2 w-50 text-white text-center border-white"
+                data-dismiss="modal"
+                type="reset"
+              >
+                Leave Game Cancelled
               </button>
             </div>
           </div>
@@ -255,6 +307,13 @@ export default {
     async cancelGame() {
       await this.$store.dispatch(
         "cancelGameById",
+        this.$store.state.activeGame
+      );
+    },
+
+    async unCancelGame() {
+      await this.$store.dispatch(
+        "unCancelGameById",
         this.$store.state.activeGame
       );
     },

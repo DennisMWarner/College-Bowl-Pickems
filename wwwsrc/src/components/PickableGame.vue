@@ -101,9 +101,9 @@
           role="dialog"
           id="pointsSelectorModal"
         >
-          <div class="modal-dialog-centered pr-3 pl-2" role="document">
+          <div class="modal-dialog-centered pr-2 pl-2" role="document">
             <div
-              class="modal-content bg-dark rounded border border-white mx-aut0"
+              class="modal-content bg-info rounded border border-white mx-aut0"
             >
               <div class="modal-body">
                 <points-selector />
@@ -111,7 +111,7 @@
 
               <button
                 type="button"
-                class="btn btn-secondary w-25 mx-auto shadow text-dark mb-4"
+                class="btn btn-dark w-25 mx-auto shadow text-white mb-4 mt-3"
                 data-dismiss="modal"
               >
                 Cancel

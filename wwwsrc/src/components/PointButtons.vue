@@ -20,13 +20,13 @@
         "
       >
         <button
-          class="btn btn-info border border-secondary rounded w-100 text-center-text-white shadow mt-4"
+          class="btn bg-primary rounded w-100 text-center text-white shadow mt-4"
           @click="sortAscending()"
           data-dismiss="modal"
         >
           Sort Remaining Points Ascending</button
         ><button
-          class="btn btn-danger border rounded w-100 text-center-text-white border-warning shadow mt-4"
+          class="btn bg-danger rounded w-100 text-center text-white shadow mt-4"
           @click="sortDescending()"
           data-dismiss="modal"
         >
@@ -35,13 +35,13 @@
       </div>
       <div v-else>
         <button
-          class="btn btn-info border rounded w-75 text-center-text-white border-secondary mt-4"
+          class="btn bg-primary rounded w-75 text-center-text-white mt-4"
           @click="sortAscending()"
           data-dismiss="modal"
         >
           Sort All Points Ascending</button
         ><button
-          class="btn btn-danger border rounded w-75 text-center-text-white border-warning mt-4"
+          class="btn bg-primary rounded w-75 text-center-text-white mt-4"
           @click="sortDescending()"
           data-dismiss="modal"
         >
@@ -50,7 +50,7 @@
       </div>
     </div>
     <button
-      class="btn btn-warning mx-auto border rounded w-75 text-center text-white shadow border-dark mt-4"
+      class="btn bg-warning mx-auto rounded w-75 text-center text-white shadow mt-4"
       data-toggle="modal"
       data-target="#reset-points-modal"
     >
@@ -60,18 +60,18 @@
     <div class="modal" tabindex="-1" role="dialog" id="reset-points-modal">
       <div class="modal-dialog-centered pr-4 pl-3" role="document">
         <div class="modal-content">
-          <div class="modal-body bg-dark rounded border text-white">
+          <div class="modal-body bg-info rounded border text-white">
             <h4>CAUTION:</h4>
             <p>This will reset all points for all games.</p>
 
             <button
-              class="btn bg-info w-75 border rounded text-white text-center shadow pt-2"
+              class="btn bg-warning w-75 border rounded text-white text-center shadow pt-2"
               @click="resetAllPoints()"
               data-dismiss="modal"
             >
               <h2>Reset Points</h2></button
             ><button
-              class="btn bg-secondary w-75 my-3 border rounded text-white text-center"
+              class="btn bg-dark w-75 my-3 border rounded text-white text-center"
               data-dismiss="modal"
             >
               Do Not Reset
