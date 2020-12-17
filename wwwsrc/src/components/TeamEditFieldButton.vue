@@ -1,28 +1,30 @@
 <template>
-  <div class="edit-field-button" @click="setActiveEditField()">
+  <div class="team-edit-field-button" @click="setActiveEditField()">
     <div
       v-if="
-        this.editFieldButtonData.key != 'id' &&
-        this.editFieldButtonData.key != 'gameId' &&
-        this.editFieldButtonData.key != 'firstTeam' &&
-        this.editFieldButtonData.key != 'secondTeam' &&
-        this.editFieldButtonData.key != 'userData'
+        this.teamEditFieldButtonData.key != 'id' &&
+        this.teamEditFieldButtonData.key != 'gameId' &&
+        this.teamEditFieldButtonData.key != 'firstTeam' &&
+        this.teamEditFieldButtonData.key != 'secondTeam' &&
+        this.teamEditFieldButtonData.key != 'userData'
       "
     >
-      <div v-if="this.editFieldButtonData == this.$store.state.activeEditField">
+      <div
+        v-if="this.teamEditFieldButtonData == this.$store.state.activeEditField"
+      >
         <button
-          v-if="this.editFieldButtonData.value"
+          v-if="this.teamEditFieldButtonData.value"
           class="btn btn-warning mb-2 rounded border mt-4 border-white text-white text-center w-75 p-2"
         >
           <h3>
-            {{ this.editFieldButtonData.value }}
+            {{ this.teamEditFieldButtonData.value }}
           </h3>
         </button>
         <button
           v-else
           class="btn btn-secondary rounded border border-white text-white text-center m-1 w-75 p-2"
         >
-          Add {{ this.editFieldButtonData.key }}
+          Add {{ this.teamEditFieldButtonData.key }}
         </button>
 
         <input
@@ -33,23 +35,23 @@
         />
         <button
           class="btn btn-info btn-block border w-75 mb-4 rounded text-white mx-auto text-center"
-          @click="updateEditedGameField()"
+          @click="updateEditedTeamField()"
         >
           Save
         </button>
       </div>
       <div v-else>
         <button
-          v-if="this.editFieldButtonData.value"
+          v-if="this.teamEditFieldButtonData.value"
           class="btn btn-warning rounded border border-white text-white text-center m-1 w-75 p-2"
         >
-          {{ this.editFieldButtonData.value }}
+          {{ this.teamEditFieldButtonData.value }}
         </button>
         <button
           v-else
           class="btn btn-secondary rounded border border-white text-white text-center m-1 w-75 p-2"
         >
-          Add {{ this.editFieldButtonData.key }}
+          Add {{ this.teamEditFieldButtonData.key }}
         </button>
       </div>
     </div>
@@ -57,7 +59,7 @@
 </template>
 <script>
 export default {
-  name: "edit-field-button",
+  name: "team-edit-field-button",
   data() {
     return {
       editData: {},
@@ -65,20 +67,24 @@ export default {
   },
   computed: {},
   methods: {
-    setActiveEditField() {
-      this.$store.dispatch("setActiveEditField", this.editFieldButtonData);
+    async setActiveEditField() {
+      await this.$store.dispatch(
+        "setActiveEditField",
+        this.teamEditFieldButtonData
+      );
     },
-    updateEditedGameField() {
-      this.editData.key = this.editFieldButtonData.key;
-      // let key = this.editFieldButtonData.key;
+    updateEditedTeamField() {
+      this.editData.key = this.teamEditFieldButtonData.key;
+      // let key = this.teamEditFieldButtonData.key;
       // this.editData[key] = this.editData.value;
-      this.$store.dispatch("updateEditedGameField", this.editData);
+      console.log("team field to update: ", this.editData);
+      this.$store.dispatch("updateEditedTeamField", this.editData);
       this.$store.dispatch("getInitAndFormat");
     },
   },
 
   components: {},
-  props: ["editFieldButtonData"],
+  props: ["teamEditFieldButtonData"],
 };
 </script>
 

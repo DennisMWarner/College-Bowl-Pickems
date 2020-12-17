@@ -4,10 +4,22 @@
     <add-team-button />
     <lock-all-games-button />
     <button
-      class="btn btn-warning border border-white text-center text-white w-75 mb-3"
+      class="btn btn-danger border border-white text-center text-white w-75 mb-3"
       @click="resetWinners()"
     >
       Reset all winners
+    </button>
+    <button
+      class="btn btn-danger border border-white text-center text-white w-75 mb-3"
+      @click="resetTeams()"
+    >
+      Reset all teams
+    </button>
+    <button
+      class="btn btn-success border border-white text-center text-white w-75 mb-3"
+      @click="genUserSims()"
+    >
+      Generate User Sim Pick Sheets
     </button>
     <div
       v-if="this.$auth.isAuthenticated && this.$store.state.teams.length < 1"
@@ -24,16 +36,16 @@
     <div class="col-12 text-center p-0">
       <game-title-bars />
     </div>
-    <!-- <div v-if="this.$store.state.cancelledGames.length > 0">
+    <div v-if="this.$store.state.otherGames.length > 0">
       <div
         class="col-12 text-center p-0 border w-75 my-3 rounded border-white bg-warning text-white mx-auto text-center"
       >
-        Cancelled Games
+        Games with status other than "locked" or "unlocked"
       </div>
       <div class="col-12 text-center p-0">
         <other-game-title-bars />
       </div>
-    </div> -->
+    </div>
     <!-- <div v-if="this.$store.state.postponedGames.length > 0">
       <div
         class="col-12 text-center p-0 border w-75 my-3 rounded border-white bg-warning text-white mx-auto text-center"
@@ -66,6 +78,7 @@ import gameTitleBars from "../components/GameTitleBars";
 // import cancelledGameTitleBars from "../components/CancelledGameTitleBars";
 // import postponedGameTitleBars from "../components/PostponedGameTitleBars";
 // import unlockedGameTitleBars from "../components/UnlockedGameTitleBars";
+import otherGameTitleBars from "../components/OtherGameTitleBars";
 import addTeamButton from "../components/AddTeamButton";
 import lockAllGamesButton from "../components/LockAllGamesButton";
 export default {
@@ -76,10 +89,9 @@ export default {
   computed: {},
   async beforeCreate() {
     this.$store.dispatch("getInitAndFormat");
+    this.$store.dispatch("getAllOtherGames");
   },
-  // created() {
-  //   this.$store.dispatch("getAllOtherGames");
-  // },
+  created() {},
   methods: {
     addAllTeams() {
       // this.$store.dispatch("addAllTeams");
@@ -90,6 +102,7 @@ export default {
     resetWinners() {
       this.$store.dispatch("resetWinners");
     },
+    genUserSims() {},
   },
   components: {
     games,
@@ -98,6 +111,7 @@ export default {
     // cancelledGameTitleBars,
     // postponedGameTitleBars,
     // unlockedGameTitleBars,
+    otherGameTitleBars,
     dates,
     addTeamButton,
     lockAllGamesButton,

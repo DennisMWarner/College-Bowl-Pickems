@@ -4,7 +4,7 @@
       this.leaderBoardHeaderButtonData ==
       this.$store.state.activeLeaderBoardHeaderButton
     "
-    class="leader-board-header-button w-25 px-1 text-center mx-auto border border-white text-white rounded bg-info"
+    class="leader-board-header-button w-25 bg-warning px-1 text-center mx-auto border border-white text-white rounded bg-info"
     @click="sort()"
   >
     {{ this.leaderBoardHeaderButtonData.name }}

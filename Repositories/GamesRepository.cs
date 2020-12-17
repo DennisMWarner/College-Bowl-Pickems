@@ -23,7 +23,7 @@ namespace BowlPickems.Repositories
 
     internal IEnumerable<Game> GetOtherGames()
     {
-      string sql = "SELECT * FROM games WHERE status IS NOT NULL";
+      string sql = "SELECT * FROM games WHERE status != 'unlocked'||'locked'";
       return _db.Query<Game>(sql);
     }
 

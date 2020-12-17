@@ -60,7 +60,7 @@ namespace BowlPickems.Repositories
     internal User EditUser(User UserToUpdate)
     {
       {
-        string sql = "UPDATE users SET  teamId = @TeamId, points=@Points WHERE id = @Id";
+        string sql = "UPDATE users SET  name=@Name, userId=@UserId, imgUrl=@ImgUrl, tieBreaker=@TieBreaker, email=@Email WHERE id = @Id";
         int affectedRows = _db.Execute(sql, UserToUpdate);
         return UserToUpdate;
       }

@@ -4,7 +4,6 @@
       <div>
         <div
           class="col-9 mx-auto no-gutters text-center pt-1 border rounded bg-light text-dark text-left my-1 mt-1"
-          @click="setActiveteam()"
         >
           <h5>
             {{ this.teamTitleBarData.name }}
@@ -13,8 +12,6 @@
 
         <button
           class="btn-sm btn-secondary rounded my-1 mx-1 mb-2 text-center text-white border"
-          data-toggle="modal"
-          data-target="#editteamModal"
           @click="removeTeamFromGame()"
         >
           Remove this team from this game
@@ -22,7 +19,7 @@
         <button
           class="btn-sm btn-warning rounded my-1 mx-1 mb-2 text-center text-white border"
           data-toggle="modal"
-          data-target="#editteamModal"
+          data-target="#editTeamModal"
           @click="setActiveEditFields()"
         >
           Edit this team
@@ -30,8 +27,6 @@
 
         <button
           class="btn-sm btn-success rounded my-1 mx-1 mb-2 w-75 text-center text-white border"
-          data-toggle="modal"
-          data-target="#editteamModal"
           @click="setGameWinner()"
         >
           {{ this.teamTitleBarData.name }} is the winner
@@ -87,10 +82,12 @@ export default {
     },
 
     setActiveTeam() {
-      this.$store.dispatch("setTeamteam", this.TeamTitleBarData);
+      this.$store.dispatch("setActiveTeam", this.teamTitleBarData);
     },
-    setActiveEditFields() {
-      this.$store.dispatch("setActiveEditFields", this.$store.state.activeTeam);
+
+    async setActiveEditFields() {
+      await this.setActiveTeam();
+      this.$store.dispatch("setActiveEditFields", this.teamTitleBarData);
     },
     removeTeamFromGame() {
       let team = this.teamTitleBarData;

@@ -65,7 +65,7 @@ namespace BowlPickems.Repositories
     internal Team EditTeam(Team teamToUpdate)
     {
       {
-        string sql = "UPDATE teams SET gameId = @GameId WHERE id = @Id";
+        string sql = "UPDATE teams SET name = @name, abbName=@AbbName, priColor=@PriColor, secColor=@SecColor, triColor=@TriColor, confRecord=@ConfRecord, overallRec=@OverallRec, mascotName=@MascotName, teamUrl=@TeamUrl, streak=@Streak  WHERE id = @Id";
         int affectedRows = _db.Execute(sql, teamToUpdate);
         return teamToUpdate;
       }

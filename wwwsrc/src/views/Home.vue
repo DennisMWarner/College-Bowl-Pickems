@@ -109,7 +109,8 @@ export default {
     async login() {
       await this.$auth.loginWithPopup();
       await this.$store.dispatch("setBearer", this.$auth.bearer);
-      this.$store.dispatch("getUsers");
+      this.$store.dispatch("getInitAndFormat");
+      this.$store.dispatch("getActiveUser", this.$auth.userInfo.sub);
     },
     logout() {
       this.$store.dispatch("logout");

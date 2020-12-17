@@ -1,7 +1,7 @@
 <template>
   <div class="edit-team-modal-body text-white">
     <form>
-      <edit-field-buttons />
+      <team-edit-field-buttons />
     </form>
     <div class="text-center">
       <button
@@ -16,7 +16,7 @@
 
 
 <script>
-import editFieldButtons from "../components/EditFieldButtons";
+import teamEditFieldButtons from "../components/TeamEditFieldButtons";
 export default {
   name: "edit-team-modal-body",
   data() {
@@ -24,7 +24,7 @@ export default {
   },
   computed: {},
   methods: {},
-  components: { editFieldButtons },
+  components: { teamEditFieldButtons },
 };
 </script>
 

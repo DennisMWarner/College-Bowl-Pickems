@@ -47,7 +47,7 @@ namespace BowlPickems.Controllers
         return BadRequest(e.Message);
       }
     }
-    [HttpPut]
+    [HttpPut("{id}")]
     [Authorize]
 
     public ActionResult<Team> EditTeam([FromBody] Team teamToUpdate)

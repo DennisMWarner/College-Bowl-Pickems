@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-md navbar-dark bg-transparent">
+  <nav class="navbar sticky-top navbar-expand-md navbar-dark bg-info">
     <router-link class="w-50" :to="{ name: 'home' }">
       <img
         src="../assets/cobopi-logo-comp.png"
@@ -90,12 +90,18 @@
           :class="{ active: $route.name == 'makePicks' }"
           v-if="
             $auth.isAuthenticated &&
-            this.$store.state.unlockedFormattedGames.length > 0
+            (this.$store.state.activeUser.tieBreaker < 1 ||
+              this.$store.state.unlockedFormattedGames.length > 0)
           "
         >
           <router-link :to="{ name: 'make-picks-page' }" class="nav-link"
-            >Make Picks</router-link
-          >
+            >Make Picks
+            <span>
+              <img
+                src="../assets/exclamation.png"
+                alt=""
+                class="img-fluid winImg mb-1" /></span
+          ></router-link>
         </li>
       </ul>
       <div v-if="$auth.isAuthenticated" class="mr-2 text-warning">
@@ -142,6 +148,7 @@ export default {
       // console.log("this.$auth: ");
       // console.log(this.$auth);
       this.$store.dispatch("getInitAndFormat");
+      this.$store.dispatch("getActiveUser", this.$auth.userInfo.sub);
     },
     async logout() {
       this.$store.dispatch("resetBearer");
@@ -156,4 +163,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.winImg {
+  max-width: 25px !important;
+  max-height: 25px;
+}
+</style>

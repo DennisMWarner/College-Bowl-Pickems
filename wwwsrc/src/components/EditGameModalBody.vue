@@ -1,7 +1,7 @@
 <template>
   <div class="edit-game-modal-body text-white">
     <form>
-      <edit-field-buttons />
+      <game-edit-field-buttons />
     </form>
     <div class="text-center">
       <button
@@ -16,7 +16,7 @@
 
 
 <script>
-import editFieldButtons from "../components/EditFieldButtons";
+import gameEditFieldButtons from "../components/GameEditFieldButtons";
 export default {
   name: "edit-game-modal-body",
   data() {
@@ -24,7 +24,7 @@ export default {
   },
   computed: {},
   methods: {},
-  components: { editFieldButtons },
+  components: { gameEditFieldButtons },
 };
 </script>
 
