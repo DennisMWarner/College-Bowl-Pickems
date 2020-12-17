@@ -3,7 +3,7 @@
     <unlocked-game-title-bar
       v-for="unlockedGameTitleBar in unlockedGameTitleBars"
       :unlockedGameTitleBarData="unlockedGameTitleBar"
-      :key="unlockedGameTitleBar.name"
+      :key="unlockedGameTitleBar.id"
     />
   </div>
 </template>

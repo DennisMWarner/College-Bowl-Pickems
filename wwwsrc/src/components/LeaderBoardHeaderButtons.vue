@@ -3,7 +3,7 @@
     <leader-board-header-button
       v-for="leaderBoardHeaderButton in leaderBoardHeaderButtons"
       :leaderBoardHeaderButtonData="leaderBoardHeaderButton"
-      :key="leaderBoardHeaderButton.name"
+      :key="leaderBoardHeaderButton.id"
     />
   </div>
 </template>

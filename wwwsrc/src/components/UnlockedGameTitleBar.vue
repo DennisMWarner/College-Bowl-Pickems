@@ -4,7 +4,7 @@
       v-if="
         this.$route.path == '/setup' &&
         this.$store.state.activeGame != '' &&
-        this.$store.state.activeGame.name == unlockedGameTitleBarData.name
+        this.$store.state.activeGame.id == unlockedGameTitleBarData.id
       "
     >
       <div>

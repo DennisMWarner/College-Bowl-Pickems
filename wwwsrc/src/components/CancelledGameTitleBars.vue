@@ -3,7 +3,7 @@
     <cancelled-game-title-bar
       v-for="cancelledGameTitleBar in cancelledGameTitleBars"
       :cancelledGameTitleBarData="cancelledGameTitleBar"
-      :key="cancelledGameTitleBar.name"
+      :key="cancelledGameTitleBar.id"
     />
   </div>
 </template>

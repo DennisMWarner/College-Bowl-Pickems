@@ -3,7 +3,7 @@
     <div
       v-if="
         this.$route.path == '/setup' &&
-        this.$store.state.activeGame.name == this.gameTitleBarData.name
+        this.$store.state.activeGame.id == this.gameTitleBarData.id
       "
       class="border m-2 rounded bg-light"
     >

@@ -3,7 +3,7 @@
     <other-game-title-bar
       v-for="otherGameTitleBar in otherGameTitleBars"
       :otherGameTitleBarData="otherGameTitleBar"
-      :key="otherGameTitleBar.name"
+      :key="otherGameTitleBar.id"
     />
   </div>
 </template>

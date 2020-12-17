@@ -25,8 +25,8 @@ namespace BowlPickems.Repositories
     internal Team Create(Team newTeam)
     {
       string sql = @"
-            INSERT INTO teams(name, abbName, priColor, secColor, triColor, confRecord, overallRec, mascotImg, teamUrl, gameId)
-            VALUES(@Name, @AbbName, @PriColor, @SecColor, @TriColor, @ConfRecord, @OverallRec, @MascotImg, @TeamUrl, @GameId); 
+            INSERT INTO teams(name, abbName, priColor, secColor,  confRecord, overallRec, mascotImg, conference, gameId)
+            VALUES(@Name, @AbbName, @PriColor, @SecColor,  @ConfRecord, @OverallRec, @MascotImg, @Conference, @GameId); 
             SELECT LAST_INSERT_ID()
         ";
       newTeam.Id = _db.ExecuteScalar<int>(sql, newTeam);
@@ -65,7 +65,7 @@ namespace BowlPickems.Repositories
     internal Team EditTeam(Team teamToUpdate)
     {
       {
-        string sql = "UPDATE teams SET name = @name, abbName=@AbbName, priColor=@PriColor, secColor=@SecColor, triColor=@TriColor, confRecord=@ConfRecord, overallRec=@OverallRec, mascotName=@MascotName, teamUrl=@TeamUrl, streak=@Streak  WHERE id = @Id";
+        string sql = "UPDATE teams SET name = @name, abbName=@AbbName, priColor=@PriColor, secColor=@SecColor,  confRecord=@ConfRecord, overallRec=@OverallRec, mascotName=@MascotName, conference=@Conference,  streak=@Streak  WHERE id = @Id";
         int affectedRows = _db.Execute(sql, teamToUpdate);
         return teamToUpdate;
       }

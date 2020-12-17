@@ -1,4 +1,4 @@
--- USE bpems;
+USE bpems;
 
 -- CREATE TABLE users (
 --     id int NOT NULL AUTO_INCREMENT,
@@ -59,7 +59,8 @@
 --     INDEX (id)   
 -- );
 
-
+-- ALTER TABLE teams 
+-- DROP COLUMN teamUrl
 
 
 

@@ -1,6 +1,6 @@
 <template>
   <div class="games no-gutters row justify-content-around">
-    <game v-for="game in games" :gameData="game" :key="game.firstTeam.name" />
+    <game v-for="game in games" :gameData="game" :key="game.firstTeam.id" />
   </div>
 </template>
 

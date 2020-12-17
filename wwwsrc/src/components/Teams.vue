@@ -1,6 +1,6 @@
 <template>
   <div class="teams text-center">
-    <team v-for="team in teams" :teamData="team" :key="team.name"></team>
+    <team v-for="team in teams" :teamData="team" :key="team.id"></team>
   </div>
 </template>
 

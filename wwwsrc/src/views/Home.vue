@@ -102,9 +102,7 @@ export default {
       newUser: {},
     };
   },
-  mounted() {
-    // console.log("logged in: ", this.$auth.userInfo);
-  },
+
   methods: {
     async login() {
       await this.$auth.loginWithPopup();
@@ -121,20 +119,11 @@ export default {
           -1 &&
         this.newUser.name.length != ""
       ) {
-        // console.log(
-        //   "user in state: ",
-        //   this.$store.state.users.findIndex((u) => u.name == this.newUser.name)
-        // );
-        // console.log("newUser: ", this.newUser);
         this.newUser.userId = this.$auth.userInfo.sub;
         this.newUser.email = this.$auth.userInfo.email;
         this.newUser.picture = this.$auth.userInfo.picture;
-        // console.log("user: ", this.$auth.userInfo);
-        // console.log("this user: ", this.newUser);
         this.$store.dispatch("createUser", this.newUser);
         $("#create-user-modal").modal("hide");
-      } else {
-        // console.log("something bad happened...");
       }
     },
   },

@@ -60,31 +60,6 @@
           >
         </li>
 
-        <!-- <li
-          v-if="$auth.isAuthenticated"
-          class="nav-item"
-          :class="{
-            active: $route.name == 'stats',
-          }"
-        >
-          <router-link
-            :to="{
-              name: 'user-stats-page',
-              params: { user: this.userInfo.name },
-            }"
-            class="nav-link"
-            >My Stats</router-link
-          >
-        </li>
-        <li
-          class="nav-item"
-          :class="{ active: $route.name == 'stats' }"
-          v-if="$auth.isAuthenticated"
-        >
-          <router-link :to="{ name: 'stats-page' }" class="nav-link"
-            >All Stats</router-link
-          >
-        </li> -->
         <li
           class="nav-item"
           :class="{ active: $route.name == 'makePicks' }"
@@ -165,7 +140,7 @@ export default {
 
 <style scoped>
 .winImg {
-  max-width: 25px !important;
+  max-width: 25px;
   max-height: 25px;
 }
 </style>
