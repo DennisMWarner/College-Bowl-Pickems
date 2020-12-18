@@ -13,6 +13,7 @@
     <div
       v-if="
         $auth.isAuthenticated &&
+        this.$store.state.users.length > 0 &&
         this.$store.state.users.findIndex(
           (u) => u.userId == this.$auth.userInfo.sub
         ) < 0

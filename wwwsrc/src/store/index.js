@@ -11,6 +11,7 @@ let baseUrl = location.host.includes("localhost")
   : "/";
 
 let api = Axios.create({
+
   baseURL: baseUrl + "api/",
   timeout: 3000,
   withCredentials: true
@@ -256,6 +257,7 @@ export default new Vuex.Store({
     },
 
     setActiveGame(state, game) {
+      console.log("active game committed: ", game)
       state.activeGame = game
     },
 
@@ -375,7 +377,7 @@ export default new Vuex.Store({
     },
 
     lockAllGames({ dispatch }) {
-      this.state.unlockedFormattedGames.forEach(ug => {
+      this.state.games.forEach(ug => {
         let gameToEdit = { ...ug }
         gameToEdit.status = "locked"
         dispatch("updateGame", gameToEdit)
@@ -384,7 +386,7 @@ export default new Vuex.Store({
     },
 
     unlockAllGames({ dispatch }) {
-      this.state.lockedFormattedGames.forEach(ug => {
+      this.state.games.forEach(ug => {
         let gameToEdit = { ...ug }
         gameToEdit.status = "unlocked"
         dispatch("updateGame", gameToEdit)
@@ -783,6 +785,8 @@ export default new Vuex.Store({
         lbRows.push(user)
       })
       commit("setLeaderBoardRows", lbRows)
+
+      dispatch("sortByPoints")
     },
 
     getCompletedGames({ dispatch, commit }) {

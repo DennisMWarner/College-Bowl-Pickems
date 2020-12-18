@@ -22,6 +22,7 @@ export default {
     },
   },
   methods: {},
+
   components: { leaderBoardHeaderButton },
 };
 </script>

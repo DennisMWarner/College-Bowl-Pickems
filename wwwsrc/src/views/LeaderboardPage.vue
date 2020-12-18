@@ -14,6 +14,12 @@ export default {
     return {};
   },
   computed: {},
+  mounted() {
+    this.$store.dispatch(
+      "setActiveLeaderBoardHeaderButton",
+      this.$store.state.leaderBoardHeaderButtons[0]
+    );
+  },
   methods: {},
   components: { leaderBoardRows },
 };

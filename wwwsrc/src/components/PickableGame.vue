@@ -82,6 +82,8 @@
           <div
             v-else
             class="col-12 offset-1 text-left teams bg-dark text-secondary team1"
+            data-toggle="modal"
+            data-a
             @click="setActiveFirstTeam()"
           >
             {{ this.pickableGameData.firstTeam.name }}

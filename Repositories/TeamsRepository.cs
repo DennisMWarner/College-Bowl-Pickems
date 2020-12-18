@@ -25,8 +25,8 @@ namespace BowlPickems.Repositories
     internal Team Create(Team newTeam)
     {
       string sql = @"
-            INSERT INTO teams(name, abbName, priColor, secColor,  confRecord, overallRec, mascotImg, conference, gameId)
-            VALUES(@Name, @AbbName, @PriColor, @SecColor,  @ConfRecord, @OverallRec, @MascotImg, @Conference, @GameId); 
+            INSERT INTO teams(name, abbName, priColor, secColor,  confRecord, overallRec, conference, gameId)
+            VALUES(@Name, @AbbName, @PriColor, @SecColor,  @ConfRecord, @OverallRec, @Conference, @GameId); 
             SELECT LAST_INSERT_ID()
         ";
       newTeam.Id = _db.ExecuteScalar<int>(sql, newTeam);
