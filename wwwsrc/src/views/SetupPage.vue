@@ -127,7 +127,7 @@ export default {
   created() {},
   methods: {
     addAllTeams() {
-      // this.$store.dispatch("addAllTeams");
+      this.$store.dispatch("addAllTeams");
     },
     resetTeams() {
       this.$store.dispatch("resetTeamGameIds");

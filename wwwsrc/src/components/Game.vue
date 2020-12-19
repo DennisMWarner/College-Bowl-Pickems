@@ -20,12 +20,12 @@
             />
           </div>
         </div>
-        <h6 class="text-white mb-0 pl-2 pt-1 font-italic">
+        <h6 class="text-white mb-0 pt-1 pl-2 font-italic">
           {{ this.gameData.sponsor }}
           {{ this.gameData.name }}
         </h6>
         <p
-          class="text-white pl-2 pb-1 mb-0 font-italic font-weight-lighter recs"
+          class="text-white pl-2 pb-1 mb-1 font-italic font-weight-lighter locs"
         >
           {{ this.gameData.loc }} {{ this.gameData.time }}
           {{ this.gameData.network }}
@@ -36,7 +36,28 @@
       <div class="col-9">
         <div class="row">
           <div
-            v-if="this.gameData.firstTeam.id == this.gameData.userData.teamId"
+            v-if="!this.gameData.userData.teamId"
+            class="col-12 offset-1 text-left teams bg-white text-secondary team1"
+          >
+            {{ this.gameData.firstTeam.name }}
+            <div class="row no-gutters">
+              <div class="col-7 recsTop text-right">
+                {{ this.gameData.conference }}&nbsp;&nbsp;{{
+                  this.gameData.confRecord
+                }}
+              </div>
+              <div class="col-7 recsBot text-right">
+                {{ this.gameData.overallRec }}
+              </div>
+              <div class="col-4 streak text-right">
+                {{ this.gameData.streak }}
+              </div>
+            </div>
+          </div>
+          <div
+            v-else-if="
+              this.gameData.firstTeam.id == this.gameData.userData.teamId
+            "
             class="col-12 offset-1 text-left teams team1"
             v-bind:style="{
               'background-color': this.gameData.firstTeam.priColor,
@@ -44,18 +65,65 @@
             }"
           >
             {{ this.gameData.firstTeam.name }}
+            <div class="row no-gutters">
+              <div class="col-7 recsTop text-right">
+                {{ this.gameData.conference }}&nbsp;&nbsp;{{
+                  this.gameData.confRecord
+                }}
+              </div>
+              <div class="col-7 recsBot text-right">
+                {{ this.gameData.overallRec }}
+              </div>
+              <div class="col-4 streak text-right">
+                {{ this.gameData.streak }}
+              </div>
+            </div>
           </div>
           <div
             v-else
             class="col-12 offset-1 text-left teams bg-dark text-secondary team1"
           >
             {{ this.gameData.firstTeam.name }}
+            <div class="row no-gutters">
+              <div class="col-7 recsTop text-right">
+                {{ this.gameData.conference }}&nbsp;&nbsp;{{
+                  this.gameData.confRecord
+                }}
+              </div>
+              <div class="col-7 recsBot text-right">
+                {{ this.gameData.overallRec }}
+              </div>
+              <div class="col-4 streak text-right">
+                {{ this.gameData.streak }}
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="row">
           <div
-            v-if="this.gameData.secondTeam.id == this.gameData.userData.teamId"
+            v-if="!this.gameData.userData.teamId"
+            class="col-12 offset-1 text-left teams bg-white text-secondary team2"
+          >
+            {{ this.gameData.secondTeam.name }}
+            <div class="row no-gutters">
+              <div class="col-7 recsTop text-right">
+                {{ this.gameData.conference }}&nbsp;&nbsp;{{
+                  this.gameData.confRecord
+                }}
+              </div>
+              <div class="col-7 recsBot text-right">
+                {{ this.gameData.overallRec }}
+              </div>
+              <div class="col-4 streak text-right">
+                {{ this.gameData.streak }}
+              </div>
+            </div>
+          </div>
+          <div
+            v-else-if="
+              this.gameData.secondTeam.id == this.gameData.userData.teamId
+            "
             class="col-12 offset-1 text-left teams mt-1 team2"
             v-bind:style="{
               'background-color': this.gameData.secondTeam.priColor,
@@ -63,18 +131,44 @@
             }"
           >
             {{ this.gameData.secondTeam.name }}
+            <div class="row no-gutters">
+              <div class="col-7 recsTop text-right">
+                {{ this.gameData.conference }}&nbsp;&nbsp;{{
+                  this.gameData.confRecord
+                }}
+              </div>
+              <div class="col-7 recsBot text-right">
+                {{ this.gameData.overallRec }}
+              </div>
+              <div class="col-4 streak text-right">
+                {{ this.gameData.streak }}
+              </div>
+            </div>
           </div>
           <div
             v-else
-            class="col-12 offset-1 text-left teams mt-1 bg-dark text-secondary team2"
+            class="col-12 offset-1 text-left teams mt-1 text-secondary team2"
           >
             {{ this.gameData.secondTeam.name }}
+            <div class="row no-gutters">
+              <div class="col-7 recsTop text-right">
+                {{ this.gameData.conference }}&nbsp;&nbsp;{{
+                  this.gameData.confRecord
+                }}
+              </div>
+              <div class="col-7 recsBot text-right">
+                {{ this.gameData.overallRec }}
+              </div>
+              <div class="col-4 streak text-right">
+                {{ this.gameData.streak }}
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div
         v-if="this.gameData.userData.points"
-        class="col-2 text-center px-2 pt-3 ml-4 text-dark points"
+        class="col-2 text-center px-2 pt-2 ml-4 text-dark points"
       >
         {{ this.gameData.userData.points }}
       </div>
@@ -88,7 +182,6 @@
 
 <script>
 import team from "../components/Team";
-import pointsSelector from "../components/PointsSelector";
 export default {
   name: "game",
   data() {
@@ -96,7 +189,6 @@ export default {
   },
   computed: {},
   methods: {},
-
   components: { team },
   props: ["gameData"],
 };
@@ -134,13 +226,26 @@ export default {
   /* border-radius: 15px; */
   font-size: xx-large;
   font-weight: bolder;
-  padding-top: 18px;
+  padding-top: 12px !important;
   padding-left: 14px;
-  border-top-right-radius: 15px;
+  border-radius: 15px;
   border-bottom-right-radius: 15px;
   color: rgba(0, 0, 0, 0.794) !important;
 }
-.recs {
+.locs {
   font-size: 12px;
+}
+.recsTop {
+  font-size: 10px;
+  margin-top: 0px;
+}
+.recsBot {
+  font-size: 10px;
+  margin-top: -4px;
+}
+.streak {
+  font-size: 12px;
+  margin-top: -12px;
+  padding-left: 3px;
 }
 </style>

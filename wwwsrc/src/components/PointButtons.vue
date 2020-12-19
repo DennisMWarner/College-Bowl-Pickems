@@ -20,13 +20,13 @@
         "
       >
         <button
-          class="btn bg-primary rounded w-100 text-center text-white shadow mt-4"
+          class="btn bg-primary rounded w-100 text-center border text-white shadow mt-4"
           @click="sortAscending()"
           data-dismiss="modal"
         >
           Sort Remaining Points Ascending</button
         ><button
-          class="btn bg-danger rounded w-100 text-center text-white shadow mt-4"
+          class="btn bg-danger rounded w-100 text-center border text-white shadow mt-4"
           @click="sortDescending()"
           data-dismiss="modal"
         >
@@ -35,13 +35,13 @@
       </div>
       <div v-else>
         <button
-          class="btn bg-primary rounded w-75 text-center-text-white mt-4"
+          class="btn bg-primary rounded w-75 text-center border text-white mt-4"
           @click="sortAscending()"
           data-dismiss="modal"
         >
           Sort All Points Ascending</button
         ><button
-          class="btn bg-primary rounded w-75 text-center-text-white mt-4"
+          class="btn bg-danger rounded w-75 text-center border text-white mt-4"
           @click="sortDescending()"
           data-dismiss="modal"
         >
@@ -50,7 +50,7 @@
       </div>
     </div>
     <button
-      class="btn bg-warning mx-auto rounded w-75 text-center text-white shadow mt-4"
+      class="btn bg-warning mx-auto rounded w-75 text-center border text-white shadow mt-4"
       data-toggle="modal"
       data-target="#reset-points-modal"
     >

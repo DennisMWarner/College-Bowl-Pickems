@@ -1,11 +1,23 @@
 <template>
   <nav class="navbar sticky-top navbar-expand-md navbar-dark bg-info">
-    <router-link class="w-50" :to="{ name: 'home' }">
+    <router-link class="w-50 mr-3 mb-3" :to="{ name: 'home' }">
       <img
         src="../assets/cobopi-logo-comp.png"
         class="img-fluid p-1 bg-light rounded"
       />
     </router-link>
+    <div
+      v-if="$auth.isAuthenticated"
+      class="text-warning border border-warning rounded bg-info pt-2 px-2 mx-auto my-auto nameDisplay"
+    >
+      <h6>
+        {{
+          this.$store.state.users.find(
+            (u) => u.userId == this.$auth.userInfo.sub
+          ).name
+        }}
+      </h6>
+    </div>
     <button
       class="navbar-toggler"
       type="button"
@@ -79,13 +91,7 @@
           ></router-link>
         </li>
       </ul>
-      <div v-if="$auth.isAuthenticated" class="mr-2 text-warning">
-        {{
-          this.$store.state.users.find(
-            (u) => u.userId == this.$auth.userInfo.sub
-          ).name
-        }}
-      </div>
+
       <span class="navbar-text">
         <button
           class="btn btn-dark border border-white"
@@ -142,5 +148,10 @@ export default {
 .winImg {
   max-width: 25px;
   max-height: 25px;
+}
+@media only screen and (min-width: 1344px) {
+  nameDisplay {
+    margin-left: 200px !important;
+  }
 }
 </style>

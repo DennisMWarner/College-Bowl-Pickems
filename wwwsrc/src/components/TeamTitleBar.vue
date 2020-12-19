@@ -7,6 +7,9 @@
         >
           <h5>
             {{ this.teamTitleBarData.name }}
+            <span class="text-muted small-font ml-3">
+              Id: {{ this.teamTitleBarData.id }}</span
+            >
           </h5>
         </div>
 
@@ -71,7 +74,7 @@ export default {
       if (this.$store.state.activeTeam.id) {
         let team = this.$store.state.activeTeam;
         team.teamId = this.$store.state.activeteam.id;
-        this.$store.dispatch("editTeam", team);
+        this.$store.dispatch("updateTeam", team);
       }
     },
     async setGameWinner() {
@@ -93,7 +96,7 @@ export default {
     removeTeamFromGame() {
       let team = this.teamTitleBarData;
       team.gameId = 0;
-      this.$store.dispatch("editTeam", team);
+      this.$store.dispatch("updateTeam", team);
     },
   },
   components: { addGameToTeamModalBody, editTeamModalBody },
@@ -103,4 +106,7 @@ export default {
 
 
 <style scoped>
+.small-font {
+  font-size: 12px;
+}
 </style>

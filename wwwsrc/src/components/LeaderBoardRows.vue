@@ -35,6 +35,7 @@ export default {
   methods: {},
   created() {
     this.$store.dispatch("getCompletedGames");
+    this.$store.dispatch("getTotalPointsPoss");
   },
   components: { leaderBoardRow, leaderBoardHeaderButtons },
 };

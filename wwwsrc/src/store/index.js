@@ -13,7 +13,7 @@ let baseUrl = location.host.includes("localhost")
 let api = Axios.create({
 
   baseURL: baseUrl + "api/",
-  timeout: 3000,
+  timeout: 10000,
   withCredentials: true
 });
 
@@ -26,6 +26,7 @@ export default new Vuex.Store({
     completedGames: [],
     otherGames: [],
     unlockedGames: [],
+    numOfValidGames: {},
     leaderBoardHeaderButtons: [{ name: "Pts Won" }, { name: "Win %" }, { name: "Pts Left" }],
     activeLeaderBoardHeaderButton: {},
     allPicks: [],
@@ -43,7 +44,7 @@ export default new Vuex.Store({
     activeEditField: {},
     activeEditFields: [],
     points: [],
-    possiblePoints: {},
+    totalPossPoints: {},
     dates: [],
     activeDate: {},
     activeGame: {},
@@ -54,106 +55,110 @@ export default new Vuex.Store({
     availableTeams: [],
     availableGames: [],
     teamsRawData: [
-      ["Buffalo", "#005BBB", "#ffffff", "", "", ""],
-      ["Charlotte", "#046A38", "#B9975B", "", "", ""],
-      ["Utah St", "#0F2439", "#ffffff", "", "", ""],
-      ["Kent St", "#002664", "#EAAB00", "", "", ""],
-      ["N Caro A&T", "#004684", "#FDB927", "", "", ""],
-      ["Alcorn St", "#46166a", "#e9a713", "", "", ""],
-      ["C Michigan", "#6A0032", "#FFC82E", "", "", ""],
-      ["San Diego St", "#a6192e", "#000000", "", "", ""],
-      ["Liberty", "#990000", "#0A254E", "Indep", "", ""],
-      ["Georgia So", "#011e41", "#87714D", "", "", ""],
-      ["SMU", "#C8102E", "#0033A0", "", "", ""],
-      ["Florida Atl", "#003366", "#CC0000", "", "", ""],
-      ["Florida Int", "#081E3F", "#B6862C", "", "", ""],
-      ["Ark St", "#cc092f", "#000000", "", "", ""],
-      ["Boise St", "#0033A0", "#FA4616", "", "", ""],
-      ["Washington", "#4B2E83", "#B7A57A", "", "", ""],
-      ["App St", "#222222", "#ffcc00", "", "", ""],
-      ["UAB", "#006341", "#CC8A00", "", "", ""],
-      ["UCF", "#000000", "#ba9b37", "", "", ""],
-      ["Marshall", "#00B140", "#A2AAAD", "", "", ""],
-      ["BYU", "#002E5D", "#ffffff", "Indep", "", ""],
-      ["Hawaii", "#024731", "#c8c8c8", "", "", ""],
-      ["LA Tech", "#003087", "##CB333B", "", "", ""],
-      ["Miami", "#F47321", "#005030", "", "", ""],
-      ["Pitt", "#003594", "#FFB81C", "", "", ""],
-      ["E Michigan", "#006633", "#000000", "", "", ""],
-      ["UNC", "#7BAFD4", "#ffffff", "", "", ""],
-      ["Temple", "#9D2235", "ffffff", "", "", ""],
-      ["Michigan St ", "#18453B", "#ffffff", "", "", ""],
-      ["Wake Forest", "#9E7E38", "#000000", "", "", ""],
-      ["Oklahoma State ", "#000000", "#FF7300", "", "", ""],
-      ["Texas A&M", "#500000", "#ffffff", "", "", ""],
-      ["USC", "#990000", "#FFC72C", "", "", ""],
-      ["Iowa", "#FFCD00", "#000000", "", "", ""],
-      ["Air Force", "#003087", "#8A8D8F", "", "", ""],
-      ["Washington St", "#981E32", "#5E6A71", "", "", ""],
-      ["Notre Dame", "#0C2340", "#C99700", "", "", ""],
-      ["Iowa St", "#C8102E", "#F1BE48", "", "", ""],
-      ["Memphis", "#003087", "#898D8D", "", "", ""],
-      ["Penn St", "#041E42", "#ffffff", "", "", ""],
-      ["Oklahoma", "#841617", "#FDF9D8", "", "", ""],
-      ["LSU", "#461D7C", "#FDD023", "", "", ""],
-      ["Clemson", "#F56600", "#522D80", "", "", ""],
-      ["Ohio St", "#BB0000", "#666666", "", "", ""],
-      ["W Kentucky", "#C60C30", "#1E1E1E", "", "", ""],
-      ["W Michigan", "#6C4023", "#B5A167", "", "", ""],
-      ["Miss St", "#660000", "#ffffff", "", "", ""],
-      ["Louisville", "#AD0000", "#000000", "", "", ""],
-      ["Cal", "#003262", "#FDB515", "", "", ""],
-      ["Illinois", "#13294b", "#E84A27", "", "", ""],
-      ["Florida", "#0021a5", "#FA4616", "", "", ""],
-      ["Virginia", "#232D4B", "#F84C1E", "", "", ""],
-      ["Virginia Tech", "#630031", "#CF4420", "", "", ""],
-      ["Kentucky", "#0033A0", "#ffffff", "", "", ""],
-      ["Florida St", "#782F40", "#CEB888", "", "", ""],
-      ["Arizona St", "#8C1D40", "#FFC627", "", "", ""],
-      ["Navy", "#000048", "#B4A87E", "", "", ""],
-      ["Kansas St", "#512888", "#D1D1D1", "", "", ""],
-      ["Wyoming", "#ffc425", "#492f24", "", "", ""],
-      ["Georgia St", "#0039A6", "ffffff", "", "", ""],
-      ["Utah", "#CC0000", "#000000", "", "", ""],
-      ["Texas", "#BF5700", "#ffffff", "", "", ""],
-      ["Michigan", "#00274C", "#FFCB05", "", "", ""],
-      ["Alabama", "#9d2235", "#ffffff", "", "", "", "Crimson Tide"],
-      ["Minnesota", "#7A0019", "#FFCC33", "", "", ""],
-      ["Auburn", "#0C2340", "#E87722", "", "", ""],
-      ["Oregon", "#154733", "#FEE123", "", "", ""],
-      ["Wisconsin", "#C5050C", "#000000", "", "", ""],
-      ["Georgia", "#ba0c2f", "#000000", "", "", ""],
-      ["Baylor", "#003015", "#FECB00", "", "", ""],
-      ["Boston Col", "#98002E", "#BC9B6A", "", "", ""],
-      ["Cincinnati", "#E00122", "000000", "", "", ""],
-      ["Indiana", "#990000", "#ffffff", "", "", ""],
-      ["Tennessee", "#FF8200", "#ffffff", "", "", ""],
-      ["Ohio", "#00694E", "#CDA077", "", "", ""],
-      ["Nevada", "#003366", "#807f84", "", "", ""],
-      ["So Miss", "#000000", "#FFAB00", "", "", ""],
-      ["Tulane", "#006747", "#ffffff", "", "", ""],
-      ["Louisiana", "#ce181e", "#0a0203", "", "", ""],
-      ["Miami (Ohio)", "#B61E2E", "#000000", "", "", ""],
-      ["UTSA", "#002244", "#DD4814", "", "", "", "Roadrunners"],
-      ["Houston", "#c92a39", "#ffffff", "", "", "", "Cougars"],
-      ["North Texas", "#00853E", "#ffffff", "", "", "", "Eagles"],
-      ["Ball State", "#BA0C2F", "#FFFFFF", "", "", "", "Cardinals"],
-      ["Coastal Caro", "#006f71", "#a27752", "", "", "", "Chanticleers"],
-      ["Texas Tech", "#CC0000", "#000000", "", "", "", ""],
-      ["Army", "#2C2A29", "#d3bc8d", "", "", "", "Black Knights"],
-      ["Tulsa", "#003dcc", "#d4c581", "", "", "", "Golden Hurricanes"],
-      ["Colorado", "#000000", "#CFB87C", "", "", "", "Buffaloes"],
-      ["NC State", "#CC0000", "#000000", "", "", "", "Wolfpack"],
-      ["Maryland", "#E21833", "#ffd200", "", "", "", "Terrapins"],
-      ["Mississippi", "#5D1725", "#c1c6c8", "", "", "", "Bulldogs"],
-      ["W Virginia", "#002855", "#EAAA00", "", "", "", "Mountaineers"],
-      ["TCU", "#4d1979", "#a3a9ac", "", "", "", "Horned Frogs"],
-      ["Arkansas", "#9D2235", "#ffffff", "", "", "", "Razorbacks"],
-      ["San Jose St", "#0055A2", "#E5A823", "", "", "", "Spartans"],
-      ["South Caro", "#73000a", "#000000", "", "", "", "Gamecocks"],
-      ["Northwestern", "#4E2A84", "#D8D6D6", "", "", "", "Wildcats"],
-      ["Missouri", "#f1b82d", "#000000", "", "", "", "Tigers"],
-      ["LA Lafayette", "#ce181e", "#0a0203", "", "", "", "Ragin' Cajuns"]
+
+      ["Buffalo", "#005BBB", "#ffffff", "", "", "", ""],
+      ["Charlotte", "#046A38", "#B9975B", "", "", "", ""],
+      ["Utah St", "#0F2439", "#ffffff", "", "", "", ""],
+      ["Kent St", "#002664", "#EAAB00", "", "", "", ""],
+      ["N Caro A&T", "#004684", "#FDB927", "", "", "", ""],
+      ["Alcorn St", "#46166a", "#e9a713", "", "", "", ""],
+      ["C Michigan", "#6A0032", "#FFC82E", "", "", "", ""],
+      ["San Diego St", "#a6192e", "#000000", "", "", "", ""],
+      ["Liberty", "#990000", "#0A254E", "Indep", "0-0", "", ""],
+      ["Georgia So", "#011e41", "#87714D", "SunBelt", "4-4", "7-5", "L-1"],
+      ["SMU", "#C8102E", "#0033A0", "", "", "", ""],
+      ["Florida Atl", "#003366", "#CC0000", "C-USA", "4-2", "5-3", "L-2"],
+      ["Florida Int", "#081E3F", "#B6862C", "", "", "", ""],
+      ["Ark St", "#cc092f", "#000000", "", "", "", ""],
+      ["Boise St", "#0033A0", "#FA4616", "", "", "", ""],
+      ["Washington", "#4B2E83", "#B7A57A", "", "", "", ""],
+      ["App St", "#222222", "#ffcc00", "SunBelt", "6-2", "8-3", "W-1"],
+      ["UAB", "#006341", "#CC8A00", "", "", "", ""],
+      ["UCF", "#000000", "#ba9b37", "AAC", "5-3", "6-3", "W-1"],
+      ["Marshall", "#00B140", "#A2AAAD", "", "", "", ""],
+      ["BYU", "#002E5D", "#ffffff", "Indep", "0-0", "10-1", "W-1", "Cougars"],
+      ["Hawaii", "#024731", "#c8c8c8", "MWC", "4-4", "4-4", "W-1"],
+      ["LA Tech", "#003087", "#cb333b", "C-USA", "4-2", "5-4", "L-1"],
+      ["Miami", "#F47321", "#005030", "", "", "", ""],
+      ["Pitt", "#003594", "#FFB81C", "", "", "", ""],
+      ["E Michigan", "#006633", "#000000", "", "", "", ""],
+      ["UNC", "#7BAFD4", "#ffffff", "", "", "", ""],
+      ["Temple", "#9D2235", "ffffff", "", "", "", ""],
+      ["Michigan St ", "#18453B", "#ffffff", "", "", "", ""],
+      ["Wake Forest", "#9E7E38", "#000000", "", "", "", ""],
+      ["Oklahoma State ", "#000000", "#FF7300", "", "", "", ""],
+      ["Texas A&M", "#500000", "#ffffff", "", "", "", ""],
+      ["USC", "#990000", "#FFC72C", "", "", "", ""],
+      ["Iowa", "#FFCD00", "#000000", "", "", "", ""],
+      ["Air Force", "#003087", "#8A8D8F", "", "", "", ""],
+      ["Washington St", "#981E32", "#5E6A71", "", "", "", ""],
+      ["Notre Dame", "#0C2340", "#C99700", "", "", "", ""],
+      ["Iowa St", "#C8102E", "#F1BE48", "", "", "", ""],
+      ["Memphis", "#003087", "#898D8D", "AAC", "5-3", "7-3", "W-1"],
+      ["Penn St", "#041E42", "#ffffff", "", "", "", ""],
+      ["Oklahoma", "#841617", "#FDF9D8", "", "", "", ""],
+      ["LSU", "#461D7C", "#FDD023", "", "", "", ""],
+      ["Clemson", "#F56600", "#522D80", "", "", "", ""],
+      ["Ohio St", "#BB0000", "#666666", "", "", "", ""],
+      ["W Kentucky", "#C60C30", "#1E1E1E", "", "", "", ""],
+      ["W Michigan", "#6C4023", "#B5A167", "", "", "", ""],
+      ["Miss St", "#660000", "#ffffff", "", "", "", ""],
+      ["Louisville", "#AD0000", "#000000", "", "", "", ""],
+      ["Cal", "#003262", "#FDB515", "", "", "", ""],
+      ["Illinois", "#13294b", "#E84A27", "", "", "", ""],
+      ["Florida", "#0021a5", "#FA4616", "", "", "", ""],
+      ["Virginia", "#232D4B", "#F84C1E", "", "", "", ""],
+      ["Virginia Tech", "#630031", "#CF4420", "", "", "", ""],
+      ["Kentucky", "#0033A0", "#ffffff", "", "", "", ""],
+      ["Florida St", "#782F40", "#CEB888", "", "", "", ""],
+      ["Arizona St", "#8C1D40", "#FFC627", "", "", "", ""],
+      ["Navy", "#000048", "#B4A87E", "", "", "", ""],
+      ["Kansas St", "#512888", "#D1D1D1", "", "", "", ""],
+      ["Wyoming", "#ffc425", "#492f24", "", "", "", ""],
+      ["Georgia St", "#0039A6", "ffffff", "", "", "", ""],
+      ["Utah", "#CC0000", "#000000", "", "", "", ""],
+      ["Texas", "#BF5700", "#ffffff", "", "", "", ""],
+      ["Michigan", "#00274C", "#FFCB05", "", "", "", ""],
+      ["Alabama", "#9d2235", "#ffffff", "", "", "", "", "Crimson Tide"],
+      ["Minnesota", "#7A0019", "#FFCC33", "", "", "", ""],
+      ["Auburn", "#0C2340", "#E87722", "", "", "", ""],
+      ["Oregon", "#154733", "#FEE123", "", "", "", ""],
+      ["Wisconsin", "#C5050C", "#000000", "", "", "", ""],
+      ["Georgia", "#ba0c2f", "#000000", "", "", "", ""],
+      ["Baylor", "#003015", "#FECB00", "", "", "", ""],
+      ["Boston Col", "#98002E", "#BC9B6A", "", "", "", ""],
+      ["Cincinnati", "#E00122", "000000", "", "", "", ""],
+      ["Indiana", "#990000", "#ffffff", "", "", "", ""],
+      ["Tennessee", "#FF8200", "#ffffff", "", "", "", ""],
+      ["Ohio", "#00694E", "#CDA077", "", "", "", ""],
+      ["Nevada", "#003366", "#807f84", "MWC", "6-2", "6-2", "L-1", "Wolf Pack"],
+      ["So Miss", "#000000", "#FFAB00", "", "", "", ""],
+      ["Tulane", "#006747", "#ffffff", "AAC", "3-5", "6-5", "W-1"],
+      ["Louisiana", "#ce181e", "#0a0203", "", "", "", ""],
+      ["Miami (Ohio)", "#B61E2E", "#000000", "", "", "", ""],
+      ["UTSA", "#002244", "#DD4814", "", "", "", "", "Roadrunners"],
+      ["Houston", "#c92a39", "#ffffff", "AAC", "3-3", "3-4", "L-1", "Cougars"],
+      ["North Texas", "#00853E", "#ffffff", "C-USA", "3-4", "4-5", "W-1", "Eagles"],
+      ["Ball State", "#BA0C2F", "#FFFFFF", "", "", "", "", "Cardinals"],
+      ["Coastal Caro", "#006f71", "#a27752", "", "", "", "", "Chanticleers"],
+      ["Texas Tech", "#CC0000", "#000000", "", "", "", "", ""],
+      ["Army", "#2C2A29", "#d3bc8d", "", "", "", "", "Black Knights"],
+      ["Tulsa", "#003dcc", "#d4c581", "", "", "", "", "Golden Hurricanes"],
+      ["Colorado", "#000000", "#CFB87C", "", "", "", "", "Buffaloes"],
+      ["NC State", "#CC0000", "#000000", "", "", "", "", "Wolfpack"],
+      ["Maryland", "#E21833", "#ffd200", "", "", "", "", "Terrapins"],
+      ["Mississippi", "#5D1725", "#c1c6c8", "", "", "", "", "Bulldogs"],
+      ["W Virginia", "#002855", "#EAAA00", "", "", "", "", "Mountaineers"],
+      ["TCU", "#4d1979", "#a3a9ac", "", "", "", "", "Horned Frogs"],
+      ["Arkansas", "#9D2235", "#ffffff", "", "", "", "", "Razorbacks"],
+      ["San Jose St", "#0055A2", "#E5A823", "", "", "", "", "Spartans"],
+      ["South Caro", "#73000a", "#000000", "", "", "", "", "Gamecocks"],
+      ["Northwestern", "#4E2A84", "#D8D6D6", "", "", "", "", "Wildcats"],
+      ["Missouri", "#f1b82d", "#000000", "", "", "", "", "Tigers"],
+      ["LA Lafayette", "#ce181e", "#0a0203", "", "", "", "", "Ragin' Cajuns"],
+      ["Sugar Bowl Winner", "#730f08", "#ffffff", "", "", "", ""],
+      ["Rose Bowl Winner", "#1b2269", "#ffffff", "", "", "", ""]
+
     ]
   },
   mutations: {
@@ -161,6 +166,9 @@ export default new Vuex.Store({
       state.games = games
     },
 
+    setTotalPossPoints(state, points) {
+      state.totalPossPoints = points
+    },
     setActiveUser(state, user) {
       state.activeUser = user
     },
@@ -244,10 +252,6 @@ export default new Vuex.Store({
       state.points = points
     },
 
-    setPossiblePoints(state, points) {
-      state.possiblePoints = points
-    },
-
     setCompletedGames(state, games) {
       state.completedGames = games
     },
@@ -257,7 +261,7 @@ export default new Vuex.Store({
     },
 
     setActiveGame(state, game) {
-      console.log("active game committed: ", game)
+
       state.activeGame = game
     },
 
@@ -315,7 +319,7 @@ export default new Vuex.Store({
     },
 
     async getGames({ dispatch, commit }) {
-      console.log("getgames called...")
+
       let res = await api.get("games");
       let validGames = []
       res.data.forEach(g => {
@@ -344,7 +348,7 @@ export default new Vuex.Store({
         await dispatch("getUserPicks")
       }
       if (this.state.games.length < 1) {
-        console.log("calling getgames from getInitAndFormat")
+        // console.log("calling getgames from getInitAndFormat")
         await dispatch("getGames")
       }
       if (this.state.teams.length < 1) {
@@ -429,14 +433,6 @@ export default new Vuex.Store({
       })
       await commit("setPoints", points);
       dispatch("setDates");
-      dispatch("setPossiblePoints")
-    },
-
-    setPossiblePoints({ dispatch, commit }) {
-      let possPts = {}
-      possPts.points = 0;
-      this.state.points.forEach(p => possPts.points += p.pointValue);
-      commit("setPossiblePoints", possPts)
     },
 
     setActivePoint({ dispatch, commit }, point) {
@@ -529,10 +525,12 @@ export default new Vuex.Store({
 
     updateCancelledPicks({ dispatch, commit }) {
       this.state.users.forEach(u => {
+
         let userPicks = this.state.allPicks.filter(ap => ap.userId == u.userId);
         let cutoff = userPicks.find(up => up.gameId == this.state.cancelledGameId) || 0;
         if (cutoff) {
           userPicks.forEach(up => {
+
             let pickToUpdate = { ...up }
             if (pickToUpdate.points > cutoff.points) {
               pickToUpdate.points--
@@ -552,29 +550,29 @@ export default new Vuex.Store({
 
     },
 
-    updateUnCancelledPicks({ dispatch, commit }) {
-      this.state.users.forEach(u => {
-        let userPicks = this.state.allPicks.filter(ap => ap.userId == u.userId);
-        let cutoff = userPicks.find(up => up.gameId == this.state.unCancelledGameId) || 0;
-        if (cutoff) {
-          userPicks.forEach(up => {
-            let pickToUpdate = { ...up }
-            if (pickToUpdate.points > cutoff.points) {
-              pickToUpdate.points++
-              dispatch("updatePick", pickToUpdate)
-            }
-            //keep cancelled game pick to know what user points were...
-            // else if (pickToUpdate.points == cutoff.points) {
-            //   pickToUpdate.points = 0;
-            //   dispatch("updatePick", pickToUpdate)
-            // }
-          })
-        }
-      }
-      )
-      dispatch("getInitAndFormat")
-      dispatch("clearActiveGame")
-    },
+    // updateUnCancelledPicks({ dispatch, commit }) {
+    //   this.state.users.forEach(u => {
+    //     let userPicks = this.state.allPicks.filter(ap => ap.userId == u.userId);
+    //     let cutoff = userPicks.find(up => up.gameId == this.state.unCancelledGameId) || 0;
+    //     if (cutoff) {
+    //       userPicks.forEach(up => {
+    //         let pickToUpdate = { ...up }
+    //         if (pickToUpdate.points >= cutoff.points) {
+    //           pickToUpdate.points++
+    //           dispatch("updatePick", pickToUpdate)
+    //         }
+    //         //keep cancelled game pick to know what user points were...
+    //         // else if (pickToUpdate.points == cutoff.points) {
+    //         //   pickToUpdate.points = 0;
+    //         //   dispatch("updatePick", pickToUpdate)
+    //         // }
+    //       })
+    //     }
+    //   }
+    //   )
+    //   dispatch("getInitAndFormat")
+    //   dispatch("clearActiveGame")
+    // },
 
     async getUsers({ dispatch, commit }) {
       let res = await api.get("users")
@@ -583,7 +581,7 @@ export default new Vuex.Store({
 
     async getActiveUser({ dispatch, commit }, activeUser) {
       if (this.state.users.length < 1) {
-        console.log("calling getusers from getactiveuser")
+        // console.log("calling getusers from getactiveuser")
         await dispatch("getUsers");
       }
       let user = this.state.users.find(u => u.userId == activeUser);
@@ -607,10 +605,11 @@ export default new Vuex.Store({
         teamToAdd.name = trd[0];
         teamToAdd.priColor = trd[1];
         teamToAdd.secColor = trd[2];
-        teamToAdd.confRecord = trd[3];
-        teamToAdd.overallRec = trd[4];
-        teamToAdd.streak = trd[5];
-        teamToAdd.mascot = trd[6] || ""
+        teamToAdd.conference = trd[3]
+        teamToAdd.confRecord = trd[4];
+        teamToAdd.overallRec = trd[5];
+        teamToAdd.streak = trd[6];
+        teamToAdd.mascot = trd[7] || ""
         api.post("teams", teamToAdd)
       })
       dispatch("getTeams")
@@ -624,18 +623,25 @@ export default new Vuex.Store({
 
     initializeAvailableTeams({ commit }) {
       let teams = this.state.teams.filter(t => t.gameId == 0 || t.gameId == this.state.activeGame.id);
+      teams.sort(function (a, b) {
+        var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+        var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      })
       commit("setAvailableTeams", teams)
     },
 
-    // async editTeam({ dispatch, commit }, team) {
-    //   let res = await api.put("teams", team)
-    //   commit("updateAvailableTeams", res);
-    //   dispatch("updateFormattedGameTeam", team)
-    // },
-
-    async editTeams({ dispatch, commit }, teams) {
-      await teams.forEach(t => {
-        let res = api.put("teams", t)
+    editTeams({ dispatch, commit }, teams) {
+      // console.log("editTeams called...: ", teams)
+      teams.forEach(t => {
+        let res = api.put("teams/" + t.id, t)
+        // console.log("res from editteams: ", res)
         commit("updateAvailableTeams", res);
         dispatch("updateFormattedGameTeam", t)
       })
@@ -656,12 +662,12 @@ export default new Vuex.Store({
     },
 
     async updateTeam({ dispatch, commit }, teamToUpdate) {
+      // console.log("updateTeam called...")
       let res = await api.put("teams/" + teamToUpdate.id, teamToUpdate)
       dispatch("getInitAndFormat")
     },
 
     setActiveEditField({ commit }, field) {
-      console.log("activeEditfield passed: ", field)
       commit("setActiveEditField", field)
     },
 
@@ -699,6 +705,7 @@ export default new Vuex.Store({
 
     async resetTeamGameIds({ dispatch }) {
       await this.state.teams.forEach(t => {
+        console.log("resetTeamGameIds called...")
         t.gameId = 0
         api.put("teams", t)
       })
@@ -714,14 +721,20 @@ export default new Vuex.Store({
     },
 
 
+    // async updatePick({ dispatch, commit }, pick) {
+    //   if (this.state.userPicks.find(up => up.gameId == pick.gameId)) {
+    //     let res = await api.put("picks", pick)
+    //     dispatch("updateUserPicks", res.data)
+    //   }
+    //   else {
+    //     dispatch("createPick", pick)
+    //   }
+    // },
+
     async updatePick({ dispatch, commit }, pick) {
-      if (this.state.userPicks.find(up => up.gameId == pick.gameId)) {
-        let res = await api.put("picks", pick)
-        dispatch("updateUserPicks", res.data)
-      }
-      else {
-        dispatch("createPick", pick)
-      }
+
+      let res = await api.put("picks", pick)
+      dispatch("updateUserPicks", res.data)
     },
 
     async createPick({ dispatch, commit }, pick) {
@@ -748,40 +761,54 @@ export default new Vuex.Store({
       dispatch("setActiveGamesByActiveDate")
     },
 
+    getTotalPointsPoss({ commit }) {
+      let totalPossPoints = {}
+      let pointTotal = 0;
+      let valGamesNum = this.state.games.filter(g => g.status == 'unlocked' || 'locked').length
+      for (let i = valGamesNum; i > 0; i--) {
+        pointTotal += i
+      }
+      totalPossPoints.points = pointTotal
+      commit("setTotalPossPoints", totalPossPoints)
+    },
+
     async getLeaderBoardData({ dispatch, commit }) {
       await dispatch("getAllPicks");
       let lbRows = [];
       this.state.users.forEach(u => {
+
         let user = {};
-        let points = 0;
-        let perc = 0;
-        let possPoints = 0;
+        let pointsWon = 0;
         let pointsLeft = 0;
-        user.userId = u.userId;
-        user.name = u.name;
-        this.state.allPicks.forEach(p => {
-          if (p.teamId != 0) {
-            let winningTeamId = 0;
-            if (this.state.lockedFormattedGames.findIndex(fg => fg.wId == p.teamId) > 0) {
-              winningTeamId = this.state.lockedFormattedGames.find(fg => fg.wId == p.teamId).wId;
+        let possiblePoints = 0;
+        let totalPossPoints = this.state.totalPossPoints.points
+        let userPicks = this.state.allPicks.filter(p => p.userId == u.userId);
+        let completedGameUserPicks = []
+        let gameWonUserPicks = []
+        userPicks.forEach(up => {
+          let compGameIndex = this.state.completedGames.findIndex(cg => cg.id == up.gameId)
+          if (compGameIndex != -1) {
+            completedGameUserPicks.push(up)
+            if (this.state.completedGames[compGameIndex].wId == up.teamId) {
+              gameWonUserPicks.push(up)
             }
-            if (p.userId == user.userId && p.teamId == winningTeamId) {
-              points += p.points
-            }
-            if (p.userId == user.userId && this.state.completedGames.findIndex(cg => cg.id == p.gameId) != -1) {
-              possPoints += p.points
-            }
-            pointsLeft = this.state.possiblePoints.points - possPoints
           }
-        });
-        user.pointsLeft = pointsLeft
-        user.points = points
-        user.possPoints = possPoints
-        if (points != 0) {
-          perc = points / possPoints * 100;
+        })
+        // console.log(" user picks: ", u.name, userPicks)
+        gameWonUserPicks.forEach(wg => { pointsWon += wg.points })
+        completedGameUserPicks.forEach(cgup => { possiblePoints += cgup.points })
+
+        pointsLeft = totalPossPoints - possiblePoints
+        if (pointsWon != 0) {
+          user.percent = ((pointsWon / totalPossPoints) * 100).toFixed(1)
         }
-        user.percent = perc.toFixed(2)
-        user.pointsLeft = pointsLeft;
+        else {
+          user.percent = 0
+        }
+        user.points = pointsWon
+        user.pointsLeft = pointsLeft
+        user.name = u.name
+        // console.log(u.name, "won: ", totalPossPoints, )
         lbRows.push(user)
       })
       commit("setLeaderBoardRows", lbRows)
@@ -796,27 +823,30 @@ export default new Vuex.Store({
     },
 
     async createUser({ dispatch, commit }, user) {
-      let res = await api.post("users", user);
-      let points = []
-      let pointValue = 1;
-      if (this.state.unlockedFormattedGames.length < 1) {
-        await dispatch("getInitAndFormat")
+      await dispatch("getUsers");
+      if (this.state.users.findIndex(u => u.userId == user.userId) == -1) {
+        let res = await api.post("users", user);
+        let points = []
+        let pointValue = 1;
+        if (this.state.unlockedFormattedGames.length < 1) {
+          await dispatch("getInitAndFormat")
+        }
+        this.state.unlockedFormattedGames.forEach(g => {
+          let initPick = {}
+          initPick.userId = user.userId
+          initPick.name = user.name
+          initPick.points = 0
+          initPick.teamId = 0
+          initPick.gameId = g.id
+          let pickRes = api.post("picks", initPick)
+          let point = {};
+          point.pointValue = pointValue;
+          points.push(point);
+          pointValue++;
+        })
+        commit("setPoints", points)
+        dispatch("getAllPicks")
       }
-      this.state.unlockedFormattedGames.forEach(g => {
-        let initPick = {}
-        initPick.userId = user.userId
-        initPick.name = user.name
-        initPick.points = 0
-        initPick.teamId = 0
-        initPick.gameId = g.id
-        let pickRes = api.post("picks", initPick)
-        let point = {};
-        point.pointValue = pointValue;
-        points.push(point);
-        pointValue++;
-      })
-      commit("setPoints", points)
-      dispatch("getAllPicks")
     },
 
     sortByPointsLeft({ dispatch, commit }) {

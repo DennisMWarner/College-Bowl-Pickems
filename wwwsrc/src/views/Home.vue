@@ -12,14 +12,17 @@
     </button>
     <div
       v-if="
-        $auth.isAuthenticated &&
-        this.$store.state.users.length > 0 &&
-        this.$store.state.users.findIndex(
-          (u) => u.userId == this.$auth.userInfo.sub
-        ) < 0
+        ($auth.isAuthenticated && this.$store.state.users.length == 0) ||
+        ($auth.isAuthenticated &&
+          this.$store.state.users.length > 0 &&
+          this.$store.state.users.findIndex(
+            (u) => u.userId == this.$auth.userInfo.sub
+          ) < 0)
       "
-      class="text-white"
+      class="text-white mt-5"
     >
+      <h5 class="mb-3 text-warning">Please choose a display name...</h5>
+
       <div class="input-group mb-3 w-75 mx-auto">
         <input
           type="text"
@@ -103,6 +106,9 @@ export default {
       newUser: {},
     };
   },
+  beforeCreate() {
+    this.$store.dispatch("getUsers");
+  },
 
   methods: {
     async login() {
@@ -118,7 +124,7 @@ export default {
       if (
         this.$store.state.users.findIndex((u) => u.name == this.newUser.name) ==
           -1 &&
-        this.newUser.name.length != ""
+        this.newUser.name != ""
       ) {
         this.newUser.userId = this.$auth.userInfo.sub;
         this.newUser.email = this.$auth.userInfo.email;

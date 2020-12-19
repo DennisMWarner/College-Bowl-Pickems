@@ -1,4 +1,4 @@
-USE bpems;
+-- USE bpems;
 
 -- CREATE TABLE users (
 --     id int NOT NULL AUTO_INCREMENT,
@@ -46,6 +46,7 @@ USE bpems;
 --     abbName VARCHAR(6),
 --     priColor VARCHAR(12),
 --     secColor VARCHAR(12), 
+--     conference VARCHAR(7), 
 --     confRecord VARCHAR(5),
 --     overallRec VARCHAR(5),
 --     mascotName VARCHAR(24), 

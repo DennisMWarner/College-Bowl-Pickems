@@ -41,21 +41,28 @@
         </p>
       </div>
     </div>
-    <div class="row no-gutters">
+    <div class="row no-gutters pr-1">
       <div class="col-9">
         <div class="row">
           <div
             v-if="!this.pickableGameData.userData.teamId"
-            class="col-12 offset-1 text-left teams bg-white text-secondary team1"
+            class="col-12 offset-1 text-left teams bg-white text-secondary team1 pr-1"
             @click="setActiveFirstTeam()"
           >
             {{ this.pickableGameData.firstTeam.name }}
             <div class="row no-gutters">
               <div class="col-7 recsTop text-right">
-                Big 10 &nbsp;&nbsp; 12-0
+                {{ this.pickableGameData.firstTeam.conference }}
+                <span class="confRec">
+                  {{ this.pickableGameData.firstTeam.confRecord }}</span
+                >
               </div>
-              <div class="col-7 recsBot text-right">13-0</div>
-              <div class="col-4 streak text-right">W-5</div>
+              <div class="col-7 recsBot text-right">
+                {{ this.pickableGameData.firstTeam.overallRec }}
+              </div>
+              <div class="col-4 streak text-center">
+                {{ this.pickableGameData.firstTeam.streak }}
+              </div>
             </div>
           </div>
           <div
@@ -63,7 +70,7 @@
               this.pickableGameData.firstTeam.id ==
               this.pickableGameData.userData.teamId
             "
-            class="col-12 offset-1 text-left teams team1"
+            class="col-12 offset-1 text-left teams team1 pr-1"
             v-bind:style="{
               'background-color': this.pickableGameData.firstTeam.priColor,
               color: this.pickableGameData.firstTeam.secColor,
@@ -73,26 +80,38 @@
             {{ this.pickableGameData.firstTeam.name }}
             <div class="row no-gutters">
               <div class="col-7 recsTop text-right">
-                Big 10 &nbsp;&nbsp; 12-0
+                {{ this.pickableGameData.firstTeam.conference }}
+                <span class="confRec">{{
+                  this.pickableGameData.firstTeam.confRecord
+                }}</span>
               </div>
-              <div class="col-7 recsBot text-right">13-0</div>
-              <div class="col-4 streak text-right">W-5</div>
+              <div class="col-7 recsBot text-right">
+                {{ this.pickableGameData.firstTeam.overallRec }}
+              </div>
+              <div class="col-4 streak text-center">
+                {{ this.pickableGameData.firstTeam.streak }}
+              </div>
             </div>
           </div>
           <div
             v-else
-            class="col-12 offset-1 text-left teams bg-dark text-secondary team1"
-            data-toggle="modal"
-            data-a
+            class="col-12 offset-1 text-left teams bg-dark text-secondary team1 pr-1"
             @click="setActiveFirstTeam()"
           >
             {{ this.pickableGameData.firstTeam.name }}
             <div class="row no-gutters">
               <div class="col-7 recsTop text-right">
-                Big 10 &nbsp;&nbsp; 12-0
+                {{ this.pickableGameData.firstTeam.conference }}
+                <span class="confRec">{{
+                  this.pickableGameData.firstTeam.confRecord
+                }}</span>
               </div>
-              <div class="col-7 recsBot text-right">13-0</div>
-              <div class="col-4 streak text-right">W-5</div>
+              <div class="col-7 recsBot text-right">
+                {{ this.pickableGameData.firstTeam.overallRec }}
+              </div>
+              <div class="col-4 streak text-center">
+                {{ this.pickableGameData.firstTeam.streak }}
+              </div>
             </div>
           </div>
         </div>
@@ -125,16 +144,23 @@
         <div class="row">
           <div
             v-if="!this.pickableGameData.userData.teamId"
-            class="col-12 offset-1 text-left teams bg-white text-secondary team2"
+            class="col-12 offset-1 text-left teams bg-white text-secondary team2 pr-1"
             @click="setActiveSecondTeam()"
           >
             {{ this.pickableGameData.secondTeam.name }}
             <div class="row no-gutters">
               <div class="col-7 recsTop text-right">
-                Big 10 &nbsp;&nbsp; 12-0
+                {{ this.pickableGameData.secondTeam.conference }}
+                <span class="confRec">{{
+                  this.pickableGameData.secondTeam.confRecord
+                }}</span>
               </div>
-              <div class="col-7 recsBot text-right">13-0</div>
-              <div class="col-4 streak text-right">W-5</div>
+              <div class="col-7 recsBot text-right">
+                {{ this.pickableGameData.secondTeam.overallRec }}
+              </div>
+              <div class="col-4 streak text-center">
+                {{ this.pickableGameData.secondTeam.streak }}
+              </div>
             </div>
           </div>
           <div
@@ -142,7 +168,7 @@
               this.pickableGameData.secondTeam.id ==
               this.pickableGameData.userData.teamId
             "
-            class="col-12 offset-1 text-left teams mt-1 team2"
+            class="col-12 offset-1 text-left teams mt-1 team2 pr-1"
             v-bind:style="{
               'background-color': this.pickableGameData.secondTeam.priColor,
               color: this.pickableGameData.secondTeam.secColor,
@@ -152,24 +178,38 @@
             {{ this.pickableGameData.secondTeam.name }}
             <div class="row no-gutters">
               <div class="col-7 recsTop text-right">
-                Big 10 &nbsp;&nbsp; 12-0
+                {{ this.pickableGameData.secondTeam.conference }}
+                <span class="confRec">
+                  {{ this.pickableGameData.secondTeam.confRecord }}</span
+                >
               </div>
-              <div class="col-7 recsBot text-right">13-0</div>
-              <div class="col-4 streak text-right">W-5</div>
+              <div class="col-7 recsBot text-right">
+                {{ this.pickableGameData.secondTeam.overallRec }}
+              </div>
+              <div class="col-4 streak text-center">
+                {{ this.pickableGameData.secondTeam.streak }}
+              </div>
             </div>
           </div>
           <div
             v-else
-            class="col-12 offset-1 text-left teams mt-1 text-secondary team2"
+            class="col-12 offset-1 text-left teams mt-1 text-secondary team2 pr-1"
             @click="setActiveSecondTeam()"
           >
             {{ this.pickableGameData.secondTeam.name }}
             <div class="row no-gutters">
               <div class="col-7 recsTop text-right">
-                Big 10 &nbsp;&nbsp; 12-0
+                {{ this.pickableGameData.secondTeam.conference }}
+                <span class="confRec">
+                  {{ this.pickableGameData.secondTeam.confRecord }}</span
+                >
               </div>
-              <div class="col-7 recsBot text-right">13-0</div>
-              <div class="col-4 streak text-right">W-5</div>
+              <div class="col-7 recsBot text-right">
+                {{ this.pickableGameData.secondTeam.overallRec }}
+              </div>
+              <div class="col-4 streak text-center">
+                {{ this.pickableGameData.secondTeam.streak }}
+              </div>
             </div>
           </div>
         </div>
@@ -275,6 +315,7 @@ export default {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-size: 18px;
   font-weight: bold;
+  padding-right: 8px;
 }
 
 .team1 {
@@ -291,7 +332,7 @@ export default {
   /* border-radius: 15px; */
   font-size: xx-large;
   font-weight: bolder;
-  padding-top: 18px;
+  padding-top: 12px !important;
   padding-left: 14px;
   border-radius: 15px;
   border-bottom-right-radius: 15px;
@@ -303,14 +344,20 @@ export default {
 .recsTop {
   font-size: 10px;
   margin-top: 0px;
+  width: 60px;
 }
 .recsBot {
   font-size: 10px;
   margin-top: -4px;
 }
+
+.confRec {
+  padding-left: 3px;
+}
 .streak {
+  width: 35px;
   font-size: 12px;
   margin-top: -12px;
-  padding-left: 3px;
+  padding-left: 2px;
 }
 </style>

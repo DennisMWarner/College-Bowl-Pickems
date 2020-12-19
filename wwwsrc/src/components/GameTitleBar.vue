@@ -9,12 +9,15 @@
     >
       <div>
         <div
-          class="col-11 mx-auto no-gutters text-center pt-1 px-0 border border-dark mt-2 bg-success rounded text-white text-left my-1"
+          class="col-11 mx-auto no-gutters text-center pt-1 px-0 border border-dark mt-2 bg-info rounded text-white text-left my-1"
           @click="setActiveGame()"
         >
-          <h3>
-            {{ this.gameTitleBarData.name }}
-          </h3>
+          <h4>
+            {{ this.gameTitleBarData.name
+            }}<span class="ml-4 small-font"
+              >Id: {{ this.gameTitleBarData.id }}</span
+            >
+          </h4>
         </div>
         <team-title-bars />
         <button
@@ -78,6 +81,7 @@
         @click="setActiveGame()"
       >
         {{ this.gameTitleBarData.name }}
+        <span class="ml-4 small-font">Id: {{ this.gameTitleBarData.id }}</span>
 
         <img
           v-if="this.gameTitleBarData.status == 'locked'"
@@ -291,12 +295,11 @@ export default {
     },
 
     setActiveGame() {
-      // if (this.gameTitleBarData != this.$store.state.activeGame) {
-      //   this.$store.dispatch("setActiveGame", this.gameTitleBarData);
-      // } else {
-      //   this.$store.dispatch("setActiveGame", {});
-      // }
-      this.$store.dispatch("setActiveGame", this.gameTitleBarData);
+      if (this.gameTitleBarData != this.$store.state.activeGame) {
+        this.$store.dispatch("setActiveGame", this.gameTitleBarData);
+      } else {
+        this.$store.dispatch("setActiveGame", {});
+      }
     },
     setActiveEditFields() {
       this.$store.dispatch("setActiveEditFields", this.gameTitleBarData);
@@ -335,5 +338,8 @@ export default {
 .winImg {
   max-width: 15px;
   max-height: 15px;
+}
+.small-font {
+  font-size: 12px;
 }
 </style>
