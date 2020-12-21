@@ -32,25 +32,31 @@
         </p>
       </div>
     </div>
-    <div class="row no-gutters">
+    <div class="row no-gutters pr-1">
       <div class="col-9">
         <div class="row">
           <div
             v-if="!this.gameData.userData.teamId"
-            class="col-12 offset-1 text-left teams bg-white text-secondary team1"
+            class="col-12 offset-1 text-left teams bg-white text-secondary team1 pr-1"
           >
-            {{ this.gameData.firstTeam.name }}
+            <span
+              >{{ this.gameData.firstTeam.name }}
+              <span class="rank text-left">{{
+                this.gameData.firstTeam.rank
+              }}</span></span
+            >
             <div class="row no-gutters">
               <div class="col-7 recsTop text-right">
-                {{ this.gameData.conference }}&nbsp;&nbsp;{{
-                  this.gameData.confRecord
-                }}
+                {{ this.gameData.firstTeam.conference }}
+                <span class="confRec">
+                  {{ this.gameData.firstTeam.confRecord }}</span
+                >
               </div>
               <div class="col-7 recsBot text-right">
-                {{ this.gameData.overallRec }}
+                {{ this.gameData.firstTeam.overallRec }}
               </div>
-              <div class="col-4 streak text-right">
-                {{ this.gameData.streak }}
+              <div class="col-4 streak text-center">
+                {{ this.gameData.firstTeam.streak }}
               </div>
             </div>
           </div>
@@ -58,65 +64,82 @@
             v-else-if="
               this.gameData.firstTeam.id == this.gameData.userData.teamId
             "
-            class="col-12 offset-1 text-left teams team1"
+            class="col-12 offset-1 text-left teams team1 pr-1"
             v-bind:style="{
               'background-color': this.gameData.firstTeam.priColor,
               color: this.gameData.firstTeam.secColor,
             }"
           >
-            {{ this.gameData.firstTeam.name }}
+            <span
+              >{{ this.gameData.firstTeam.name }}
+              <span class="rank text-left">{{
+                this.gameData.firstTeam.rank
+              }}</span></span
+            >
             <div class="row no-gutters">
               <div class="col-7 recsTop text-right">
-                {{ this.gameData.conference }}&nbsp;&nbsp;{{
-                  this.gameData.confRecord
-                }}
+                {{ this.gameData.firstTeam.conference }}
+                <span class="confRec">{{
+                  this.gameData.firstTeam.confRecord
+                }}</span>
               </div>
               <div class="col-7 recsBot text-right">
-                {{ this.gameData.overallRec }}
+                {{ this.gameData.firstTeam.overallRec }}
               </div>
-              <div class="col-4 streak text-right">
-                {{ this.gameData.streak }}
+              <div class="col-4 streak text-center">
+                {{ this.gameData.firstTeam.streak }}
               </div>
             </div>
           </div>
           <div
             v-else
-            class="col-12 offset-1 text-left teams bg-dark text-secondary team1"
+            class="col-12 offset-1 text-left teams bg-dark text-secondary team1 pr-1"
           >
-            {{ this.gameData.firstTeam.name }}
+            <span
+              >{{ this.gameData.firstTeam.name }}
+              <span class="rank text-left">{{
+                this.gameData.firstTeam.rank
+              }}</span></span
+            >
             <div class="row no-gutters">
               <div class="col-7 recsTop text-right">
-                {{ this.gameData.conference }}&nbsp;&nbsp;{{
-                  this.gameData.confRecord
-                }}
+                {{ this.gameData.firstTeam.conference }}
+                <span class="confRec">{{
+                  this.gameData.firstTeam.confRecord
+                }}</span>
               </div>
               <div class="col-7 recsBot text-right">
-                {{ this.gameData.overallRec }}
+                {{ this.gameData.firstTeam.overallRec }}
               </div>
-              <div class="col-4 streak text-right">
-                {{ this.gameData.streak }}
+              <div class="col-4 streak text-center">
+                {{ this.gameData.firstTeam.streak }}
               </div>
             </div>
           </div>
         </div>
-
         <div class="row">
           <div
             v-if="!this.gameData.userData.teamId"
-            class="col-12 offset-1 text-left teams bg-white text-secondary team2"
+            class="col-12 offset-1 text-left teams bg-white text-secondary team2 pr-1"
           >
-            {{ this.gameData.secondTeam.name }}
+            <span
+              >{{ this.gameData.secondTeam.name }}
+              <span class="rank text-left">{{
+                this.gameData.secondTeam.rank
+              }}</span></span
+            >
             <div class="row no-gutters">
               <div class="col-7 recsTop text-right">
-                {{ this.gameData.conference }}&nbsp;&nbsp;{{
-                  this.gameData.confRecord
-                }}
+                {{ this.gameData.secondTeam.conference }}
+                <span class="confRec">{{
+                  this.gameData.secondTeam.confRecord
+                }}</span>
               </div>
               <div class="col-7 recsBot text-right">
-                {{ this.gameData.overallRec }}
+                {{ this.gameData.secondTeam.overallRec }}
               </div>
-              <div class="col-4 streak text-right">
-                {{ this.gameData.streak }}
+              <div class="col-4 streak text-center">
+                {{ this.gameData.secondTeam.streak }}
               </div>
             </div>
           </div>
@@ -124,43 +147,53 @@
             v-else-if="
               this.gameData.secondTeam.id == this.gameData.userData.teamId
             "
-            class="col-12 offset-1 text-left teams mt-1 team2"
+            class="col-12 offset-1 text-left teams mt-1 team2 pr-1"
             v-bind:style="{
               'background-color': this.gameData.secondTeam.priColor,
               color: this.gameData.secondTeam.secColor,
             }"
           >
-            {{ this.gameData.secondTeam.name }}
+            <span
+              >{{ this.gameData.secondTeam.name }}
+              <span class="rank text-left">{{
+                this.gameData.secondTrank
+              }}</span></span
+            >
             <div class="row no-gutters">
               <div class="col-7 recsTop text-right">
-                {{ this.gameData.conference }}&nbsp;&nbsp;{{
-                  this.gameData.confRecord
-                }}
+                {{ this.gameData.secondTeam.conference }}
+                <span class="confRec">
+                  {{ this.gameData.secondTeam.confRecord }}</span
+                >
               </div>
               <div class="col-7 recsBot text-right">
-                {{ this.gameData.overallRec }}
+                {{ this.gameData.secondTeam.overallRec }}
               </div>
-              <div class="col-4 streak text-right">
-                {{ this.gameData.streak }}
+              <div class="col-4 streak text-center">
+                {{ this.gameData.secondTeam.streak }}
               </div>
             </div>
           </div>
           <div
             v-else
-            class="col-12 offset-1 text-left teams mt-1 text-secondary team2"
+            class="col-12 offset-1 text-left teams mt-1 text-secondary team2 pr-1"
           >
-            {{ this.gameData.secondTeam.name }}
+            <span
+              >{{ this.gameData.secondTeam.name }}
+              <span class="rank text-left">{{ this.gameData.rank }}</span></span
+            >
             <div class="row no-gutters">
               <div class="col-7 recsTop text-right">
-                {{ this.gameData.conference }}&nbsp;&nbsp;{{
-                  this.gameData.confRecord
-                }}
+                {{ this.gameData.secondTeam.conference }}
+                <span class="confRec">
+                  {{ this.gameData.secondTeam.confRecord }}</span
+                >
               </div>
               <div class="col-7 recsBot text-right">
-                {{ this.gameData.overallRec }}
+                {{ this.gameData.secondTeam.overallRec }}
               </div>
-              <div class="col-4 streak text-right">
-                {{ this.gameData.streak }}
+              <div class="col-4 streak text-center">
+                {{ this.gameData.secondTeam.streak }}
               </div>
             </div>
           </div>
@@ -168,7 +201,7 @@
       </div>
       <div
         v-if="this.gameData.userData.points"
-        class="col-2 text-center px-2 pt-2 ml-4 text-dark points"
+        class="col-2 text-center px-2 pt-3 ml-4 text-dark points"
       >
         {{ this.gameData.userData.points }}
       </div>
@@ -182,10 +215,13 @@
 
 <script>
 import team from "../components/Team";
+
 export default {
   name: "game",
   data() {
-    return {};
+    return {
+      newPick: {},
+    };
   },
   computed: {},
   methods: {},
@@ -210,6 +246,7 @@ export default {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-size: 18px;
   font-weight: bold;
+  padding-right: 8px;
 }
 
 .team1 {
@@ -237,15 +274,27 @@ export default {
 }
 .recsTop {
   font-size: 10px;
-  margin-top: 0px;
+  margin-top: 1px;
+  width: 60px;
+}
+.rank {
+  font-size: 12px;
+  padding-bottom: 20px !important;
+  position: relative;
+  top: -2px;
 }
 .recsBot {
   font-size: 10px;
-  margin-top: -4px;
+  margin-top: -5px;
+}
+
+.confRec {
+  padding-left: 3px;
 }
 .streak {
+  width: 35px;
   font-size: 12px;
   margin-top: -12px;
-  padding-left: 3px;
+  padding-left: 2px;
 }
 </style>

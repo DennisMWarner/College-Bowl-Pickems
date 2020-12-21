@@ -8,7 +8,7 @@ import { authGuard } from "@bcwdev/auth0-vue";
 // @ts-ignore
 import SetupPage from "./views/SetupPage";
 // @ts-ignore
-// import StatsPage from "./views/StatsPage";
+import StatsPage from "./views/StatsPage";
 // // @ts-ignore
 // import UserStatsPage from "./views/UserStatsPage";
 // @ts-ignore
@@ -42,11 +42,11 @@ export default new Router({
     //   name: "user-stats-page",
     //   component: UserStatsPage
     // },
-    // {
-    //   path: "/stats",
-    //   name: "stats-page",
-    //   component: StatsPage
-    // },
+    {
+      path: "/stats",
+      name: "stats-page",
+      component: StatsPage
+    },
     {
       path: "/makePicks",
       name: "make-picks-page",

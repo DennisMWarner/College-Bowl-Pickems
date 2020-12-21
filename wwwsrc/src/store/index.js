@@ -19,6 +19,7 @@ let api = Axios.create({
 
 export default new Vuex.Store({
   state: {
+    adminOptions: {},
     teams: [],
     teamsToUpdate: [],
     activeTeamsByGameId: [],
@@ -177,6 +178,9 @@ export default new Vuex.Store({
       state.otherGames = games
     },
 
+    setAdminOptions(state, options) {
+      state.adminOptions = options
+    },
 
     setDates(state) {
       state.games.forEach(g => {
@@ -490,6 +494,9 @@ export default new Vuex.Store({
       if (newGame.sponsor == null) {
         newGame.sponsor = ''
       }
+      if (newGame.rank == null) {
+        newGame.sponsor = ''
+      }
       newGame.status = 'unlocked'
       newGame.wId = 0
       let res = await api.post("games", newGame);
@@ -770,6 +777,17 @@ export default new Vuex.Store({
       }
       totalPossPoints.points = pointTotal
       commit("setTotalPossPoints", totalPossPoints)
+    },
+
+    toggleAdminOptions({ commit }) {
+      let adminOptions = {}
+      if (this.state.adminOptions.showAdminOptions == true) {
+        adminOptions.showOptions = false;
+      }
+      else {
+        adminOptions.showOptions = true;
+      }
+      commit("setAdminOptions", adminOptions)
     },
 
     async getLeaderBoardData({ dispatch, commit }) {

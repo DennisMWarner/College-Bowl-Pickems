@@ -16,6 +16,7 @@ namespace BowlPickems.Models
     public string streak { get; set; }
     public string conference { get; set; }
     public int GameId { get; set; }
+    public string Rank { get; set; }
 
 
   }

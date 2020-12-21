@@ -49,7 +49,12 @@
             class="col-12 offset-1 text-left teams bg-white text-secondary team1 pr-1"
             @click="setActiveFirstTeam()"
           >
-            {{ this.pickableGameData.firstTeam.name }}
+            <span
+              >{{ this.pickableGameData.firstTeam.name }}
+              <span class="rank text-left">{{
+                this.pickableGameData.firstTeam.rank
+              }}</span></span
+            >
             <div class="row no-gutters">
               <div class="col-7 recsTop text-right">
                 {{ this.pickableGameData.firstTeam.conference }}
@@ -77,7 +82,12 @@
             }"
             @click="setActiveFirstTeam()"
           >
-            {{ this.pickableGameData.firstTeam.name }}
+            <span
+              >{{ this.pickableGameData.firstTeam.name }}
+              <span class="rank text-left">{{
+                this.pickableGameData.firstTeam.rank
+              }}</span></span
+            >
             <div class="row no-gutters">
               <div class="col-7 recsTop text-right">
                 {{ this.pickableGameData.firstTeam.conference }}
@@ -98,7 +108,12 @@
             class="col-12 offset-1 text-left teams bg-dark text-secondary team1 pr-1"
             @click="setActiveFirstTeam()"
           >
-            {{ this.pickableGameData.firstTeam.name }}
+            <span
+              >{{ this.pickableGameData.firstTeam.name }}
+              <span class="rank text-left">{{
+                this.pickableGameData.firstTeam.rank
+              }}</span></span
+            >
             <div class="row no-gutters">
               <div class="col-7 recsTop text-right">
                 {{ this.pickableGameData.firstTeam.conference }}
@@ -147,7 +162,12 @@
             class="col-12 offset-1 text-left teams bg-white text-secondary team2 pr-1"
             @click="setActiveSecondTeam()"
           >
-            {{ this.pickableGameData.secondTeam.name }}
+            <span
+              >{{ this.pickableGameData.secondTeam.name }}
+              <span class="rank text-left">{{
+                this.pickableGameData.secondTeam.rank
+              }}</span></span
+            >
             <div class="row no-gutters">
               <div class="col-7 recsTop text-right">
                 {{ this.pickableGameData.secondTeam.conference }}
@@ -175,7 +195,12 @@
             }"
             @click="setActiveSecondTeam()"
           >
-            {{ this.pickableGameData.secondTeam.name }}
+            <span
+              >{{ this.pickableGameData.secondTeam.name }}
+              <span class="rank text-left">{{
+                this.pickableGameData.secondTrank
+              }}</span></span
+            >
             <div class="row no-gutters">
               <div class="col-7 recsTop text-right">
                 {{ this.pickableGameData.secondTeam.conference }}
@@ -196,7 +221,12 @@
             class="col-12 offset-1 text-left teams mt-1 text-secondary team2 pr-1"
             @click="setActiveSecondTeam()"
           >
-            {{ this.pickableGameData.secondTeam.name }}
+            <span
+              >{{ this.pickableGameData.secondTeam.name }}
+              <span class="rank text-left">{{
+                this.pickableGameData.rank
+              }}</span></span
+            >
             <div class="row no-gutters">
               <div class="col-7 recsTop text-right">
                 {{ this.pickableGameData.secondTeam.conference }}
@@ -343,12 +373,18 @@ export default {
 }
 .recsTop {
   font-size: 10px;
-  margin-top: 0px;
+  margin-top: 1px;
   width: 60px;
+}
+.rank {
+  font-size: 12px;
+  padding-bottom: 20px !important;
+  position: relative;
+  top: -2px;
 }
 .recsBot {
   font-size: 10px;
-  margin-top: -4px;
+  margin-top: -5px;
 }
 
 .confRec {

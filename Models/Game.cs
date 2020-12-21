@@ -14,6 +14,7 @@ namespace BowlPickems.Models
 
     public int WId { get; set; }
     public string Status { get; set; }
+
   }
 
 }

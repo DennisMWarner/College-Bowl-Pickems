@@ -52,6 +52,7 @@
 --     mascotName VARCHAR(24), 
 --     streak VARCHAR(255),
 --     gameId int(11),
+--rank VARCHAR(4), 
 --    PRIMARY KEY (id),
 --     INDEX (id)   
 -- );
@@ -59,7 +60,8 @@
 -- ALTER TABLE teams 
 -- DROP COLUMN teamUrl
 
-
+-- ALTER TABLE teams
+-- ADD rank VARCHAR(4)
 
 
 

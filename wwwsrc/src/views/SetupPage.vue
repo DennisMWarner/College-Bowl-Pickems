@@ -1,6 +1,19 @@
 <template>
   <div class="setup-page text-white text-center">
-    <add-game-button />
+    <!-- <router-link class="w-50 mr-3 mb-3" :to="{ name: '' }"> -->
+    <!-- <button
+      class="btn bg-warning rounded border text-white mb-2 border-white w-50"
+      @click="toggleAdminOptions()"
+    >
+      Show Options
+    </button>
+    <button
+      class="btn bg-warning rounded border text-white mb-2 border-white w-50"
+      @click="viewUserData;"
+    >
+      User View
+    </button> -->
+    <!-- <add-game-button />
     <add-team-button />
     <lock-all-games-button />
     <unlock-games-button />
@@ -10,9 +23,9 @@
       data-toggle="modal"
     >
       Reset all winners
-    </button>
+    </button> -->
     <!--Reset winners modal------------------------>
-    <div class="modal" tabindex="-1" role="dialog" id="resetWinnersModal">
+    <!-- <div class="modal" tabindex="-1" role="dialog" id="resetWinnersModal">
       <div class="modal-dialog-centered m-3" role="document">
         <div class="modal-content bg-danger">
           <div class="modal-body p-3 border rounded border-white text-center">
@@ -35,9 +48,9 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!--------------modal end-------------->
-    <button
+    <!-- <button
       class="btn btn-danger border border-white text-center text-white w-75 mb-3"
       data-target="#resetTeamsModal"
       data-toggle="modal"
@@ -45,7 +58,7 @@
       Reset all teams
     </button>
     <!--Reset teams modal------------------------>
-    <div class="modal" tabindex="-1" role="dialog" id="resetTeamsModal">
+    <!-- <div class="modal" tabindex="-1" role="dialog" id="resetTeamsModal">
       <div class="modal-dialog-centered m-3" role="document">
         <div class="modal-content bg-danger">
           <div class="modal-body p-3 border rounded border-white text-center">
@@ -68,14 +81,15 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!--------------modal end-------------->
-    <button
+    <!-- <button
       class="btn btn-success border border-white text-center text-white w-75 mb-3"
       @click="genUserSims()"
     >
       Generate User Sim Pick Sheets
     </button>
+     -->
     <div
       v-if="this.$auth.isAuthenticated && this.$store.state.teams.length < 1"
       class="text-center"
@@ -136,6 +150,10 @@ export default {
       this.$store.dispatch("resetWinners");
     },
     genUserSims() {},
+
+    toggleAdminOptions() {
+      this.$store.dispatch("toggleAdminOptions");
+    },
   },
   components: {
     games,

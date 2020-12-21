@@ -1,5 +1,22 @@
 <template>
   <div class="no-gutters row justify-content-around mt-4">
+    <div
+      v-if="
+        this.$store.state.userPicks.filter(
+          (up) => up.teamId > 0 || up.points > 0
+        ).length < 1
+      "
+      class="text-center text-white bg-warning border border-white rounded m-3 p-2"
+    >
+      <h6>
+        Click anywhere on a team title bar to select team; Click on the point
+        area to its right to select a point value.
+      </h6>
+      <h6>
+        Points and team selection can be changed at any time, before a game is
+        locked, by simply clicking another.
+      </h6>
+    </div>
     <pickable-game
       v-for="game in games"
       :pickableGameData="game"
