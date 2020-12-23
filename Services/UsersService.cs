@@ -26,11 +26,20 @@ namespace BowlPickems.Services
     {
       return _repo.Create(newUser);
     }
-    internal User EditUser(User userToUpdate)
-    {
-      return _repo.EditUser(userToUpdate);
+
+    // internal string Delete(int id)
+    // {
+    //   if (_repo.Delete(id))
+    //   {
+    //     return "User successfully removed.";
+    //   }
+    //   throw new Exception("Could not delete user");
+    // }
+    // internal User EditUser(User userToUpdate)
+    // {
+    //   return _repo.EditUser(userToUpdate);
 
 
-    }
+    // }
   }
 }

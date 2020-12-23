@@ -29,7 +29,7 @@
       <span class="w-25 text-center pl-1 mx-auto">{{
         leaderBoardRowData.points
       }}</span>
-      <span class="w-25 text-center pl-2 mx-auto">
+      <span class="w-25 text-center pl-0 mx-auto">
         {{ leaderBoardRowData.percent }}%</span
       >
       <span class="w-25 text-center pl-2 mx-auto">

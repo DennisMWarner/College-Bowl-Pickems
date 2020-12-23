@@ -1,9 +1,12 @@
 <template>
-  <div class="stats-page text-white">All stats here</div>
+  <div class="stats-page text-white">
+    <user-views />
+  </div>
 </template>
 
 
 <script>
+import userViews from "../components/UserViews";
 export default {
   name: "stats-page",
   data() {
@@ -11,11 +14,10 @@ export default {
   },
   computed: {},
   methods: {},
-  beforeCreate() {
-    this.$store.dispatch("getAllPicks");
-    // console.log("all picks: ", this.$store.state.allPicks);
+  async beforeCreate() {
+    await this.$store.dispatch("getAllPicks");
   },
-  components: {},
+  components: { userViews },
 };
 </script>
 

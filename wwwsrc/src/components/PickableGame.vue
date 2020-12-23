@@ -2,7 +2,7 @@
   <div
     class="pickable-game col-md-5 game pb-2 mt-0 mb-3 mx-2 border border-white rounded bg-dark"
   >
-    <div class="m-0 row no-gutters">
+    <div class="m-0 no-gutters row">
       <div class="col-12">
         <div
           v-if="
@@ -41,7 +41,7 @@
         </p>
       </div>
     </div>
-    <div class="row no-gutters pr-1">
+    <div class="row pr-1 no-gutters">
       <div class="col-9">
         <div class="row">
           <div
@@ -55,7 +55,7 @@
                 this.pickableGameData.firstTeam.rank
               }}</span></span
             >
-            <div class="row no-gutters">
+            <div class="row no-gutters recsAndStreak">
               <div class="col-7 recsTop text-right">
                 {{ this.pickableGameData.firstTeam.conference }}
                 <span class="confRec">
@@ -88,7 +88,7 @@
                 this.pickableGameData.firstTeam.rank
               }}</span></span
             >
-            <div class="row no-gutters">
+            <div class="row no-gutters recsAndStreak">
               <div class="col-7 recsTop text-right">
                 {{ this.pickableGameData.firstTeam.conference }}
                 <span class="confRec">{{
@@ -114,7 +114,7 @@
                 this.pickableGameData.firstTeam.rank
               }}</span></span
             >
-            <div class="row no-gutters">
+            <div class="row no-gutters recsAndStreak">
               <div class="col-7 recsTop text-right">
                 {{ this.pickableGameData.firstTeam.conference }}
                 <span class="confRec">{{
@@ -168,7 +168,7 @@
                 this.pickableGameData.secondTeam.rank
               }}</span></span
             >
-            <div class="row no-gutters">
+            <div class="row no-gutters recsAndStreak">
               <div class="col-7 recsTop text-right">
                 {{ this.pickableGameData.secondTeam.conference }}
                 <span class="confRec">{{
@@ -201,7 +201,7 @@
                 this.pickableGameData.secondTrank
               }}</span></span
             >
-            <div class="row no-gutters">
+            <div class="row no-gutters recsAndStreak">
               <div class="col-7 recsTop text-right">
                 {{ this.pickableGameData.secondTeam.conference }}
                 <span class="confRec">
@@ -227,7 +227,7 @@
                 this.pickableGameData.rank
               }}</span></span
             >
-            <div class="row no-gutters">
+            <div class="row no-gutters recsAndStreak">
               <div class="col-7 recsTop text-right">
                 {{ this.pickableGameData.secondTeam.conference }}
                 <span class="confRec">
@@ -395,5 +395,15 @@ export default {
   font-size: 12px;
   margin-top: -12px;
   padding-left: 2px;
+}
+@media only screen and (min-width: 400px) {
+  .recsAndStreak {
+    margin-right: 30px !important;
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .recsAndStreak {
+    margin-right: 75px !important;
+  }
 }
 </style>

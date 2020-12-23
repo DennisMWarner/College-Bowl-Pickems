@@ -97,6 +97,10 @@ export default {
       let team = this.teamTitleBarData;
       team.gameId = 0;
       this.$store.dispatch("updateTeam", team);
+      this.$store.dispatch(
+        "resetUserPicksByGame",
+        this.$store.state.activeGame
+      );
     },
   },
   components: { addGameToTeamModalBody, editTeamModalBody },

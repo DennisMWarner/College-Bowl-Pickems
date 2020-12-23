@@ -32,6 +32,8 @@ export default new Vuex.Store({
     activeLeaderBoardHeaderButton: {},
     allPicks: [],
     userPicks: [],
+    incompletePicks: [],
+    lockableGames: [],
     leaderBoardRows: [],
     picksByPointTotal: [],
     picksByPointsLeft: [],
@@ -55,6 +57,7 @@ export default new Vuex.Store({
     unlockedFormattedGames: [],
     availableTeams: [],
     availableGames: [],
+    userViews: [],
     teamsRawData: [
 
       ["Buffalo", "#005BBB", "#ffffff", "", "", "", ""],
@@ -180,6 +183,18 @@ export default new Vuex.Store({
 
     setAdminOptions(state, options) {
       state.adminOptions = options
+    },
+
+    setUserViews(state, userViews) {
+      state.userViews = userViews
+    },
+
+    setIncompletePicks(state, picks) {
+      state.incompletePicks = picks
+    },
+
+    setLockableGames(state, games) {
+      state.lockableGames = games
     },
 
     setDates(state) {
@@ -712,7 +727,7 @@ export default new Vuex.Store({
 
     async resetTeamGameIds({ dispatch }) {
       await this.state.teams.forEach(t => {
-        console.log("resetTeamGameIds called...")
+        // console.log("resetTeamGameIds called...")
         t.gameId = 0
         api.put("teams", t)
       })
@@ -790,6 +805,24 @@ export default new Vuex.Store({
       commit("setAdminOptions", adminOptions)
     },
 
+    getUserViews({ commit, dispatch }) {
+      let userViews = []
+      this.state.users.forEach(uv => {
+        let userView = {}
+        let gamePick = {
+          ...this.state.allPicks.find(up => up.gameId == 2 && up.userId == uv.userId)
+        }
+        // console.log("pick found: ", uv.name, gamePick, this.state.allPicks.length)
+        userView.name = uv.name
+        userView.game = gamePick.gameId
+        userView.team = gamePick.teamId
+        userView.points = gamePick.points
+        userView.numPicks = this.state.allPicks.filter(ap => ap.userId == uv.userId).length
+        userViews.push(userView)
+      })
+      commit("setUserViews", userViews)
+    },
+
     async getLeaderBoardData({ dispatch, commit }) {
       await dispatch("getAllPicks");
       let lbRows = [];
@@ -818,7 +851,7 @@ export default new Vuex.Store({
 
         pointsLeft = totalPossPoints - possiblePoints
         if (pointsWon != 0) {
-          user.percent = ((pointsWon / totalPossPoints) * 100).toFixed(1)
+          user.percent = ((pointsWon / possiblePoints) * 100).toFixed(1)
         }
         else {
           user.percent = 0
@@ -884,15 +917,9 @@ export default new Vuex.Store({
 
     sortByPercent({ dispatch, commit }) {
       let sortedRows = this.state.leaderBoardRows.sort(function (a, b) {
-        let varA = a.percent;
-        let varB = b.percent;
-        if (varA > varB) {
-          return -1;
-        }
-        if (varA < varB) {
-          return 1;
-        }
-        return 0;
+        let varA = a.percent
+        let varB = b.percent
+        return parseFloat(varB) - parseFloat(varA)
       })
       commit("setLeaderBoardRows", sortedRows)
     },
@@ -911,6 +938,98 @@ export default new Vuex.Store({
       })
       commit("setLeaderBoardRows", sortedRows)
     },
+
+    async getLockableGames({ dispatch, commit }, gameToCheck) {
+      if (this.state.allPicks.length < 1) {
+        await dispatch("getAllPicks")
+      }
+      let gamesToCheck = []
+      if (gameToCheck != {}) {
+        gamesToCheck.push(gameToCheck)
+      }
+      else { gamesToCheck = [...this.state.unlockedFormattedGames] }
+
+      console.log("games to check: ", gamesToCheck)
+
+      let incompletePicks = []
+      let completePicks = 0;
+      let lockableGames = []
+      gamesToCheck.forEach(ug => {
+        let incompleteGamePicks = []
+
+        let incompletePicksData = this.state.allPicks.filter(p => p.gameId == ug.id && (p.teamId == 0 || p.points == 0))
+
+        completePicks += this.state.allPicks.filter(p => p.gameId == ug.id && (p.teamId != 0 && p.points != 0)).length
+        incompletePicksData.forEach(ipd => {
+          let incompletePick = { ...ipd }
+          incompletePick.gameName = ug.name
+          incompletePick.userName = this.state.users.find(u => u.userId == ipd.userId).name
+          if (ipd.points == 0 && ipd.teamId == 0) {
+            incompletePick.missingPoints = true
+            incompletePick.missingTeam = true
+            incompleteGamePicks.push(incompletePick)
+          }
+          else if (ipd.points == 0) {
+            incompletePick.missingPoints = true
+            incompletePick.missingTeam = false
+            incompleteGamePicks.push(incompletePick)
+          }
+          else if (ipd.teamId == 0) {
+            incompletePick.missingTeam = true
+            incompletePick.missingPoints = false
+            incompleteGamePicks.push(incompletePick)
+          }
+        })
+        if (incompleteGamePicks.length < 1) {
+          let lockableGame = { ...ug }
+          lockableGames.push(lockableGame)
+        }
+        incompleteGamePicks.forEach(icp => incompletePicks.push(icp)
+        )
+      })
+
+      // console.log("lockableGames: ", lockableGames)
+      // console.log("incomplete picks: ", incompletePicks)
+      // console.log("number of complete picks: ", completePicks)
+      commit("setLockableGames", lockableGames)
+      commit("setIncompletePicks", incompletePicks)
+
+    },
+
+    async resetUserPicksByGame({ dispatch, commit }, game) {
+      if (this.state.allPicks.length < 1) {
+        await dispatch("getAllPicks")
+      }
+      let resetUserPicks = []
+      let userGamePicks = this.state.allPicks.filter(ap => ap.gameId == game.id)
+      userGamePicks.forEach(ugp => {
+        let resetUserPick = { ...ugp }
+        resetUserPick.teamId = 0;
+        resetUserPick.points = 0;
+        resetUserPicks.push(resetUserPick)
+      })
+      resetUserPicks.forEach(rup => {
+        dispatch("updatePick", rup)
+      })
+    },
+
+    async adjustPts({ dispatch }) {
+
+      await dispatch("getAllPicks")
+      this.state.allPicks.forEach(ap2 => {
+        if (ap2.points > 29) {
+          let userPick = {}
+          userPick.name = this.state.users.find(u => ap2.userId == u.userId).name
+          userPick.game = this.state.games.find(g => ap2.gameId == g.id).name
+          userPick.points = ap2.points
+          console.log("out of range pick: ", userPick)
+        }
+      })
+      this.state.users.forEach(u => {
+        let name = u.name
+
+      })
+    }
   }
 }
 );

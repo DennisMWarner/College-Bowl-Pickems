@@ -79,5 +79,20 @@ namespace BowlPickems.Controllers
       }
     }
 
+    // [HttpDelete("{userId}")]
+    // [Authorize]
+    // public ActionResult<string> Delete(string userId)
+    // {
+    //   try
+    //   {
+
+    //     return Ok(_ps.Delete(userId));
+    //   }
+    //   catch (System.Exception error)
+    //   {
+    //     return BadRequest(error.Message);
+    //   }
+    // }
+
   }
 }

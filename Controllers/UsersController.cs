@@ -49,20 +49,25 @@ namespace BowlPickems.Controllers
         return BadRequest(e.Message);
       }
     }
-    [HttpPut]
-    [Authorize]
 
-    public ActionResult<User> EditUser([FromBody] User UserToUpdate)
-    {
-      try
-      {
-        return Ok(_us.EditUser(UserToUpdate));
-      }
-      catch (Exception e)
-      {
-        return BadRequest(e.Message);
-      }
-    }
+    // [HttpDelete("{id}")]
+    // [Authorize]
+    // public ActionResult<string> Delete(int id)
+    // {
+    //   try
+    //   {
+
+    //     return Ok(_us.Delete(id));
+    //   }
+    //   catch (System.Exception error)
+    //   {
+    //     return BadRequest(error.Message);
+    //   }
+    // }
+
+
+
+
 
   }
 }

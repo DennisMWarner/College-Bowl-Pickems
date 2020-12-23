@@ -322,10 +322,31 @@ export default {
     },
 
     async lockOrUnlockGame(status) {
-      this.gameTitleBarData.status = status;
-      await this.$store.dispatch("updateGame", this.gameTitleBarData);
-      this.$store.dispatch("getInitAndFormat");
-      this.$store.dispatch("clearActiveGame");
+      await this.$store.dispatch("getLockableGames", this.gameTitleBarData);
+      if (
+        status == "locked" &&
+        this.$store.state.lockableGames.findIndex(
+          (lg) => lg.id == this.gameTitleBarData.id
+        ) != -1
+      ) {
+        this.gameTitleBarData.status = status;
+        await this.$store.dispatch("updateGame", this.gameTitleBarData);
+        console.log(
+          "tried to lock game: game found in lockable games",
+          this.gameTitleBarData
+        );
+        this.$store.dispatch("getInitAndFormat");
+        this.$store.dispatch("clearActiveGame");
+      } else if (status == "unlocked") {
+        await this.$store.dispatch("updateGame", this.gameTitleBarData);
+        console.log(
+          "tried to lock game: game not found in lockable games",
+          this.gameTitleBarData,
+          this.$store.state.incompletePicks
+        );
+        this.$store.dispatch("getInitAndFormat");
+        this.$store.dispatch("clearActiveGame");
+      }
     },
   },
   components: { addTeamToGameModalBody, editGameModalBody, teamTitleBars },

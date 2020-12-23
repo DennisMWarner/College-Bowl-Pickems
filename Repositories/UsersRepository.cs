@@ -47,15 +47,15 @@ namespace BowlPickems.Repositories
 
     }
 
-    internal bool Delete(int id, string userId)
-    {
-      {
-        string sql = @"
-     DELETE FROM users WHERE(id =@Id AND userId = @UserId) LIMIT 1";
-        int affectedRows = _db.Execute(sql, new { id, userId });
-        return affectedRows == 1;
-      }
-    }
+    // internal bool Delete(int id)
+    // {
+    //   {
+    //     string sql = @"
+    //  DELETE FROM users WHERE id =@Id  LIMIT 1";
+    //     int affectedRows = _db.Execute(sql, new { id });
+    //     return affectedRows == 1;
+    //   }
+    // }
 
     internal User EditUser(User UserToUpdate)
     {

@@ -18,7 +18,7 @@ namespace BowlPickems.Services
     {
       return _repo.Get();
     }
-     public IEnumerable<Pick> GetByUserId( string userId)
+    public IEnumerable<Pick> GetByUserId(string userId)
     {
       return _repo.GetByUserId(userId);
     }
@@ -32,5 +32,14 @@ namespace BowlPickems.Services
 
 
     }
+    // internal string Delete(string userId)
+    // {
+    //   if (_repo.Delete(userId) > 1)
+    //   {
+    //     return "picks successfully removed.";
+    //   }
+    //   throw new Exception("Could not delete picks");
+    // }
+
   }
 }

@@ -7,14 +7,14 @@
     class="leader-board-header-button w-25 bg-warning px-1 text-center mx-auto border border-white text-white rounded bg-info"
     @click="sort()"
   >
-    {{ this.leaderBoardHeaderButtonData.name }}
+    <span class="buttonFont"> {{ this.leaderBoardHeaderButtonData.name }}</span>
   </div>
   <div
     v-else
     class="leader-board-header-button w-25 px-1 text-center mx-auto border rounded text-white"
     @click="sort()"
   >
-    {{ leaderBoardHeaderButtonData.name }}
+    <span class="buttonFont">{{ leaderBoardHeaderButtonData.name }}</span>
   </div>
 </template>
 
@@ -48,4 +48,9 @@ export default {
 
 
 <style scoped>
+@media only screen and (min-width: 700px) {
+  .buttonFont {
+    line-height: 6;
+  }
+}
 </style>

@@ -1,18 +1,23 @@
 <template>
   <div class="setup-page text-white text-center">
-    <!-- <router-link class="w-50 mr-3 mb-3" :to="{ name: '' }"> -->
+    <!--  -->
     <!-- <button
       class="btn bg-warning rounded border text-white mb-2 border-white w-50"
       @click="toggleAdminOptions()"
     >
       Show Options
-    </button>
-    <button
-      class="btn bg-warning rounded border text-white mb-2 border-white w-50"
-      @click="viewUserData;"
-    >
-      User View
     </button> -->
+    <router-link class="w-50 mr-3 mb-3" :to="{ name: 'stats-page' }">
+      <button
+        class="btn bg-warning rounded border text-white mb-2 border-white w-50 mx-auto"
+        @click="getUserViews()"
+      >
+        User View
+      </button></router-link
+    >
+    <button class="btn text-white border" @click="adjustPts()">
+      Adjust points
+    </button>
     <!-- <add-game-button />
     <add-team-button />
     <lock-all-games-button />
@@ -56,7 +61,7 @@
       data-toggle="modal"
     >
       Reset all teams
-    </button>
+    </button>-->
     <!--Reset teams modal------------------------>
     <!-- <div class="modal" tabindex="-1" role="dialog" id="resetTeamsModal">
       <div class="modal-dialog-centered m-3" role="document">
@@ -150,9 +155,16 @@ export default {
       this.$store.dispatch("resetWinners");
     },
     genUserSims() {},
+    adjustPts() {
+      this.$store.dispatch("adjustPts");
+    },
 
     toggleAdminOptions() {
       this.$store.dispatch("toggleAdminOptions");
+    },
+    async getUserViews() {
+      await this.$store.dispatch("getAllPicks");
+      this.$store.dispatch("getUserViews");
     },
   },
   components: {
