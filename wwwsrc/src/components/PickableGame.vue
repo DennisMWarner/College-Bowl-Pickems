@@ -198,7 +198,7 @@
             <span
               >{{ this.pickableGameData.secondTeam.name }}
               <span class="rank text-left">{{
-                this.pickableGameData.secondTrank
+                this.pickableGameData.secondTeam.rank
               }}</span></span
             >
             <div class="row no-gutters recsAndStreak">
@@ -224,7 +224,7 @@
             <span
               >{{ this.pickableGameData.secondTeam.name }}
               <span class="rank text-left">{{
-                this.pickableGameData.rank
+                this.pickableGameData.secondTeam.rank
               }}</span></span
             >
             <div class="row no-gutters recsAndStreak">

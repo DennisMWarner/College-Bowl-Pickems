@@ -57,12 +57,12 @@ namespace BowlPickems.Repositories
     //   }
     // }
 
-    internal User EditUser(User UserToUpdate)
+    internal User EditUser(User userToUpdate)
     {
       {
-        string sql = "UPDATE users SET  name=@Name, userId=@UserId, imgUrl=@ImgUrl, tieBreaker=@TieBreaker, email=@Email WHERE id = @Id";
-        int affectedRows = _db.Execute(sql, UserToUpdate);
-        return UserToUpdate;
+        string sql = "UPDATE users SET  name=@Name, userId=@UserId, imgUrl=@ImgUrl, tieBreaker=@TieBreaker, email=@Email WHERE (userId = @UserId && id = @Id)";
+        int affectedRows = _db.Execute(sql, userToUpdate);
+        return userToUpdate;
       }
     }
 

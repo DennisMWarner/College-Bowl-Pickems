@@ -41,5 +41,9 @@ namespace BowlPickems.Services
 
 
     // }
+    internal User EditUser(User userToUpdate)
+    {
+      return _repo.EditUser(userToUpdate);
+    }
   }
 }

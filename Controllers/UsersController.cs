@@ -66,8 +66,21 @@ namespace BowlPickems.Controllers
     // }
 
 
-
-
+    [HttpPut("{id}")]
+    [Authorize]
+    public ActionResult<User> EditUser([FromBody] User userToUpdate)
+    {
+      try
+      {
+        var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+        userToUpdate.UserId = userId.Value;
+        return Ok(_us.EditUser(userToUpdate));
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
 
   }
 }

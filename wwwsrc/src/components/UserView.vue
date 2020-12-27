@@ -1,10 +1,8 @@
 <template>
   <div class="user-view text-white row">
     <div class="col-4">{{ this.userViewData.name }}</div>
-    <div class="col-2">{{ this.userViewData.game }}</div>
     <div class="col-2">{{ this.userViewData.team }}</div>
     <div class="col-2">{{ this.userViewData.points }}</div>
-    <div class="col-2">{{ this.userViewData.numPicks }}</div>
   </div>
 </template>
 

@@ -1,5 +1,6 @@
 <template>
   <div class="user-views">
+    <div class="text-white">{{ this.$store.state.activeGame.name }}</div>
     <user-view
       v-for="userView in userViews"
       :userViewData="userView"

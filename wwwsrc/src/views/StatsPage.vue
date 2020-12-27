@@ -1,11 +1,13 @@
 <template>
   <div class="stats-page text-white">
+    <game-buttons />
     <user-views />
   </div>
 </template>
 
 
 <script>
+import gameButtons from "../components/GameButtons";
 import userViews from "../components/UserViews";
 export default {
   name: "stats-page",
@@ -15,9 +17,9 @@ export default {
   computed: {},
   methods: {},
   async beforeCreate() {
-    await this.$store.dispatch("getAllPicks");
+    this.$store.dispatch("getGameButtons");
   },
-  components: { userViews },
+  components: { userViews, gameButtons },
 };
 </script>
 

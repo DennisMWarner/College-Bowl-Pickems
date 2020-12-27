@@ -107,7 +107,7 @@ export default {
     async unCancelGame() {
       await this.$store.dispatch(
         "unCancelGameById",
-        this.$store.state.activeGame
+        this.otherGameTitleBarData
       );
     },
   },

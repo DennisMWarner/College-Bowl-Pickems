@@ -81,7 +81,8 @@
         @click="setActiveGame()"
       >
         {{ this.gameTitleBarData.name }}
-        <span class="ml-4 small-font">Id: {{ this.gameTitleBarData.id }}</span>
+
+        >
 
         <img
           v-if="this.gameTitleBarData.status == 'locked'"
@@ -101,6 +102,9 @@
           alt=""
           class="img-fluid float-right float-top mt-1 winImg"
         />
+        <span class="ml-4 small-font mr-2 pr-1 float-right"
+          >Id: {{ this.gameTitleBarData.id }}</span
+        >
       </div>
       <div
         v-else

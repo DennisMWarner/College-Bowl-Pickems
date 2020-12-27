@@ -40,6 +40,7 @@ export default new Vuex.Store({
     picksByPercent: [],
     userPoints: [],
     activeGames: [],
+    gameButtons: [],
     cancelledGameId: {},
     unCancelledGameId: {},
     users: [],
@@ -235,6 +236,10 @@ export default new Vuex.Store({
       state.userPoints = points
     },
 
+    setGameButtons(state, buttons) {
+      state.gameButtons = buttons
+    },
+
     updateActiveTeams(state) {
       state.activeTeams.splice(state.activeTeams[0], 1, state.activeTeam)
     },
@@ -376,6 +381,8 @@ export default new Vuex.Store({
       let lockedFormattedGames = [];
       let unlockedFormattedGames = []
       let formattedGames = []
+      let firstLockedGameDates = []
+      let firstUnlockedGameDates = []
 
       this.state.games.forEach(g => {
         let teamsfound = this.state.teams.filter(t =>
@@ -388,10 +395,26 @@ export default new Vuex.Store({
 
       formattedGames.forEach(tf => {
         if (tf.status == 'locked') {
-          lockedFormattedGames.push(tf)
+          if (firstLockedGameDates.findIndex(flgd => flgd.gameDate == tf.gameDate) == -1) {
+            tf.isFirstGameDate = "true"
+            firstLockedGameDates.push(tf)
+            lockedFormattedGames.push(tf)
+          }
+          else {
+            tf.isFirstGameDate = "false"
+            lockedFormattedGames.push(tf)
+          }
         }
         else if (tf.status == "unlocked" || tf.status == null) {
-          unlockedFormattedGames.push(tf)
+          if (firstUnlockedGameDates.findIndex(flgd => flgd.gameDate == tf.gameDate) == -1) {
+            tf.isFirstGameDate = "true"
+            firstUnlockedGameDates.push(tf)
+            unlockedFormattedGames.push(tf)
+          }
+          else {
+            tf.isFirstGameDate = "false"
+            unlockedFormattedGames.push(tf)
+          }
         }
         else { }
       })
@@ -523,7 +546,7 @@ export default new Vuex.Store({
     },
 
     async editUser({ dispatch, commit }, user) {
-      let res = await api.put("users", user)
+      let res = await api.put("users/" + user.id, user)
       commit("setActiveUser", res.data)
     },
 
@@ -542,20 +565,33 @@ export default new Vuex.Store({
       unCancelledGame.status = "unlocked"
       await api.put("games/" + game.id, unCancelledGame);
       commit("setUnCancelledGameId", game.id)
-      dispatch("updateUnCancelledPicks")
+      // dispatch("updateUnCancelledPicks")
     },
 
     updateCancelledPicks({ dispatch, commit }) {
+      let userCancelledPicks = []
       this.state.users.forEach(u => {
+        let userCancelledPick = {}
+        userCancelledPick.name = u.name
+        userCancelledPick.oldPicks = []
+        userCancelledPick.newPicks = []
 
         let userPicks = this.state.allPicks.filter(ap => ap.userId == u.userId);
         let cutoff = userPicks.find(up => up.gameId == this.state.cancelledGameId) || 0;
+        userCancelledPick.cutoff = cutoff
         if (cutoff) {
           userPicks.forEach(up => {
 
             let pickToUpdate = { ...up }
             if (pickToUpdate.points > cutoff.points) {
+              let op = {}
+              op.name = this.state.games.find(g => g.id == up.gameId).name
+              op.points = up.points
+              let np = { ...op }
+              userCancelledPick.oldPicks.push(op)
               pickToUpdate.points--
+              np.points = up.points
+              userCancelledPick.newPicks.push(np)
               dispatch("updatePick", pickToUpdate)
             }
             //keep cancelled game pick to know what user points were...
@@ -565,8 +601,11 @@ export default new Vuex.Store({
             // }
           })
         }
+        userCancelledPicks.push(userCancelledPick)
       }
       )
+
+      console.log(userCancelledPicks)
       dispatch("getInitAndFormat")
       dispatch("clearActiveGame")
 
@@ -805,14 +844,21 @@ export default new Vuex.Store({
       commit("setAdminOptions", adminOptions)
     },
 
-    getUserViews({ commit, dispatch }) {
+    async getUserViews({ commit, dispatch }, gameId) {
+      if (this.state.allPicks.length < 1) {
+        await dispatch("getAllPicks")
+      }
+      console.log("getUserViews called for game id: ", gameId)
+      console.log("all picks: ", this.state.allPicks.length)
+
       let userViews = []
       this.state.users.forEach(uv => {
+        let gId = gameId
         let userView = {}
         let gamePick = {
-          ...this.state.allPicks.find(up => up.gameId == 2 && up.userId == uv.userId)
+          ...this.state.allPicks.find(up => up.gameId == gId && up.userId == uv.userId)
         }
-        // console.log("pick found: ", uv.name, gamePick, this.state.allPicks.length)
+        console.log("pick found: ", uv.name, gamePick)
         userView.name = uv.name
         userView.game = gamePick.gameId
         userView.team = gamePick.teamId
@@ -820,7 +866,32 @@ export default new Vuex.Store({
         userView.numPicks = this.state.allPicks.filter(ap => ap.userId == uv.userId).length
         userViews.push(userView)
       })
+      console.log("game view for user: ", userViews)
       commit("setUserViews", userViews)
+    },
+
+    async getGameButtons({ commit, dispatch }) {
+      let gameButtons = []
+      if (this.state.allPicks.length < 1) {
+        await dispatch("getAllPicks")
+      }
+
+      this.state.games.forEach(g => {
+        let gameButton = {}
+        gameButton.name = g.name
+        gameButton.id = g.id
+        gameButton.allPicksMade = 'false'
+
+        let userPicksForGame = this.state.allPicks.filter(ap => ap.gameId == g.id && ap.team != 0 && ap.points != 0).length;
+        // console.log("game picks: ", g.name, userPicksForGame, this.state.users.length)
+        if (this.state.users.length == userPicksForGame) {
+          gameButton.allPicksMade = 'true'
+        }
+        gameButtons.push(gameButton)
+      })
+      commit("setGameButtons", gameButtons)
+      console.log("game buttons: ", gameButtons)
+
     },
 
     async getLeaderBoardData({ dispatch, commit }) {
@@ -868,7 +939,10 @@ export default new Vuex.Store({
     },
 
     getCompletedGames({ dispatch, commit }) {
+
       let completedGames = this.state.lockedFormattedGames.filter(fg => fg.wId > 0)
+
+
       commit("setCompletedGames", completedGames)
       dispatch("getLeaderBoardData")
     },
@@ -1013,23 +1087,51 @@ export default new Vuex.Store({
       })
     },
 
-    async adjustPts({ dispatch }) {
+    // async adjustPts({ dispatch }) {
 
-      await dispatch("getAllPicks")
-      this.state.allPicks.forEach(ap2 => {
-        if (ap2.points > 29) {
-          let userPick = {}
-          userPick.name = this.state.users.find(u => ap2.userId == u.userId).name
-          userPick.game = this.state.games.find(g => ap2.gameId == g.id).name
-          userPick.points = ap2.points
-          console.log("out of range pick: ", userPick)
-        }
-      })
-      this.state.users.forEach(u => {
-        let name = u.name
+    //   await dispatch("getAllPicks")
+    //   this.state.allPicks.forEach(ap2 => {
+    //     if (ap2.points > 29) {
+    //       let editedPick = { ...ap2 }
+    //       editedPick.points = 29
+    //       let userPick = {}
+    //       userPick.name = this.state.users.find(u => ap2.userId == u.userId).name
+    //       userPick.game = this.state.games.find(g => ap2.gameId == g.id).name
+    //       userPick.points = ap2.points
+    //       console.log("out of range pick: ", userPick)
+    //       dispatch("updatePick", editedPick)
+    //     }
+    //   })
+    //   this.state.users.forEach(u => {
+    //     let name = u.name
+    //     let allUserPicks = [...this.state.allPicks.filter(ap => ap.userId == u.userId)]
+    //     let dupPicks = [];
+    //     let picksToChange = []
+    //     allUserPicks.forEach(aup => {
+    //       let game = { ...this.state.games.find(g => g.id == aup.gameId) }
+    //       if (dupPicks.findIndex(dp => dp.points == aup.points) == -1 && game.status == "locked") {
+    //         dupPicks.push(aup.points)
+    //       }
+    //       else if (dupPicks.findIndex((dp) => dp == aup.points) != -1 && aup.points != 0) {
+    //         let pickToEdit = { ...aup }
+    //         pickToEdit.points = 0
+    //         let userPick = {}
+    //         userPick.name = name
+    //         userPick.game = game.name
+    //         userPick.gameId = game.id
+    //         userPick.points = aup.points
+    //         dispatch("updatePick", pickToEdit)
+    //         console.log("new editeed game: ", userPick, aup, pickToEdit)
+    //       }
+    //     })
+    //     console.log("user: ", name)
+    //     console.log("locked games: ", dupPicks)
+    //     picksToChange.forEach(ptc => {
+    //       console.log("dup: ", ptc)
+    //     })
 
-      })
-    }
+    //   })
+    // }
   }
 }
 );
