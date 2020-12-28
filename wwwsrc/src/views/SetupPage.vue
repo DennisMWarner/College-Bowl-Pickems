@@ -7,17 +7,10 @@
     >
       Show Options
     </button> -->
-    <router-link class="w-50 mr-3 mb-3" :to="{ name: 'stats-page' }">
-      <button
-        class="btn bg-warning rounded border text-white mb-2 border-white w-50 mx-auto"
-        @click="getUserViews()"
-      >
-        User View
-      </button></router-link
-    >
-    <button class="btn text-white border" @click="adjustPts()">
+
+    <!-- <button class="btn text-white border" @click="adjustPts()">
       Adjust points
-    </button>
+    </button> -->
     <!-- <add-game-button />
     <add-team-button />
     <lock-all-games-button />
@@ -161,10 +154,6 @@ export default {
 
     toggleAdminOptions() {
       this.$store.dispatch("toggleAdminOptions");
-    },
-    async getUserViews() {
-      await this.$store.dispatch("getAllPicks");
-      this.$store.dispatch("getUserViews");
     },
   },
   components: {

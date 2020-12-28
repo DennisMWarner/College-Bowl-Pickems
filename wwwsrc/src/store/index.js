@@ -40,7 +40,6 @@ export default new Vuex.Store({
     picksByPercent: [],
     userPoints: [],
     activeGames: [],
-    gameButtons: [],
     cancelledGameId: {},
     unCancelledGameId: {},
     users: [],
@@ -236,10 +235,6 @@ export default new Vuex.Store({
       state.userPoints = points
     },
 
-    setGameButtons(state, buttons) {
-      state.gameButtons = buttons
-    },
-
     updateActiveTeams(state) {
       state.activeTeams.splice(state.activeTeams[0], 1, state.activeTeam)
     },
@@ -285,7 +280,7 @@ export default new Vuex.Store({
     },
 
     setActiveGame(state, game) {
-
+      console.log("setActiveGame commited: ", game)
       state.activeGame = game
     },
 
@@ -508,7 +503,7 @@ export default new Vuex.Store({
 
     setActiveTeam({ dispatch, commit }, team) {
       commit("setActiveTeam", team);
-      if (team.gameId != 0) {
+      if (team.gameId != 0 && this.state.unlockedFormattedGames.findIndex(g => g.id == team.gameId) != -1) {
         dispatch("setActiveGame", this.state.unlockedFormattedGames.find(g => g.id == team.gameId))
       }
     },
@@ -554,7 +549,7 @@ export default new Vuex.Store({
       let cancelledGame = { ...game }
       await dispatch("getAllPicks");
       cancelledGame.status = "cancelled"
-      await api.put("games/" + game.id, cancelledGame);
+      // await api.put("games/" + game.id, cancelledGame);
       commit("setCancelledGameId", game.id)
       dispatch("updateCancelledPicks")
     },
@@ -568,31 +563,37 @@ export default new Vuex.Store({
       // dispatch("updateUnCancelledPicks")
     },
 
-    updateCancelledPicks({ dispatch, commit }) {
+    async updateCancelledPicks({ dispatch, commit }) {
+      if (this.state.users.length < 1) {
+        await dispatch("getUsers")
+      }
+      if (this.state.allPicks.length < 1) {
+        await dispatch("getAllPicks")
+      }
       let userCancelledPicks = []
       this.state.users.forEach(u => {
         let userCancelledPick = {}
         userCancelledPick.name = u.name
-        userCancelledPick.oldPicks = []
-        userCancelledPick.newPicks = []
+        userCancelledPick.picks = []
+
 
         let userPicks = this.state.allPicks.filter(ap => ap.userId == u.userId);
         let cutoff = userPicks.find(up => up.gameId == this.state.cancelledGameId) || 0;
-        userCancelledPick.cutoff = cutoff
+        userCancelledPick.cutoff = cutoff.points
         if (cutoff) {
           userPicks.forEach(up => {
 
             let pickToUpdate = { ...up }
             if (pickToUpdate.points > cutoff.points) {
-              let op = {}
-              op.name = this.state.games.find(g => g.id == up.gameId).name
-              op.points = up.points
-              let np = { ...op }
-              userCancelledPick.oldPicks.push(op)
+              let p = {}
+              p.oldPick = {}
+              let game = { ...this.state.games.find(g => g.id == up.gameId) }
+              p.name = game.name
+              p.oldPick = pickToUpdate.points
               pickToUpdate.points--
-              np.points = up.points
-              userCancelledPick.newPicks.push(np)
-              dispatch("updatePick", pickToUpdate)
+              p.newPoints = pickToUpdate.points
+              userCancelledPick.picks.push(p)
+              // dispatch("updatePick", pickToUpdate)
             }
             //keep cancelled game pick to know what user points were...
             // else if (pickToUpdate.points == cutoff.points) {
@@ -844,16 +845,30 @@ export default new Vuex.Store({
       commit("setAdminOptions", adminOptions)
     },
 
-    async getUserViews({ commit, dispatch }, gameId) {
+    async getUserViews({ commit, dispatch }, game) {
+      let thisGame = { ...game }
+      console.log("game passed to getUserViews: ", game)
       if (this.state.allPicks.length < 1) {
         await dispatch("getAllPicks")
       }
-      console.log("getUserViews called for game id: ", gameId)
+      dispatch("setActiveGame", game)
+
+      let winningTeam = {}
+      winningTeam.name = "TBD"
+      if (thisGame.wId != 0) {
+        winningTeam = { ...this.state.teams.find(wt => wt.id == thisGame.wId) }
+      }
+
+      console.log("winning team: ", winningTeam)
+      let completedGames = this.state.lockedFormattedGames.filter(fg => fg.wId > 0)
+
+      console.log("getUserViews called for game id: ", game.id)
       console.log("all picks: ", this.state.allPicks.length)
+      console.log("completed games: ", completedGames)
 
       let userViews = []
       this.state.users.forEach(uv => {
-        let gId = gameId
+        let gId = game.id
         let userView = {}
         let gamePick = {
           ...this.state.allPicks.find(up => up.gameId == gId && up.userId == uv.userId)
@@ -861,7 +876,14 @@ export default new Vuex.Store({
         console.log("pick found: ", uv.name, gamePick)
         userView.name = uv.name
         userView.game = gamePick.gameId
-        userView.team = gamePick.teamId
+        userView.teamId = gamePick.teamId
+        let team = this.state.teams.find(t => t.id == gamePick.teamId)
+
+
+
+        userView.teamName = team.name
+        userView.gameName = this.state.activeGame.name
+        userView.winTeam = winningTeam.name
         userView.points = gamePick.points
         userView.numPicks = this.state.allPicks.filter(ap => ap.userId == uv.userId).length
         userViews.push(userView)
@@ -870,29 +892,6 @@ export default new Vuex.Store({
       commit("setUserViews", userViews)
     },
 
-    async getGameButtons({ commit, dispatch }) {
-      let gameButtons = []
-      if (this.state.allPicks.length < 1) {
-        await dispatch("getAllPicks")
-      }
-
-      this.state.games.forEach(g => {
-        let gameButton = {}
-        gameButton.name = g.name
-        gameButton.id = g.id
-        gameButton.allPicksMade = 'false'
-
-        let userPicksForGame = this.state.allPicks.filter(ap => ap.gameId == g.id && ap.team != 0 && ap.points != 0).length;
-        // console.log("game picks: ", g.name, userPicksForGame, this.state.users.length)
-        if (this.state.users.length == userPicksForGame) {
-          gameButton.allPicksMade = 'true'
-        }
-        gameButtons.push(gameButton)
-      })
-      commit("setGameButtons", gameButtons)
-      console.log("game buttons: ", gameButtons)
-
-    },
 
     async getLeaderBoardData({ dispatch, commit }) {
       await dispatch("getAllPicks");
