@@ -280,7 +280,7 @@ export default new Vuex.Store({
     },
 
     setActiveGame(state, game) {
-      console.log("setActiveGame commited: ", game)
+
       state.activeGame = game
     },
 
@@ -367,7 +367,6 @@ export default new Vuex.Store({
         await dispatch("getUserPicks")
       }
       if (this.state.games.length < 1) {
-        // console.log("calling getgames from getInitAndFormat")
         await dispatch("getGames")
       }
       if (this.state.teams.length < 1) {
@@ -549,7 +548,7 @@ export default new Vuex.Store({
       let cancelledGame = { ...game }
       await dispatch("getAllPicks");
       cancelledGame.status = "cancelled"
-      // await api.put("games/" + game.id, cancelledGame);
+      await api.put("games/" + game.id, cancelledGame);
       commit("setCancelledGameId", game.id)
       dispatch("updateCancelledPicks")
     },
@@ -593,7 +592,7 @@ export default new Vuex.Store({
               pickToUpdate.points--
               p.newPoints = pickToUpdate.points
               userCancelledPick.picks.push(p)
-              // dispatch("updatePick", pickToUpdate)
+              dispatch("updatePick", pickToUpdate)
             }
             //keep cancelled game pick to know what user points were...
             // else if (pickToUpdate.points == cutoff.points) {
@@ -832,6 +831,7 @@ export default new Vuex.Store({
       }
       totalPossPoints.points = pointTotal
       commit("setTotalPossPoints", totalPossPoints)
+      console.log("total possible points: ", totalPossPoints, valGamesNum)
     },
 
     toggleAdminOptions({ commit }) {
@@ -847,7 +847,7 @@ export default new Vuex.Store({
 
     async getUserViews({ commit, dispatch }, game) {
       let thisGame = { ...game }
-      console.log("game passed to getUserViews: ", game)
+
       if (this.state.allPicks.length < 1) {
         await dispatch("getAllPicks")
       }
@@ -859,13 +859,6 @@ export default new Vuex.Store({
         winningTeam = { ...this.state.teams.find(wt => wt.id == thisGame.wId) }
       }
 
-      console.log("winning team: ", winningTeam)
-      let completedGames = this.state.lockedFormattedGames.filter(fg => fg.wId > 0)
-
-      console.log("getUserViews called for game id: ", game.id)
-      console.log("all picks: ", this.state.allPicks.length)
-      console.log("completed games: ", completedGames)
-
       let userViews = []
       this.state.users.forEach(uv => {
         let gId = game.id
@@ -873,7 +866,7 @@ export default new Vuex.Store({
         let gamePick = {
           ...this.state.allPicks.find(up => up.gameId == gId && up.userId == uv.userId)
         }
-        console.log("pick found: ", uv.name, gamePick)
+
         userView.name = uv.name
         userView.game = gamePick.gameId
         userView.teamId = gamePick.teamId
@@ -888,7 +881,7 @@ export default new Vuex.Store({
         userView.numPicks = this.state.allPicks.filter(ap => ap.userId == uv.userId).length
         userViews.push(userView)
       })
-      console.log("game view for user: ", userViews)
+
       commit("setUserViews", userViews)
     },
 
@@ -1022,8 +1015,6 @@ export default new Vuex.Store({
       }
       else { gamesToCheck = [...this.state.unlockedFormattedGames] }
 
-      console.log("games to check: ", gamesToCheck)
-
       let incompletePicks = []
       let completePicks = 0;
       let lockableGames = []
@@ -1085,6 +1076,17 @@ export default new Vuex.Store({
         dispatch("updatePick", rup)
       })
     },
+
+    async checkTotPossPts({ dispatch }) {
+      await dispatch("getAllPicks")
+      this.state.users.forEach(u => {
+        let points = 0
+        let userPicks = this.state.allPicks.filter(ap => ap.userId == u.userId && this.state.games.find(g => g.id == ap.gameId))
+        userPicks.forEach(up => points += up.points)
+        console.log(u.name, ": ", points)
+        console.log("num of games: ", this.state.games.length)
+      })
+    }
 
     // async adjustPts({ dispatch }) {
 

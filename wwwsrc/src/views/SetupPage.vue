@@ -1,6 +1,11 @@
 <template>
   <div class="setup-page text-white text-center">
-    <!--  -->
+    <button
+      class="btn text-center bg-warning w-50 border text-white"
+      @click="checkTotPossPts()"
+    >
+      Check total poss. pts.
+    </button>
     <!-- <button
       class="btn bg-warning rounded border text-white mb-2 border-white w-50"
       @click="toggleAdminOptions()"
@@ -154,6 +159,9 @@ export default {
 
     toggleAdminOptions() {
       this.$store.dispatch("toggleAdminOptions");
+    },
+    checkTotPossPts() {
+      this.$store.dispatch("checkTotPossPts");
     },
   },
   components: {
